@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classgdf_1_1_reader.html#a9178f346903ee5f9b47932f7208e7dfa" title="Find Record index to which a sample belongs." alt="" coords="253,5,421,35"/>
+<area shape="rect" id="node5" href="$classgdf_1_1_record.html#a0d3b34f0085e5b1291ce0716f0f15f7d" title="Returns reference to channel chan_idx." alt="" coords="251,59,424,88"/>
+<area shape="rect" id="node7" href="$classgdf_1_1_reader.html#aa0e1f6e08f7eee1627f0c42b05210649" title="Returns a reference to Record." alt="" coords="245,112,429,141"/>
+<area shape="rect" id="node11" href="$classgdf_1_1_channel.html#af332515256e6cc82e8638dc13305c96f" title="get sample value" alt="" coords="232,165,443,195"/>
+<area shape="rect" id="node9" href="$classgdf_1_1_reader.html#ac27a7669548fce17720b2f9c61dcfc05" title="Reset cache to empty state." alt="" coords="492,112,665,141"/>
+</map>

@@ -1,0 +1,249 @@
+\hypertarget{classgdf_1_1_reader}{
+\section{gdf::Reader Class Reference}
+\label{classgdf_1_1_reader}\index{gdf::Reader@{gdf::Reader}}
+}
+
+
+Class for reading GDF files to disc.  
+
+
+
+
+{\ttfamily \#include $<$Reader.h$>$}
+
+
+
+Inherited by \hyperlink{classgdf_1_1_modifier}{gdf::Modifier}{\ttfamily  \mbox{[}private\mbox{]}}.
+
+
+
+Collaboration diagram for gdf::Reader:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_reader__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classgdf_1_1_reader_a0cfb8c260168d99aae5eecbfe6ddb23f}{
+\hyperlink{classgdf_1_1_reader_a0cfb8c260168d99aae5eecbfe6ddb23f}{Reader} ()}
+\label{classgdf_1_1_reader_a0cfb8c260168d99aae5eecbfe6ddb23f}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_a7a30b000e44df279c4524d134b7f5a9c}{
+virtual \hyperlink{classgdf_1_1_reader_a7a30b000e44df279c4524d134b7f5a9c}{$\sim$Reader} ()}
+\label{classgdf_1_1_reader_a7a30b000e44df279c4524d134b7f5a9c}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_ab0a373e03f5e30bbd727f4d89808fa46}{
+void \hyperlink{classgdf_1_1_reader_ab0a373e03f5e30bbd727f4d89808fa46}{open} (const std::string filename)}
+\label{classgdf_1_1_reader_ab0a373e03f5e30bbd727f4d89808fa46}
+
+\begin{DoxyCompactList}\small\item\em Opens file for reading. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_a9403aed29a6df769dc909025f8231bc8}{
+void \hyperlink{classgdf_1_1_reader_a9403aed29a6df769dc909025f8231bc8}{close} ()}
+\label{classgdf_1_1_reader_a9403aed29a6df769dc909025f8231bc8}
+
+\begin{DoxyCompactList}\small\item\em Close file. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_af409e126981ab1a0c5d106ec49d09179}{
+void \hyperlink{classgdf_1_1_reader_af409e126981ab1a0c5d106ec49d09179}{enableCache} (bool b)}
+\label{classgdf_1_1_reader_af409e126981ab1a0c5d106ec49d09179}
+
+\begin{DoxyCompactList}\small\item\em Enable or disable cache. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_ac27a7669548fce17720b2f9c61dcfc05}{
+virtual void \hyperlink{classgdf_1_1_reader_ac27a7669548fce17720b2f9c61dcfc05}{resetCache} ()}
+\label{classgdf_1_1_reader_ac27a7669548fce17720b2f9c61dcfc05}
+
+\begin{DoxyCompactList}\small\item\em Reset cache to empty state. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_a9178f346903ee5f9b47932f7208e7dfa}{
+size\_\-t \hyperlink{classgdf_1_1_reader_a9178f346903ee5f9b47932f7208e7dfa}{findRecord} (uint16 channel\_\-idx, size\_\-t sample\_\-idx)}
+\label{classgdf_1_1_reader_a9178f346903ee5f9b47932f7208e7dfa}
+
+\begin{DoxyCompactList}\small\item\em Find \hyperlink{classgdf_1_1_record}{Record} index to which a sample belongs. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_reader_ad1b1edc464cfe23b54c9ffc278677087}{getSignals} (std::vector$<$ std::vector$<$ double $>$ $>$ \&buffer, double start\_\-time=0, double end\_\-time=-\/1, std::vector$<$ uint16 $>$ signal\_\-indices=std::vector$<$ uint16 $>$())
+\begin{DoxyCompactList}\small\item\em Read Signals from file into buffer (physical units). \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_reader_a2ad79c0649034f6462052ba088850c97}{getSignal} (uint16 channel\_\-idx, double $\ast$buffer, size\_\-t start=0, size\_\-t end=0)
+\begin{DoxyCompactList}\small\item\em Read a single channel from file into buffer. \item\end{DoxyCompactList}\item 
+double \hyperlink{classgdf_1_1_reader_ab0c56ba1256f76ac62663bd634fac79f}{getSample} (uint16 channel\_\-idx, size\_\-t sample\_\-idx)
+\begin{DoxyCompactList}\small\item\em Read a single Sample (physical units). \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_aa0e1f6e08f7eee1627f0c42b05210649}{
+\hyperlink{classgdf_1_1_record}{Record} $\ast$ \hyperlink{classgdf_1_1_reader_aa0e1f6e08f7eee1627f0c42b05210649}{getRecordPtr} (size\_\-t index)}
+\label{classgdf_1_1_reader_aa0e1f6e08f7eee1627f0c42b05210649}
+
+\begin{DoxyCompactList}\small\item\em Returns a reference to \hyperlink{classgdf_1_1_record}{Record}. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_ae54fe50c79b21ec12bdc314164ccbc21}{
+void \hyperlink{classgdf_1_1_reader_ae54fe50c79b21ec12bdc314164ccbc21}{precacheRecords} (size\_\-t start, size\_\-t end)}
+\label{classgdf_1_1_reader_ae54fe50c79b21ec12bdc314164ccbc21}
+
+\begin{DoxyCompactList}\small\item\em Precache a range of Records. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_af10117d1c54e0aaa860e7f158cc7db15}{
+\hyperlink{classgdf_1_1_event_header}{EventHeader} $\ast$ \hyperlink{classgdf_1_1_reader_af10117d1c54e0aaa860e7f158cc7db15}{getEventHeader} ()}
+\label{classgdf_1_1_reader_af10117d1c54e0aaa860e7f158cc7db15}
+
+\begin{DoxyCompactList}\small\item\em get reference to event header \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classgdf_1_1_reader_a300e99e98eb147c660edddf109a40116}{
+void {\bfseries readEvents} ()}
+\label{classgdf_1_1_reader_a300e99e98eb147c660edddf109a40116}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classgdf_1_1_reader_a1cbc1a56b834026470b2c58b8ace18da}{
+std::string {\bfseries m\_\-filename}}
+\label{classgdf_1_1_reader_a1cbc1a56b834026470b2c58b8ace18da}
+
+\item 
+\hypertarget{classgdf_1_1_reader_a074adb287bd8f4f2c78eadac4003ef70}{
+\hyperlink{classgdf_1_1_g_d_f_header_access}{GDFHeaderAccess} {\bfseries m\_\-header}}
+\label{classgdf_1_1_reader_a074adb287bd8f4f2c78eadac4003ef70}
+
+\item 
+\hypertarget{classgdf_1_1_reader_a404e8fe0871d638a4082ea3e3d304849}{
+\hyperlink{classgdf_1_1_event_header}{EventHeader} $\ast$ {\bfseries m\_\-events}}
+\label{classgdf_1_1_reader_a404e8fe0871d638a4082ea3e3d304849}
+
+\item 
+\hypertarget{classgdf_1_1_reader_a98f8657c10545dbf96aa8815de772d91}{
+std::vector$<$ boost::shared\_\-ptr$<$ \hyperlink{classgdf_1_1_record}{Record} $>$ $>$ {\bfseries m\_\-record\_\-cache}}
+\label{classgdf_1_1_reader_a98f8657c10545dbf96aa8815de772d91}
+
+\item 
+\hypertarget{classgdf_1_1_reader_a393cf77dab3a8ede289da24fdb310372}{
+std::ifstream {\bfseries m\_\-file}}
+\label{classgdf_1_1_reader_a393cf77dab3a8ede289da24fdb310372}
+
+\item 
+\hypertarget{classgdf_1_1_reader_ad77fae214888cd06b33e8b487a990d0f}{
+bool {\bfseries m\_\-cache\_\-enabled}}
+\label{classgdf_1_1_reader_ad77fae214888cd06b33e8b487a990d0f}
+
+\item 
+\hypertarget{classgdf_1_1_reader_a5a0980f98d8e438da98594dc4a7c06c8}{
+size\_\-t {\bfseries m\_\-record\_\-length}}
+\label{classgdf_1_1_reader_a5a0980f98d8e438da98594dc4a7c06c8}
+
+\item 
+\hypertarget{classgdf_1_1_reader_a57f8b15044b4f5f396291e648dd48160}{
+size\_\-t \hyperlink{classgdf_1_1_reader_a57f8b15044b4f5f396291e648dd48160}{m\_\-record\_\-offset}}
+\label{classgdf_1_1_reader_a57f8b15044b4f5f396291e648dd48160}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{classgdf_1_1_record}{Record} length in bytes. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_reader_a6cd9deb54aa60d60cdd3f99a9d090960}{
+size\_\-t \hyperlink{classgdf_1_1_reader_a6cd9deb54aa60d60cdd3f99a9d090960}{m\_\-event\_\-offset}}
+\label{classgdf_1_1_reader_a6cd9deb54aa60d60cdd3f99a9d090960}
+
+\begin{DoxyCompactList}\small\item\em Where data records start in the file. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for reading GDF files to disc. Data Records are only read on demand and stay in memory until another file is opened or the \hyperlink{classgdf_1_1_reader}{Reader} object is destroyed. This cache can be disabled. Then each data record is loaded from disk everytime it is accessed. This saves memory, but may severly decrease performance. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classgdf_1_1_reader_ab0c56ba1256f76ac62663bd634fac79f}{
+\index{gdf::Reader@{gdf::Reader}!getSample@{getSample}}
+\index{getSample@{getSample}!gdf::Reader@{gdf::Reader}}
+\subsubsection[{getSample}]{\setlength{\rightskip}{0pt plus 5cm}double gdf::Reader::getSample (
+\begin{DoxyParamCaption}
+\item[{uint16}]{ channel\_\-idx, }
+\item[{size\_\-t}]{ sample\_\-idx}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_reader_ab0c56ba1256f76ac62663bd634fac79f}
+
+
+Read a single Sample (physical units). 
+
+
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]channel index \item[\mbox{\tt[in]} {\em sample\_\-idx}]sample index \end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classgdf_1_1_modifier_aa5d1ba80d46c3cd55f3930b586e57585}{gdf::Modifier}.
+
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_reader_ab0c56ba1256f76ac62663bd634fac79f_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_reader_a2ad79c0649034f6462052ba088850c97}{
+\index{gdf::Reader@{gdf::Reader}!getSignal@{getSignal}}
+\index{getSignal@{getSignal}!gdf::Reader@{gdf::Reader}}
+\subsubsection[{getSignal}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Reader::getSignal (
+\begin{DoxyParamCaption}
+\item[{uint16}]{ channel\_\-idx, }
+\item[{double $\ast$}]{ buffer, }
+\item[{size\_\-t}]{ start = {\ttfamily 0}, }
+\item[{size\_\-t}]{ end = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_reader_a2ad79c0649034f6462052ba088850c97}
+
+
+Read a single channel from file into buffer. 
+
+The buffer must be allocated by the user, who is also responsible that enough memory is allocated. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]index of channel to read \item[\mbox{\tt[out]} {\em buffer}]pointer to double array \item[\mbox{\tt[in]} {\em start\_\-time}]samples with n $>$= start are loaded. \item[\mbox{\tt[in]} {\em end\_\-time}]samples with n $<$ end are loaded. end $<$= start loads the complete signal. \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_reader_a2ad79c0649034f6462052ba088850c97_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_reader_ad1b1edc464cfe23b54c9ffc278677087}{
+\index{gdf::Reader@{gdf::Reader}!getSignals@{getSignals}}
+\index{getSignals@{getSignals}!gdf::Reader@{gdf::Reader}}
+\subsubsection[{getSignals}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Reader::getSignals (
+\begin{DoxyParamCaption}
+\item[{std::vector$<$ std::vector$<$ double $>$ $>$ \&}]{ buffer, }
+\item[{double}]{ start\_\-time = {\ttfamily 0}, }
+\item[{double}]{ end\_\-time = {\ttfamily -\/1}, }
+\item[{std::vector$<$ uint16 $>$}]{ signal\_\-indices = {\ttfamily std::vector$<$uint16$>$()}}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_reader_ad1b1edc464cfe23b54c9ffc278677087}
+
+
+Read Signals from file into buffer (physical units). 
+
+Sample values are converted to physical units. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[out]} {\em buffer}]vector; each element is a channel. \item[\mbox{\tt[in]} {\em start\_\-time}]samples with n $>$= start\_\-time$\ast$fs are loaded. \item[\mbox{\tt[in]} {\em end\_\-time}]samples with n $<$ end\_\-time$\ast$fs are loaded. end\_\-time = -\/1 loads the complete signal. \item[\mbox{\tt[in]} {\em signal\_\-indices}]vector with signal indices that should be loaded. If empty, all signals are loaded. \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_reader_ad1b1edc464cfe23b54c9ffc278677087_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+include/GDF/Reader.h\item 
+src/Reader.cpp\end{DoxyCompactItemize}

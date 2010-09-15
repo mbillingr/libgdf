@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$classgdf_1_1_record_buffer_1_1_record_full_handler.html" title="gdf::RecordBuffer::RecordFullHandler" alt="" coords="5,197,256,227"/>
+<area shape="rect" id="node4" href="$classgdf_1_1_record_buffer.html" title="Buffers incomplete records before they are written to disk." alt="" coords="393,197,524,227"/>
+<area shape="rect" id="node6" href="$classgdf_1_1_g_d_f_header_access.html" title="gdf::GDFHeaderAccess" alt="" coords="241,101,409,131"/>
+<area shape="rect" id="node8" href="$classgdf_1_1_main_header.html" title="Contains all information required to construct the GDF fixed header." alt="" coords="109,5,235,35"/>
+<area shape="rect" id="node10" href="$classgdf_1_1_event_header.html" title="Class that provides access to GDF events." alt="" coords="259,5,392,35"/>
+<area shape="rect" id="node12" href="$classgdf_1_1_tag_header.html" title="Contains all information required to construct the optional GDF tag header." alt="" coords="416,5,533,35"/>
+</map>

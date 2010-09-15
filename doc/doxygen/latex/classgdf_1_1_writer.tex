@@ -1,0 +1,671 @@
+\hypertarget{classgdf_1_1_writer}{
+\section{gdf::Writer Class Reference}
+\label{classgdf_1_1_writer}\index{gdf::Writer@{gdf::Writer}}
+}
+
+
+Class for writing GDF files to disc.  
+
+
+
+
+{\ttfamily \#include $<$Writer.h$>$}
+
+
+
+Inherits \hyperlink{classgdf_1_1_record_buffer_1_1_record_full_handler}{gdf::RecordBuffer::RecordFullHandler}.
+
+
+
+Collaboration diagram for gdf::Writer:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classgdf_1_1_writer_a612e93a7862d4fa9c871a7e62399048c}{
+\hyperlink{classgdf_1_1_writer_a612e93a7862d4fa9c871a7e62399048c}{Writer} ()}
+\label{classgdf_1_1_writer_a612e93a7862d4fa9c871a7e62399048c}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a6a436f443584c4daa94a941e2f202dfc}{
+virtual \hyperlink{classgdf_1_1_writer_a6a436f443584c4daa94a941e2f202dfc}{$\sim$Writer} ()}
+\label{classgdf_1_1_writer_a6a436f443584c4daa94a941e2f202dfc}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_a984bb670f2ca17c85916924877edab39}{open} (const int flags=writer\_\-ev\_\-file)
+\begin{DoxyCompactList}\small\item\em Opens file for writing and writes Header. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_ab493c0c6beb99d11d0cba1a229681e44}{open} (const std::string filename, const int flags=writer\_\-ev\_\-file)
+\begin{DoxyCompactList}\small\item\em Opens file for writing and writes Header. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_ae5856d4b6ca98e7af552d99d830433c9}{close} ()
+\begin{DoxyCompactList}\small\item\em Close file. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_abc4c99004fc2275bc25dddb95e164e10}{
+bool \hyperlink{classgdf_1_1_writer_abc4c99004fc2275bc25dddb95e164e10}{isOpen} ()}
+\label{classgdf_1_1_writer_abc4c99004fc2275bc25dddb95e164e10}
+
+\begin{DoxyCompactList}\small\item\em Check if file is open. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_ad8cab49e3b866304802924707fd9d367}{setFilename} (std::string filename)
+\begin{DoxyCompactList}\small\item\em set filename for later opening \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_a15b2d4702b41521a1dba4fe8b7f2986a}{setMaxFullRecords} (size\_\-t num)
+\begin{DoxyCompactList}\small\item\em Set number of full records that are kept in memory before the buffer is flushed. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classgdf_1_1_writer_ab0dc03f3e4f125695c40c09ce66d9d16}{createSignal} (size\_\-t index, bool throwexc=false)
+\begin{DoxyCompactList}\small\item\em Create a signal. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_a25563ed9d61e7b6935dc09bc469c9eb7}{swapSignals} (size\_\-t a, size\_\-t b)
+\begin{DoxyCompactList}\small\item\em Swap to signals. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_ab69e32b0fb120731544cbff10d6e3a3f}{relocateSignal} (size\_\-t src, size\_\-t dst)
+\begin{DoxyCompactList}\small\item\em Change signal index. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_ae7328f77c14354b57608c9c8097e4a51}{
+size\_\-t \hyperlink{classgdf_1_1_writer_ae7328f77c14354b57608c9c8097e4a51}{getFirstFreeSignalIndex} ()}
+\label{classgdf_1_1_writer_ae7328f77c14354b57608c9c8097e4a51}
+
+\begin{DoxyCompactList}\small\item\em get lowest signal index that can be created \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_a78c344714054c13d96e0c85af24ad19f}{blitFromSerialBufferPhys} (const double $\ast$buf, const std::vector$<$ size\_\-t $>$ \&samples\_\-per\_\-channel)
+\begin{DoxyCompactList}\small\item\em Blit data from a serial buffer. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_aeb0e491af4de91e79469634d8b3ecc5d}{addSamplePhys} (const size\_\-t channel\_\-idx, const float64 value)
+\begin{DoxyCompactList}\small\item\em Add sample in physical units to a channel. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{classgdf_1_1_writer_a072237c5d82136be71668611a27111fc}{addSampleRaw} (const size\_\-t channel\_\-idx, const T value)
+\begin{DoxyCompactList}\small\item\em Add a raw sample to channel. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_a3e01dfba57c77e5cac1db767de79b650}{blitSamplesPhys} (const size\_\-t channel\_\-idx, const float64 $\ast$values, size\_\-t num)
+\begin{DoxyCompactList}\small\item\em Blit a number of samples in physical units to channel. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_af8b7e224467b9b706e4eaec7672d8399}{blitSamplesPhys} (const size\_\-t channel\_\-idx, const std::vector$<$ float64 $>$ \&values)
+\begin{DoxyCompactList}\small\item\em Blit a number of samples in physical units to channel. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{classgdf_1_1_writer_a2faf6a7c8aa18f81aadd0ff42eeb5caf}{blitSamplesRaw} (const size\_\-t channel\_\-idx, const T $\ast$values, size\_\-t num)
+\begin{DoxyCompactList}\small\item\em Blit a number of raw samples to channel. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{classgdf_1_1_writer_ae9eb09e9e7017fafaa6c367ec74d66bb}{blitSamplesRaw} (const size\_\-t channel\_\-idx, const std::vector$<$ T $>$ \&values)
+\begin{DoxyCompactList}\small\item\em Blit a number of raw samples to channel. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_aa067a56c9699ad0c0a9fbebf83724dec}{addRecord} (\hyperlink{classgdf_1_1_record}{Record} \&r)
+\begin{DoxyCompactList}\small\item\em Add a complete \hyperlink{classgdf_1_1_record}{Record}. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a14c39a92ac6f19312b2561363283d3e4}{
+void \hyperlink{classgdf_1_1_writer_a14c39a92ac6f19312b2561363283d3e4}{flush} ()}
+\label{classgdf_1_1_writer_a14c39a92ac6f19312b2561363283d3e4}
+
+\begin{DoxyCompactList}\small\item\em writes all full records from buffer to disc \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_ac8b0924c5b5721d01274e73c02b0d69f}{setEventMode} (uint8 mode)
+\begin{DoxyCompactList}\small\item\em Set Event Mode. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_writer_aeabb4626bd62684d0c9e5d3222e83fff}{setEventSamplingRate} (float32 fs=-\/1)
+\begin{DoxyCompactList}\small\item\em Set Sampling Rate associated with event positions. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_ab0a2c1b89c23f5d46144447253ada5ca}{
+void \hyperlink{classgdf_1_1_writer_ab0a2c1b89c23f5d46144447253ada5ca}{addEvent} (const \hyperlink{structgdf_1_1_mode1_event}{Mode1Event} \&ev)}
+\label{classgdf_1_1_writer_ab0a2c1b89c23f5d46144447253ada5ca}
+
+\begin{DoxyCompactList}\small\item\em Add a Mode 1 Event. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a74395664e8920e69c02808f53bf517e0}{
+void \hyperlink{classgdf_1_1_writer_a74395664e8920e69c02808f53bf517e0}{addEvent} (uint32 position, uint16 type)}
+\label{classgdf_1_1_writer_a74395664e8920e69c02808f53bf517e0}
+
+\begin{DoxyCompactList}\small\item\em Add a Mode 1 Event. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a32c1f5eb7c4c560705ce994d9463f987}{
+void \hyperlink{classgdf_1_1_writer_a32c1f5eb7c4c560705ce994d9463f987}{addEvent} (const \hyperlink{structgdf_1_1_mode3_event}{Mode3Event} \&ev)}
+\label{classgdf_1_1_writer_a32c1f5eb7c4c560705ce994d9463f987}
+
+\begin{DoxyCompactList}\small\item\em Add a Mode 3 Event. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a51041a8a46a997d869b91737d03ea44f}{
+void \hyperlink{classgdf_1_1_writer_a51041a8a46a997d869b91737d03ea44f}{addEvent} (uint32 position, uint16 type, uint16 channel, uint32 duration)}
+\label{classgdf_1_1_writer_a51041a8a46a997d869b91737d03ea44f}
+
+\begin{DoxyCompactList}\small\item\em Add a Mode 3 Event. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a20d82ae706287503b98205f7a23b0a8e}{
+void \hyperlink{classgdf_1_1_writer_a20d82ae706287503b98205f7a23b0a8e}{addEvent} (uint32 position, uint16 type, uint16 channel, float32 value)}
+\label{classgdf_1_1_writer_a20d82ae706287503b98205f7a23b0a8e}
+
+\begin{DoxyCompactList}\small\item\em Add a Mode 3 Event. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a24400dc06cda7e3de52f62b32fd3e42e}{
+const \hyperlink{classgdf_1_1_g_d_f_header_access}{GDFHeaderAccess} \& \hyperlink{classgdf_1_1_writer_a24400dc06cda7e3de52f62b32fd3e42e}{getHeaderAccess\_\-readonly} () const }
+\label{classgdf_1_1_writer_a24400dc06cda7e3de52f62b32fd3e42e}
+
+\begin{DoxyCompactList}\small\item\em get Constant reference to header access \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a52a0d180e34c4860559fddc929527b13}{
+\hyperlink{classgdf_1_1_g_d_f_header_access}{GDFHeaderAccess} \& \hyperlink{classgdf_1_1_writer_a52a0d180e34c4860559fddc929527b13}{getHeaderAccess} ()}
+\label{classgdf_1_1_writer_a52a0d180e34c4860559fddc929527b13}
+
+\begin{DoxyCompactList}\small\item\em get reference to main header \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a99a6e8d6baf70560359b0a1474721011}{
+const \hyperlink{classgdf_1_1_main_header}{MainHeader} \& \hyperlink{classgdf_1_1_writer_a99a6e8d6baf70560359b0a1474721011}{getMainHeader\_\-readonly} () const }
+\label{classgdf_1_1_writer_a99a6e8d6baf70560359b0a1474721011}
+
+\begin{DoxyCompactList}\small\item\em get Constant reference to main header \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_a5460055c0f847fee89ae80771e8a52b1}{
+\hyperlink{classgdf_1_1_main_header}{MainHeader} \& \hyperlink{classgdf_1_1_writer_a5460055c0f847fee89ae80771e8a52b1}{getMainHeader} ()}
+\label{classgdf_1_1_writer_a5460055c0f847fee89ae80771e8a52b1}
+
+\begin{DoxyCompactList}\small\item\em get reference to main header \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_afcdfc96e12802d0e05848a3222b01566}{
+const \hyperlink{classgdf_1_1_signal_header}{SignalHeader} \& \hyperlink{classgdf_1_1_writer_afcdfc96e12802d0e05848a3222b01566}{getSignalHeader\_\-readonly} (size\_\-t idx) const }
+\label{classgdf_1_1_writer_afcdfc96e12802d0e05848a3222b01566}
+
+\begin{DoxyCompactList}\small\item\em get constant reference to a signal's header \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_writer_ad966f79403be1d7ee22114156ca9c832}{
+size\_\-t {\bfseries getNumSignals} () const }
+\label{classgdf_1_1_writer_ad966f79403be1d7ee22114156ca9c832}
+
+\item 
+\hypertarget{classgdf_1_1_writer_ac52f285e4d2533a88d89fb88b1ab0d33}{
+\hyperlink{classgdf_1_1_signal_header}{SignalHeader} \& \hyperlink{classgdf_1_1_writer_ac52f285e4d2533a88d89fb88b1ab0d33}{getSignalHeader} (size\_\-t idx)}
+\label{classgdf_1_1_writer_ac52f285e4d2533a88d89fb88b1ab0d33}
+
+\begin{DoxyCompactList}\small\item\em get reference to a signal's header \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for writing GDF files to disc. Events are buffered and appended to the file when calling \hyperlink{classgdf_1_1_writer_ae5856d4b6ca98e7af552d99d830433c9}{close( )}. By default events are buffered in a separate file named {\itshape filename.events\/}. Thus, information may be recovered after computer crashes during long online recordings. The user may chose to buffer events in memory instead (see \hyperlink{classgdf_1_1_writer_a984bb670f2ca17c85916924877edab39}{open()}). 
+
+\subsection{Member Function Documentation}
+\hypertarget{classgdf_1_1_writer_aa067a56c9699ad0c0a9fbebf83724dec}{
+\index{gdf::Writer@{gdf::Writer}!addRecord@{addRecord}}
+\index{addRecord@{addRecord}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{addRecord}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::addRecord (
+\begin{DoxyParamCaption}
+\item[{{\bf Record} \&}]{ r}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_aa067a56c9699ad0c0a9fbebf83724dec}
+
+
+Add a complete \hyperlink{classgdf_1_1_record}{Record}. 
+
+There must not be any partial records in the buffer in order to add a complete record. 
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_aa067a56c9699ad0c0a9fbebf83724dec_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_aeb0e491af4de91e79469634d8b3ecc5d}{
+\index{gdf::Writer@{gdf::Writer}!addSamplePhys@{addSamplePhys}}
+\index{addSamplePhys@{addSamplePhys}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{addSamplePhys}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::addSamplePhys (
+\begin{DoxyParamCaption}
+\item[{const size\_\-t}]{ channel\_\-idx, }
+\item[{const float64}]{ value}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_aeb0e491af4de91e79469634d8b3ecc5d}
+
+
+Add sample in physical units to a channel. 
+
+The sample value is converted from the channels \mbox{[}physmin,physmax\mbox{]} to the range of \mbox{[}digmin,digmax\mbox{]} and then cast to the correct data type. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]index of the channel written to \item[\mbox{\tt[in]} {\em value}]sample value in physical units \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_aeb0e491af4de91e79469634d8b3ecc5d_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_a072237c5d82136be71668611a27111fc}{
+\index{gdf::Writer@{gdf::Writer}!addSampleRaw@{addSampleRaw}}
+\index{addSampleRaw@{addSampleRaw}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{addSampleRaw}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void gdf::Writer::addSampleRaw (
+\begin{DoxyParamCaption}
+\item[{const size\_\-t}]{ channel\_\-idx, }
+\item[{const T}]{ value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classgdf_1_1_writer_a072237c5d82136be71668611a27111fc}
+
+
+Add a raw sample to channel. 
+
+The sample value is cast to the correct data type, but no range checking is performed 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]index of the channel written to \item[\mbox{\tt[in]} {\em value}]raw sample value in physical units \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_a072237c5d82136be71668611a27111fc_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_a78c344714054c13d96e0c85af24ad19f}{
+\index{gdf::Writer@{gdf::Writer}!blitFromSerialBufferPhys@{blitFromSerialBufferPhys}}
+\index{blitFromSerialBufferPhys@{blitFromSerialBufferPhys}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{blitFromSerialBufferPhys}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::blitFromSerialBufferPhys (
+\begin{DoxyParamCaption}
+\item[{const double $\ast$}]{ buf, }
+\item[{const std::vector$<$ size\_\-t $>$ \&}]{ samples\_\-per\_\-channel}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_a78c344714054c13d96e0c85af24ad19f}
+
+
+Blit data from a serial buffer. 
+
+Instead of streaming samples as they come, the complete data is provided in an array of type double. In the buffer channels have to be arranged sequentially. I.e. all samples from channel 1 are followed by all samles from channel 2, and so on. This function attempts to keep memory overhead low by filling record by record whenever possible. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em buf}]Buffer \item[\mbox{\tt[in]} {\em samples\_\-per\_\-channel}]A vector containing the number of samples in each channel. \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_a78c344714054c13d96e0c85af24ad19f_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_a3e01dfba57c77e5cac1db767de79b650}{
+\index{gdf::Writer@{gdf::Writer}!blitSamplesPhys@{blitSamplesPhys}}
+\index{blitSamplesPhys@{blitSamplesPhys}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{blitSamplesPhys}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::blitSamplesPhys (
+\begin{DoxyParamCaption}
+\item[{const size\_\-t}]{ channel\_\-idx, }
+\item[{const float64 $\ast$}]{ values, }
+\item[{size\_\-t}]{ num}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_a3e01dfba57c77e5cac1db767de79b650}
+
+
+Blit a number of samples in physical units to channel. 
+
+The sample values are converted from the channels \mbox{[}physmin,physmax\mbox{]} to the range of \mbox{[}digmin,digmax\mbox{]} and then cast to the correct data type. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]index of the channel written to \item[\mbox{\tt[in]} {\em values}]array of sample values in physical units \item[\mbox{\tt[in]} {\em num}]number of samples to blit \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_a3e01dfba57c77e5cac1db767de79b650_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_af8b7e224467b9b706e4eaec7672d8399}{
+\index{gdf::Writer@{gdf::Writer}!blitSamplesPhys@{blitSamplesPhys}}
+\index{blitSamplesPhys@{blitSamplesPhys}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{blitSamplesPhys}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::blitSamplesPhys (
+\begin{DoxyParamCaption}
+\item[{const size\_\-t}]{ channel\_\-idx, }
+\item[{const std::vector$<$ float64 $>$ \&}]{ values}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_af8b7e224467b9b706e4eaec7672d8399}
+
+
+Blit a number of samples in physical units to channel. 
+
+The sample values are converted from the channels \mbox{[}physmin,physmax\mbox{]} to the range of \mbox{[}digmin,digmax\mbox{]} and then cast to the correct data type. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]index of the channel written to \item[\mbox{\tt[in]} {\em values}]vector of sample values in physical units \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_af8b7e224467b9b706e4eaec7672d8399_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_a2faf6a7c8aa18f81aadd0ff42eeb5caf}{
+\index{gdf::Writer@{gdf::Writer}!blitSamplesRaw@{blitSamplesRaw}}
+\index{blitSamplesRaw@{blitSamplesRaw}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{blitSamplesRaw}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void gdf::Writer::blitSamplesRaw (
+\begin{DoxyParamCaption}
+\item[{const size\_\-t}]{ channel\_\-idx, }
+\item[{const T $\ast$}]{ values, }
+\item[{size\_\-t}]{ num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classgdf_1_1_writer_a2faf6a7c8aa18f81aadd0ff42eeb5caf}
+
+
+Blit a number of raw samples to channel. 
+
+The sample values are cast to the correct data type, but no range checking is performed 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]index of the channel written to \item[\mbox{\tt[in]} {\em values}]array of raw sample value \item[\mbox{\tt[in]} {\em num}]number of samples to blit \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_a2faf6a7c8aa18f81aadd0ff42eeb5caf_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_ae9eb09e9e7017fafaa6c367ec74d66bb}{
+\index{gdf::Writer@{gdf::Writer}!blitSamplesRaw@{blitSamplesRaw}}
+\index{blitSamplesRaw@{blitSamplesRaw}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{blitSamplesRaw}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void gdf::Writer::blitSamplesRaw (
+\begin{DoxyParamCaption}
+\item[{const size\_\-t}]{ channel\_\-idx, }
+\item[{const std::vector$<$ T $>$ \&}]{ values}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classgdf_1_1_writer_ae9eb09e9e7017fafaa6c367ec74d66bb}
+
+
+Blit a number of raw samples to channel. 
+
+The sample values are cast to the correct data type, but no range checking is performed 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]index of the channel written to \item[\mbox{\tt[in]} {\em values}]vector of raw sample value \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_ae9eb09e9e7017fafaa6c367ec74d66bb_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_ae5856d4b6ca98e7af552d99d830433c9}{
+\index{gdf::Writer@{gdf::Writer}!close@{close}}
+\index{close@{close}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_ae5856d4b6ca98e7af552d99d830433c9}
+
+
+Close file. 
+
+File is closed if open. Prior to closing, events are written to the file. 
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_ae5856d4b6ca98e7af552d99d830433c9_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=318pt]{classgdf_1_1_writer_ae5856d4b6ca98e7af552d99d830433c9_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_ab0dc03f3e4f125695c40c09ce66d9d16}{
+\index{gdf::Writer@{gdf::Writer}!createSignal@{createSignal}}
+\index{createSignal@{createSignal}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{createSignal}]{\setlength{\rightskip}{0pt plus 5cm}bool gdf::Writer::createSignal (
+\begin{DoxyParamCaption}
+\item[{size\_\-t}]{ index, }
+\item[{bool}]{ throwexc = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_ab0dc03f3e4f125695c40c09ce66d9d16}
+
+
+Create a signal. 
+
+Signals have to be created before they can be configured and stored. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em index}]index of the signal \item[\mbox{\tt[in]} {\em throwexc}]if true, \hyperlink{classgdf_1_1exception_1_1signal__exists}{exception::signal\_\-exists} may be thrown \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success 
+\end{DoxyReturn}
+\hypertarget{classgdf_1_1_writer_a984bb670f2ca17c85916924877edab39}{
+\index{gdf::Writer@{gdf::Writer}!open@{open}}
+\index{open@{open}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::open (
+\begin{DoxyParamCaption}
+\item[{const int}]{ flags = {\ttfamily writer\_\-ev\_\-file}}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_a984bb670f2ca17c85916924877edab39}
+
+
+Opens file for writing and writes Header. 
+
+Prior to opening the file, \hyperlink{classgdf_1_1_g_d_f_header_access_a16f91d1cb964f0acd3c842cf87c9d959}{GDFHeaderAccess::sanitize()} is called. Exceptions thrown by \hyperlink{classgdf_1_1_g_d_f_header_access_a16f91d1cb964f0acd3c842cf87c9d959}{GDFHeaderAccess::sanitize()} are checked if there are errors and/or warnings. In the presence of errors the exception is forwarded immediately, and in case of warnings the file is opened but the exception is still forwarded. If the file exists, it is not opened unless the file\_\-overwrite flag is set. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em flags}]Flags... \end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classgdf_1_1exception_1_1header__issues}{exception::header\_\-issues}}]\item[{\em \hyperlink{classgdf_1_1exception_1_1file__exists}{exception::file\_\-exists}}]\end{DoxyExceptions}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_a984bb670f2ca17c85916924877edab39_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=308pt]{classgdf_1_1_writer_a984bb670f2ca17c85916924877edab39_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_ab493c0c6beb99d11d0cba1a229681e44}{
+\index{gdf::Writer@{gdf::Writer}!open@{open}}
+\index{open@{open}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::open (
+\begin{DoxyParamCaption}
+\item[{const std::string}]{ filename, }
+\item[{const int}]{ flags = {\ttfamily writer\_\-ev\_\-file}}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_ab493c0c6beb99d11d0cba1a229681e44}
+
+
+Opens file for writing and writes Header. 
+
+Convenience function. Calls setFilename prior to opening the file 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em filename}]Full path name to the file. \item[\mbox{\tt[in]} {\em flags}]Flags... \end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classgdf_1_1exception_1_1header__issues}{exception::header\_\-issues}}]\item[{\em \hyperlink{classgdf_1_1exception_1_1file__exists}{exception::file\_\-exists}}]\end{DoxyExceptions}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_ab493c0c6beb99d11d0cba1a229681e44_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_ab69e32b0fb120731544cbff10d6e3a3f}{
+\index{gdf::Writer@{gdf::Writer}!relocateSignal@{relocateSignal}}
+\index{relocateSignal@{relocateSignal}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{relocateSignal}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::relocateSignal (
+\begin{DoxyParamCaption}
+\item[{size\_\-t}]{ src, }
+\item[{size\_\-t}]{ dst}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_ab69e32b0fb120731544cbff10d6e3a3f}
+
+
+Change signal index. 
+
+The new index must not exist 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em src}]old index of first signal \item[\mbox{\tt[in]} {\em dst}]new index of second signal \end{DoxyParams}
+\hypertarget{classgdf_1_1_writer_ac8b0924c5b5721d01274e73c02b0d69f}{
+\index{gdf::Writer@{gdf::Writer}!setEventMode@{setEventMode}}
+\index{setEventMode@{setEventMode}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{setEventMode}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::setEventMode (
+\begin{DoxyParamCaption}
+\item[{uint8}]{ mode}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_ac8b0924c5b5721d01274e73c02b0d69f}
+
+
+Set Event Mode. 
+
+mode can be 1 or 3 1: (default) Events are stored as position,type pairs 3: Events are stored with position and type, associated to a channel and have a duration or value. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em mode}]event mode \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_ac8b0924c5b5721d01274e73c02b0d69f_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_aeabb4626bd62684d0c9e5d3222e83fff}{
+\index{gdf::Writer@{gdf::Writer}!setEventSamplingRate@{setEventSamplingRate}}
+\index{setEventSamplingRate@{setEventSamplingRate}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{setEventSamplingRate}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::setEventSamplingRate (
+\begin{DoxyParamCaption}
+\item[{float32}]{ fs = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_aeabb4626bd62684d0c9e5d3222e83fff}
+
+
+Set Sampling Rate associated with event positions. 
+
+Events are not actually sampled, but their position is stored in samples rather than seconds. In order to convert event positions between time and sample, this sampling rate is used. If Sampling rate is not set (or set to $<$= 0 ), fs is set to the highest signal sampling rate. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em fs}]sampling rate \end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_writer_aeabb4626bd62684d0c9e5d3222e83fff_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_ad8cab49e3b866304802924707fd9d367}{
+\index{gdf::Writer@{gdf::Writer}!setFilename@{setFilename}}
+\index{setFilename@{setFilename}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{setFilename}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::setFilename (
+\begin{DoxyParamCaption}
+\item[{std::string}]{ filename}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_ad8cab49e3b866304802924707fd9d367}
+
+
+set filename for later opening 
+
+
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em filename}]Full path name to the file \end{DoxyParams}
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classgdf_1_1_writer_ad8cab49e3b866304802924707fd9d367_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_a15b2d4702b41521a1dba4fe8b7f2986a}{
+\index{gdf::Writer@{gdf::Writer}!setMaxFullRecords@{setMaxFullRecords}}
+\index{setMaxFullRecords@{setMaxFullRecords}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{setMaxFullRecords}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::setMaxFullRecords (
+\begin{DoxyParamCaption}
+\item[{size\_\-t}]{ num}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_a15b2d4702b41521a1dba4fe8b7f2986a}
+
+
+Set number of full records that are kept in memory before the buffer is flushed. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em num}]number of records \end{DoxyParams}
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=372pt]{classgdf_1_1_writer_a15b2d4702b41521a1dba4fe8b7f2986a_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_writer_a25563ed9d61e7b6935dc09bc469c9eb7}{
+\index{gdf::Writer@{gdf::Writer}!swapSignals@{swapSignals}}
+\index{swapSignals@{swapSignals}!gdf::Writer@{gdf::Writer}}
+\subsubsection[{swapSignals}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Writer::swapSignals (
+\begin{DoxyParamCaption}
+\item[{size\_\-t}]{ a, }
+\item[{size\_\-t}]{ b}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_writer_a25563ed9d61e7b6935dc09bc469c9eb7}
+
+
+Swap to signals. 
+
+Both signals must exist. 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em a}]index of first signal \item[\mbox{\tt[in]} {\em b}]index of second signal \end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+include/GDF/Writer.h\item 
+src/Writer.cpp\end{DoxyCompactItemize}

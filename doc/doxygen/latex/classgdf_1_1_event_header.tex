@@ -1,0 +1,147 @@
+\hypertarget{classgdf_1_1_event_header}{
+\section{gdf::EventHeader Class Reference}
+\label{classgdf_1_1_event_header}\index{gdf::EventHeader@{gdf::EventHeader}}
+}
+
+
+Class that provides access to GDF events.  
+
+
+
+
+{\ttfamily \#include $<$EventHeader.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classgdf_1_1_event_header_a2182bca6b8218be97f069e74c27ad81c}{
+\hyperlink{classgdf_1_1_event_header_a2182bca6b8218be97f069e74c27ad81c}{EventHeader} ()}
+\label{classgdf_1_1_event_header_a2182bca6b8218be97f069e74c27ad81c}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_a20252e9799545069a2ec27f78b137c11}{
+virtual \hyperlink{classgdf_1_1_event_header_a20252e9799545069a2ec27f78b137c11}{$\sim$EventHeader} ()}
+\label{classgdf_1_1_event_header_a20252e9799545069a2ec27f78b137c11}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_ac77886ed06b41e7a2ac6ba8811c68de1}{
+void \hyperlink{classgdf_1_1_event_header_ac77886ed06b41e7a2ac6ba8811c68de1}{toStream} (std::ostream \&stream)}
+\label{classgdf_1_1_event_header_ac77886ed06b41e7a2ac6ba8811c68de1}
+
+\begin{DoxyCompactList}\small\item\em Serializer. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_a0f6967002bb5766d55a683beae63ebd5}{
+void \hyperlink{classgdf_1_1_event_header_a0f6967002bb5766d55a683beae63ebd5}{fromStream} (std::istream \&stream)}
+\label{classgdf_1_1_event_header_a0f6967002bb5766d55a683beae63ebd5}
+
+\begin{DoxyCompactList}\small\item\em Deserializer. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_event_header_a7384f73f64a72bb3c4a8a30423f8c1fd}{setMode} (uint8 mode)
+\begin{DoxyCompactList}\small\item\em Set Event Mode. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_event_header_a2be9223eaf498c7d71ab0018205062b6}{setSamplingRate} (float32 fs)
+\begin{DoxyCompactList}\small\item\em Set Sampling Rate associated with event positions. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_a621cff50e4c4e2342a5de4fdf696d346}{
+uint8 \hyperlink{classgdf_1_1_event_header_a621cff50e4c4e2342a5de4fdf696d346}{getMode} ()}
+\label{classgdf_1_1_event_header_a621cff50e4c4e2342a5de4fdf696d346}
+
+\begin{DoxyCompactList}\small\item\em returns event mode \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_ae667a24691800816b04ae615ee9f20b2}{
+float32 \hyperlink{classgdf_1_1_event_header_ae667a24691800816b04ae615ee9f20b2}{getSamplingRate} ()}
+\label{classgdf_1_1_event_header_ae667a24691800816b04ae615ee9f20b2}
+
+\begin{DoxyCompactList}\small\item\em returns sampling rate \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_ace93b5ce5d3621cc5dbf2c69d97b10ad}{
+uint32 \hyperlink{classgdf_1_1_event_header_ace93b5ce5d3621cc5dbf2c69d97b10ad}{getNumEvents} ()}
+\label{classgdf_1_1_event_header_ace93b5ce5d3621cc5dbf2c69d97b10ad}
+
+\begin{DoxyCompactList}\small\item\em Number of events. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_a02e9ab180df492a86f59295bd2fd24cd}{
+void \hyperlink{classgdf_1_1_event_header_a02e9ab180df492a86f59295bd2fd24cd}{getEvent} (uint32 index, \hyperlink{structgdf_1_1_mode1_event}{Mode1Event} \&ev)}
+\label{classgdf_1_1_event_header_a02e9ab180df492a86f59295bd2fd24cd}
+
+\begin{DoxyCompactList}\small\item\em Returns a Mode 1 Event. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_a4dca894e55f6fe5a0ce36b2b4716d505}{
+void \hyperlink{classgdf_1_1_event_header_a4dca894e55f6fe5a0ce36b2b4716d505}{getEvent} (uint32 index, \hyperlink{structgdf_1_1_mode3_event}{Mode3Event} \&ev)}
+\label{classgdf_1_1_event_header_a4dca894e55f6fe5a0ce36b2b4716d505}
+
+\begin{DoxyCompactList}\small\item\em Returns a Mode 3 Event. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_a0f58d00c6e0952d1f0c4cf0a105dcbf4}{
+void \hyperlink{classgdf_1_1_event_header_a0f58d00c6e0952d1f0c4cf0a105dcbf4}{addEvent} (const \hyperlink{structgdf_1_1_mode1_event}{Mode1Event} \&ev)}
+\label{classgdf_1_1_event_header_a0f58d00c6e0952d1f0c4cf0a105dcbf4}
+
+\begin{DoxyCompactList}\small\item\em Add a Mode 1 Event. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_a44265a33a67ebbc25b38a6b1809ef9d4}{
+void \hyperlink{classgdf_1_1_event_header_a44265a33a67ebbc25b38a6b1809ef9d4}{addEvent} (const \hyperlink{structgdf_1_1_mode3_event}{Mode3Event} \&ev)}
+\label{classgdf_1_1_event_header_a44265a33a67ebbc25b38a6b1809ef9d4}
+
+\begin{DoxyCompactList}\small\item\em Add a Mode 3 Event. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_acd6ea2733587c141979fdd0fb5942eb9}{
+void \hyperlink{classgdf_1_1_event_header_acd6ea2733587c141979fdd0fb5942eb9}{sort} ()}
+\label{classgdf_1_1_event_header_acd6ea2733587c141979fdd0fb5942eb9}
+
+\begin{DoxyCompactList}\small\item\em Sort Events by position. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_event_header_ac78d98343e8bc7fb60c0c7029247ecd0}{
+void \hyperlink{classgdf_1_1_event_header_ac78d98343e8bc7fb60c0c7029247ecd0}{clear} ()}
+\label{classgdf_1_1_event_header_ac78d98343e8bc7fb60c0c7029247ecd0}
+
+\begin{DoxyCompactList}\small\item\em Clears all Events. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class that provides access to GDF events. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classgdf_1_1_event_header_a7384f73f64a72bb3c4a8a30423f8c1fd}{
+\index{gdf::EventHeader@{gdf::EventHeader}!setMode@{setMode}}
+\index{setMode@{setMode}!gdf::EventHeader@{gdf::EventHeader}}
+\subsubsection[{setMode}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::EventHeader::setMode (
+\begin{DoxyParamCaption}
+\item[{uint8}]{ mode}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_event_header_a7384f73f64a72bb3c4a8a30423f8c1fd}
+
+
+Set Event Mode. 
+
+mode can be 1 or 3 1: (default) Events are stored as position,type pairs 3: Events are stored with position and type, associated to a channel and have a duration or value. 
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_event_header_a7384f73f64a72bb3c4a8a30423f8c1fd_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_event_header_a2be9223eaf498c7d71ab0018205062b6}{
+\index{gdf::EventHeader@{gdf::EventHeader}!setSamplingRate@{setSamplingRate}}
+\index{setSamplingRate@{setSamplingRate}!gdf::EventHeader@{gdf::EventHeader}}
+\subsubsection[{setSamplingRate}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::EventHeader::setSamplingRate (
+\begin{DoxyParamCaption}
+\item[{float32}]{ fs}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_event_header_a2be9223eaf498c7d71ab0018205062b6}
+
+
+Set Sampling Rate associated with event positions. 
+
+Events are not actually sampled, but their position is stored in samples rather than seconds. In order to convert event positions between time and sample, this sampling rate is used. 
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_event_header_a2be9223eaf498c7d71ab0018205062b6_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+include/GDF/EventHeader.h\item 
+src/EventHeader.cpp\end{DoxyCompactItemize}

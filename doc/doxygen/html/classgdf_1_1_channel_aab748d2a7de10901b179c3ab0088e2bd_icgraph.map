@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classgdf_1_1_record_buffer.html#ac516aef638abed8539809c42b18fcc47" title="Add a physical sample to the channel specified by channel_idx." alt="" coords="267,5,509,35"/>
+<area shape="rect" id="node7" href="$classgdf_1_1_channel.html#a9283ade92e758c9b9d069cc2915e2166" title="Blit a number of physical samples into channel." alt="" coords="281,59,495,88"/>
+<area shape="rect" id="node5" href="$classgdf_1_1_writer.html#aeb0e491af4de91e79469634d8b3ecc5d" title="Add sample in physical units to a channel." alt="" coords="581,5,779,35"/>
+<area shape="rect" id="node9" href="$classgdf_1_1_record_buffer.html#ada2965511d8ec8aa18c19761284a8690" title="Blit a number of physical samples into channel specified by channel_idx." alt="" coords="559,59,801,88"/>
+<area shape="rect" id="node11" href="$classgdf_1_1_writer.html#a78c344714054c13d96e0c85af24ad19f" title="Blit data from a serial buffer." alt="" coords="852,32,1100,61"/>
+<area shape="rect" id="node13" href="$classgdf_1_1_writer.html#a3e01dfba57c77e5cac1db767de79b650" title="Blit a number of samples in physical units to channel." alt="" coords="877,85,1075,115"/>
+</map>

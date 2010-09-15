@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classgdf_1_1_record_buffer.html#a1ae270e60f9d483a06fe92df0cd664e4" title="Called when a record becomes full." alt="" coords="309,5,555,35"/>
+<area shape="rect" id="node5" href="$classgdf_1_1_record.html#af5575c0f504c59507bb8e4d472edf5a7" title="Returns true if all channels in the record have no free samples." alt="" coords="367,59,497,88"/>
+</map>

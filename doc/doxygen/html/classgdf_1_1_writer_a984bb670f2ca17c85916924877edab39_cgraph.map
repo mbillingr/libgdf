@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classgdf_1_1_record_buffer.html#a17d98ebe6d1c41ec7d367e59291697f9" title="Resets the buffer to a valid initial state." alt="" coords="209,32,380,61"/>
+<area shape="rect" id="node5" href="$classgdf_1_1_g_d_f_header_access.html#a16f91d1cb964f0acd3c842cf87c9d959" title="perform sanity check on header and normalize header information." alt="" coords="181,85,408,115"/>
+<area shape="rect" id="node15" href="$classgdf_1_1_g_d_f_header_access.html#a7e27e4527cebe030b3fd268defbeb95f" title="Lock write access to headers." alt="" coords="181,139,408,168"/>
+<area shape="rect" id="node7" href="$classgdf_1_1_tag_header.html#a27ca1dab24ac2407af9071831876059b" title="Returns number the length of the header (number of 256 byte blocks)." alt="" coords="487,5,676,35"/>
+<area shape="rect" id="node9" href="$classgdf_1_1_event_header.html#a621cff50e4c4e2342a5de4fdf696d346" title="returns event mode" alt="" coords="483,59,680,88"/>
+<area shape="rect" id="node11" href="$classgdf_1_1_event_header.html#ae667a24691800816b04ae615ee9f20b2" title="returns sampling rate" alt="" coords="456,112,707,141"/>
+<area shape="rect" id="node13" href="$classgdf_1_1_event_header.html#a2be9223eaf498c7d71ab0018205062b6" title="Set Sampling Rate associated with event positions." alt="" coords="456,165,707,195"/>
+</map>

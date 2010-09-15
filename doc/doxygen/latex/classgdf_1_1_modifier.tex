@@ -1,0 +1,144 @@
+\hypertarget{classgdf_1_1_modifier}{
+\section{gdf::Modifier Class Reference}
+\label{classgdf_1_1_modifier}\index{gdf::Modifier@{gdf::Modifier}}
+}
+
+
+Class for reading, modifying and saving changes to GDF files.  
+
+
+
+
+{\ttfamily \#include $<$Modifier.h$>$}
+
+
+
+Inherits \hyperlink{classgdf_1_1_reader}{gdf::Reader}.
+
+
+
+Collaboration diagram for gdf::Modifier:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_modifier__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classgdf_1_1_modifier_a6fe073392dcedae9fbdd084708afb1be}{
+\hyperlink{classgdf_1_1_modifier_a6fe073392dcedae9fbdd084708afb1be}{Modifier} ()}
+\label{classgdf_1_1_modifier_a6fe073392dcedae9fbdd084708afb1be}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_modifier_a4def55c87a3bb26c3a51c59d76cca155}{
+virtual \hyperlink{classgdf_1_1_modifier_a4def55c87a3bb26c3a51c59d76cca155}{$\sim$Modifier} ()}
+\label{classgdf_1_1_modifier_a4def55c87a3bb26c3a51c59d76cca155}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_modifier_abcb4c7bfa55babf4d1cc82b916877eda}{
+void \hyperlink{classgdf_1_1_modifier_abcb4c7bfa55babf4d1cc82b916877eda}{open} (const std::string filename)}
+\label{classgdf_1_1_modifier_abcb4c7bfa55babf4d1cc82b916877eda}
+
+\begin{DoxyCompactList}\small\item\em Opens file for modification. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_modifier_a11862cf81de237520bf969f2755a1a08}{
+void \hyperlink{classgdf_1_1_modifier_a11862cf81de237520bf969f2755a1a08}{close} ()}
+\label{classgdf_1_1_modifier_a11862cf81de237520bf969f2755a1a08}
+
+\begin{DoxyCompactList}\small\item\em Close file. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_modifier_a88b582ab5f78daf05796c89397523f5b}{
+void \hyperlink{classgdf_1_1_modifier_a88b582ab5f78daf05796c89397523f5b}{saveChanges} ()}
+\label{classgdf_1_1_modifier_a88b582ab5f78daf05796c89397523f5b}
+
+\begin{DoxyCompactList}\small\item\em Write changes to disk. \item\end{DoxyCompactList}\item 
+double \hyperlink{classgdf_1_1_modifier_aa5d1ba80d46c3cd55f3930b586e57585}{getSample} (uint16 channel\_\-idx, size\_\-t sample\_\-idx)
+\begin{DoxyCompactList}\small\item\em Get a single Sample (physical units). \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_modifier_a7466a9097151cbb0176936bc979d01d9}{setSample} (uint16 channel\_\-idx, size\_\-t sample\_\-idx, double value)
+\begin{DoxyCompactList}\small\item\em Set a single Sample (physical units). \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_modifier_ababfb7e1503c8030a821059a78980348}{
+\hyperlink{classgdf_1_1_event_header}{EventHeader} $\ast$ \hyperlink{classgdf_1_1_modifier_ababfb7e1503c8030a821059a78980348}{getEventHeader} ()}
+\label{classgdf_1_1_modifier_ababfb7e1503c8030a821059a78980348}
+
+\begin{DoxyCompactList}\small\item\em get writable reference to event header \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_modifier_a1067dfac1c4d09ebe5b892e6eee7ed81}{
+const \hyperlink{classgdf_1_1_event_header}{EventHeader} $\ast$ \hyperlink{classgdf_1_1_modifier_a1067dfac1c4d09ebe5b892e6eee7ed81}{getEventHeader\_\-readonly} ()}
+\label{classgdf_1_1_modifier_a1067dfac1c4d09ebe5b892e6eee7ed81}
+
+\begin{DoxyCompactList}\small\item\em get const reference to event header \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for reading, modifying and saving changes to GDF files. It is not possible to change the number of signals or their length. When a sample is set, the entire record is marked for rewriting. If the Event Header is retrieved using the non-\/const get function, it is marked for rewriting. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classgdf_1_1_modifier_aa5d1ba80d46c3cd55f3930b586e57585}{
+\index{gdf::Modifier@{gdf::Modifier}!getSample@{getSample}}
+\index{getSample@{getSample}!gdf::Modifier@{gdf::Modifier}}
+\subsubsection[{getSample}]{\setlength{\rightskip}{0pt plus 5cm}double gdf::Modifier::getSample (
+\begin{DoxyParamCaption}
+\item[{uint16}]{ channel\_\-idx, }
+\item[{size\_\-t}]{ sample\_\-idx}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_modifier_aa5d1ba80d46c3cd55f3930b586e57585}
+
+
+Get a single Sample (physical units). 
+
+
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]channel index \item[\mbox{\tt[in]} {\em sample\_\-idx}]sample index \end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classgdf_1_1_reader_ab0c56ba1256f76ac62663bd634fac79f}{gdf::Reader}.
+
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_modifier_aa5d1ba80d46c3cd55f3930b586e57585_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_modifier_a7466a9097151cbb0176936bc979d01d9}{
+\index{gdf::Modifier@{gdf::Modifier}!setSample@{setSample}}
+\index{setSample@{setSample}!gdf::Modifier@{gdf::Modifier}}
+\subsubsection[{setSample}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Modifier::setSample (
+\begin{DoxyParamCaption}
+\item[{uint16}]{ channel\_\-idx, }
+\item[{size\_\-t}]{ sample\_\-idx, }
+\item[{double}]{ value}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_modifier_a7466a9097151cbb0176936bc979d01d9}
+
+
+Set a single Sample (physical units). 
+
+
+\begin{DoxyParams}{Parameters}
+\item[\mbox{\tt[in]} {\em channel\_\-idx}]channel index \item[\mbox{\tt[in]} {\em sample\_\-idx}]sample index \item[\mbox{\tt[in]} {\em value}]\end{DoxyParams}
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_modifier_a7466a9097151cbb0176936bc979d01d9_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+include/GDF/Modifier.h\item 
+src/Modifier.cpp\end{DoxyCompactItemize}

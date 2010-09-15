@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classgdf_1_1_record_buffer.html#a554260febe2dc7bc56bb07756eb4f939" title="Blit a number of raw samples into channel specified by channel_idx." alt="" coords="249,85,487,115"/>
+<area shape="rect" id="node5" href="$classgdf_1_1_channel.html#a4dbee85af31381a4b60807938374d435" title="Blit a number of raw samples into channel." alt="" coords="559,5,769,35"/>
+<area shape="rect" id="node7" href="$classgdf_1_1_channel.html#a394ca2e97a35c0acc4c9af45e7d7bc3f" title="Get number of free samples." alt="" coords="585,59,743,88"/>
+<area shape="rect" id="node9" href="$classgdf_1_1_record_buffer.html#a780d3156d97dd0e2f7121e813419035a" title="Returns reference to channel specified by channel_idx." alt="" coords="543,112,785,141"/>
+<area shape="rect" id="node13" href="$classgdf_1_1_record_buffer.html#a7bd44e545daf03030de6e87a7903635a" title="Called when a channel becomes full." alt="" coords="537,165,791,195"/>
+<area shape="rect" id="node11" href="$classgdf_1_1_record_buffer.html#a21f20828bffa27e1ed7383eacde6a927" title="Put a new record to the end of the list." alt="" coords="840,112,1091,141"/>
+<area shape="rect" id="node15" href="$classgdf_1_1_record_buffer.html#a1ae270e60f9d483a06fe92df0cd664e4" title="Called when a record becomes full." alt="" coords="843,165,1088,195"/>
+<area shape="rect" id="node17" href="$classgdf_1_1_record.html#af5575c0f504c59507bb8e4d472edf5a7" title="Returns true if all channels in the record have no free samples." alt="" coords="900,219,1031,248"/>
+</map>

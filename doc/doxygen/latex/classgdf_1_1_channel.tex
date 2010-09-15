@@ -1,0 +1,304 @@
+\hypertarget{classgdf_1_1_channel}{
+\section{gdf::Channel Class Reference}
+\label{classgdf_1_1_channel}\index{gdf::Channel@{gdf::Channel}}
+}
+
+
+Representation of a channel (signal in GDF).  
+
+
+
+
+{\ttfamily \#include $<$Channel.h$>$}
+
+
+
+Collaboration diagram for gdf::Channel:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{classgdf_1_1_channel__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classgdf_1_1_channel_ac2b2017a6e756749a16af2b9c8509cc0}{
+\hyperlink{classgdf_1_1_channel_ac2b2017a6e756749a16af2b9c8509cc0}{Channel} (const \hyperlink{classgdf_1_1_signal_header}{SignalHeader} $\ast$sig\_\-hdr, const size\_\-t length)}
+\label{classgdf_1_1_channel_ac2b2017a6e756749a16af2b9c8509cc0}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classgdf_1_1_channel_af27f9328085d4b662d6039a9fa36b650}{Channel} (const \hyperlink{classgdf_1_1_signal_header}{SignalHeader} $\ast$sig\_\-hdr)
+\begin{DoxyCompactList}\small\item\em Constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_channel_ac8a48799dbf99cd2d6c93c1de2985d1d}{
+virtual \hyperlink{classgdf_1_1_channel_ac8a48799dbf99cd2d6c93c1de2985d1d}{$\sim$Channel} ()}
+\label{classgdf_1_1_channel_ac8a48799dbf99cd2d6c93c1de2985d1d}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_channel_aab748d2a7de10901b179c3ab0088e2bd}{addSamplePhys} (const double value)
+\begin{DoxyCompactList}\small\item\em Add a physical sample to the channel. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{classgdf_1_1_channel_af3f1c59ce05c2ce53f67e975475cae0b}{addSampleRaw} (const T rawval)
+\begin{DoxyCompactList}\small\item\em Add a raw sample to the channel. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_channel_a9283ade92e758c9b9d069cc2915e2166}{blitSamplesPhys} (const double $\ast$values, size\_\-t num)
+\begin{DoxyCompactList}\small\item\em Blit a number of physical samples into channel. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{classgdf_1_1_channel_a4dbee85af31381a4b60807938374d435}{blitSamplesRaw} (const T $\ast$values, size\_\-t num)
+\begin{DoxyCompactList}\small\item\em Blit a number of raw samples into channel. \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_channel_a076665b0f8cfc07b99cf23bf40aabf46}{fillPhys} (const double value, size\_\-t num)
+\begin{DoxyCompactList}\small\item\em Fill a number of samples with the same physical value. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{classgdf_1_1_channel_a8c94145830b7f3de1413a7c79bd791dd}{fillRaw} (const T value, size\_\-t num)
+\begin{DoxyCompactList}\small\item\em Fill a number of samples with the same raw value. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_channel_a5e11e8837429d02fc4e88c4293e49d19}{
+void \hyperlink{classgdf_1_1_channel_a5e11e8837429d02fc4e88c4293e49d19}{setSamplePhys} (size\_\-t pos, double value)}
+\label{classgdf_1_1_channel_a5e11e8837429d02fc4e88c4293e49d19}
+
+\begin{DoxyCompactList}\small\item\em set sample value \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_channel_af332515256e6cc82e8638dc13305c96f}{
+double \hyperlink{classgdf_1_1_channel_af332515256e6cc82e8638dc13305c96f}{getSamplePhys} (size\_\-t pos)}
+\label{classgdf_1_1_channel_af332515256e6cc82e8638dc13305c96f}
+
+\begin{DoxyCompactList}\small\item\em get sample value \item\end{DoxyCompactList}\item 
+void \hyperlink{classgdf_1_1_channel_a12b0aac7591e46cd0bb9bad0d683d1b5}{deblitSamplesPhys} (double $\ast$values, size\_\-t start, size\_\-t num)
+\begin{DoxyCompactList}\small\item\em Blit a number of physical samples from channel to buffer. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_channel_a280b7c8bddfadc3b8a587b0344750d62}{
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{classgdf_1_1_channel_a280b7c8bddfadc3b8a587b0344750d62}{deblitSamplesRaw} (T $\ast$values, size\_\-t start, size\_\-t num)}
+\label{classgdf_1_1_channel_a280b7c8bddfadc3b8a587b0344750d62}
+
+\begin{DoxyCompactList}\small\item\em Blit a number of raw samples from channel to buffer. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_channel_a394ca2e97a35c0acc4c9af45e7d7bc3f}{
+size\_\-t \hyperlink{classgdf_1_1_channel_a394ca2e97a35c0acc4c9af45e7d7bc3f}{getFree} ()}
+\label{classgdf_1_1_channel_a394ca2e97a35c0acc4c9af45e7d7bc3f}
+
+\begin{DoxyCompactList}\small\item\em Get number of free samples. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_channel_a103d927127768cc75b61502415b5d892}{
+size\_\-t \hyperlink{classgdf_1_1_channel_a103d927127768cc75b61502415b5d892}{getWritten} ()}
+\label{classgdf_1_1_channel_a103d927127768cc75b61502415b5d892}
+
+\begin{DoxyCompactList}\small\item\em Get number of written samples. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_channel_a2b4461c2601d75de9d8a3a818aacb821}{
+uint32 \hyperlink{classgdf_1_1_channel_a2b4461c2601d75de9d8a3a818aacb821}{getTypeID} ()}
+\label{classgdf_1_1_channel_a2b4461c2601d75de9d8a3a818aacb821}
+
+\begin{DoxyCompactList}\small\item\em Get type of channel. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classgdf_1_1_channel_a98bbc925b3332bd24bc7964665fa586c}{
+std::ostream \& \hyperlink{classgdf_1_1_channel_a98bbc925b3332bd24bc7964665fa586c}{operator$<$$<$} (std::ostream \&out, const \hyperlink{classgdf_1_1_channel}{Channel} \&c)}
+\label{classgdf_1_1_channel_a98bbc925b3332bd24bc7964665fa586c}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{classgdf_1_1_channel}{Channel} Serializer. \item\end{DoxyCompactList}\item 
+\hypertarget{classgdf_1_1_channel_ad9bbbcbff8301a7d6fc3ed9636964eb6}{
+std::istream \& \hyperlink{classgdf_1_1_channel_ad9bbbcbff8301a7d6fc3ed9636964eb6}{operator$>$$>$} (std::istream \&in, \hyperlink{classgdf_1_1_channel}{Channel} \&c)}
+\label{classgdf_1_1_channel_ad9bbbcbff8301a7d6fc3ed9636964eb6}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{classgdf_1_1_channel}{Channel} Deserializer. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Representation of a channel (signal in GDF). 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classgdf_1_1_channel_af27f9328085d4b662d6039a9fa36b650}{
+\index{gdf::Channel@{gdf::Channel}!Channel@{Channel}}
+\index{Channel@{Channel}!gdf::Channel@{gdf::Channel}}
+\subsubsection[{Channel}]{\setlength{\rightskip}{0pt plus 5cm}gdf::Channel::Channel (
+\begin{DoxyParamCaption}
+\item[{const {\bf SignalHeader} $\ast$}]{ sig\_\-hdr}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_channel_af27f9328085d4b662d6039a9fa36b650}
+
+
+Constructor. 
+
+\hyperlink{classgdf_1_1_channel}{Channel} length is initialized to channel's samples\_\-per\_\-record. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classgdf_1_1_channel_aab748d2a7de10901b179c3ab0088e2bd}{
+\index{gdf::Channel@{gdf::Channel}!addSamplePhys@{addSamplePhys}}
+\index{addSamplePhys@{addSamplePhys}!gdf::Channel@{gdf::Channel}}
+\subsubsection[{addSamplePhys}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Channel::addSamplePhys (
+\begin{DoxyParamCaption}
+\item[{const double}]{ value}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_channel_aab748d2a7de10901b179c3ab0088e2bd}
+
+
+Add a physical sample to the channel. 
+
+value is scaled from \mbox{[}phys\_\-min..phys\_\-max\mbox{]} to \mbox{[}dig\_\-min..dig\_\-max\mbox{]} and converted to the channel's data type 
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_channel_aab748d2a7de10901b179c3ab0088e2bd_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_channel_af3f1c59ce05c2ce53f67e975475cae0b}{
+\index{gdf::Channel@{gdf::Channel}!addSampleRaw@{addSampleRaw}}
+\index{addSampleRaw@{addSampleRaw}!gdf::Channel@{gdf::Channel}}
+\subsubsection[{addSampleRaw}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void gdf::Channel::addSampleRaw (
+\begin{DoxyParamCaption}
+\item[{const T}]{ rawval}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_channel_af3f1c59ce05c2ce53f67e975475cae0b}
+
+
+Add a raw sample to the channel. 
+
+value is converted to the channel's data type. but otherwise remains unmodified 
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_channel_af3f1c59ce05c2ce53f67e975475cae0b_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_channel_a9283ade92e758c9b9d069cc2915e2166}{
+\index{gdf::Channel@{gdf::Channel}!blitSamplesPhys@{blitSamplesPhys}}
+\index{blitSamplesPhys@{blitSamplesPhys}!gdf::Channel@{gdf::Channel}}
+\subsubsection[{blitSamplesPhys}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Channel::blitSamplesPhys (
+\begin{DoxyParamCaption}
+\item[{const double $\ast$}]{ values, }
+\item[{size\_\-t}]{ num}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_channel_a9283ade92e758c9b9d069cc2915e2166}
+
+
+Blit a number of physical samples into channel. 
+
+values are scaled from \mbox{[}phys\_\-min..phys\_\-max\mbox{]} to \mbox{[}dig\_\-min..dig\_\-max\mbox{]} and converted to the channel's data type 
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_channel_a9283ade92e758c9b9d069cc2915e2166_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_channel_a9283ade92e758c9b9d069cc2915e2166_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_channel_a4dbee85af31381a4b60807938374d435}{
+\index{gdf::Channel@{gdf::Channel}!blitSamplesRaw@{blitSamplesRaw}}
+\index{blitSamplesRaw@{blitSamplesRaw}!gdf::Channel@{gdf::Channel}}
+\subsubsection[{blitSamplesRaw}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void gdf::Channel::blitSamplesRaw (
+\begin{DoxyParamCaption}
+\item[{const T $\ast$}]{ values, }
+\item[{size\_\-t}]{ num}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_channel_a4dbee85af31381a4b60807938374d435}
+
+
+Blit a number of raw samples into channel. 
+
+values are converted to the channel's data type but otherwise remains unmodified 
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_channel_a4dbee85af31381a4b60807938374d435_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_channel_a12b0aac7591e46cd0bb9bad0d683d1b5}{
+\index{gdf::Channel@{gdf::Channel}!deblitSamplesPhys@{deblitSamplesPhys}}
+\index{deblitSamplesPhys@{deblitSamplesPhys}!gdf::Channel@{gdf::Channel}}
+\subsubsection[{deblitSamplesPhys}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Channel::deblitSamplesPhys (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{ values, }
+\item[{size\_\-t}]{ start, }
+\item[{size\_\-t}]{ num}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_channel_a12b0aac7591e46cd0bb9bad0d683d1b5}
+
+
+Blit a number of physical samples from channel to buffer. 
+
+values are scaled from \mbox{[}dig\_\-min..dig\_\-max\mbox{]} to \mbox{[}phys\_\-min..phys\_\-max\mbox{]} and converted to double 
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_channel_a12b0aac7591e46cd0bb9bad0d683d1b5_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classgdf_1_1_channel_a12b0aac7591e46cd0bb9bad0d683d1b5_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{classgdf_1_1_channel_a076665b0f8cfc07b99cf23bf40aabf46}{
+\index{gdf::Channel@{gdf::Channel}!fillPhys@{fillPhys}}
+\index{fillPhys@{fillPhys}!gdf::Channel@{gdf::Channel}}
+\subsubsection[{fillPhys}]{\setlength{\rightskip}{0pt plus 5cm}void gdf::Channel::fillPhys (
+\begin{DoxyParamCaption}
+\item[{const double}]{ value, }
+\item[{size\_\-t}]{ num}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_channel_a076665b0f8cfc07b99cf23bf40aabf46}
+
+
+Fill a number of samples with the same physical value. 
+
+value is scaled from \mbox{[}phys\_\-min..phys\_\-max\mbox{]} to \mbox{[}dig\_\-min..dig\_\-max\mbox{]} and converted to the channel's data type \hypertarget{classgdf_1_1_channel_a8c94145830b7f3de1413a7c79bd791dd}{
+\index{gdf::Channel@{gdf::Channel}!fillRaw@{fillRaw}}
+\index{fillRaw@{fillRaw}!gdf::Channel@{gdf::Channel}}
+\subsubsection[{fillRaw}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void gdf::Channel::fillRaw (
+\begin{DoxyParamCaption}
+\item[{const T}]{ value, }
+\item[{size\_\-t}]{ num}
+\end{DoxyParamCaption}
+)}}
+\label{classgdf_1_1_channel_a8c94145830b7f3de1413a7c79bd791dd}
+
+
+Fill a number of samples with the same raw value. 
+
+value is converted to the channel's data type but otherwise remains unmodified 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+include/GDF/Channel.h\item 
+src/Channel.cpp\end{DoxyCompactItemize}

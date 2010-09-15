@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classgdf_1_1_record_buffer.html#ad58cb7b3c52b576d35abab83db4b5cad" title="Fills all partial records with default values." alt="" coords="224,59,395,88"/>
+<area shape="rect" id="node9" href="$classgdf_1_1_writer.html#a14c39a92ac6f19312b2561363283d3e4" title="writes all full records from buffer to disc" alt="" coords="248,112,371,141"/>
+<area shape="rect" id="node13" href="$classgdf_1_1_writer.html#a5460055c0f847fee89ae80771e8a52b1" title="get reference to main header" alt="" coords="213,165,405,195"/>
+<area shape="rect" id="node15" href="$classgdf_1_1_writer.html#a99a6e8d6baf70560359b0a1474721011" title="get Constant reference to main header" alt="" coords="183,219,436,248"/>
+<area shape="rect" id="node17" href="$classgdf_1_1_g_d_f_header_access.html#a7e27e4527cebe030b3fd268defbeb95f" title="Lock write access to headers." alt="" coords="196,272,423,301"/>
+<area shape="rect" id="node5" href="$classgdf_1_1_record_buffer.html#a26a79cdf41e61e9bf900b5c044e41777" title="Get number of partially filled records currently in the list." alt="" coords="485,5,765,35"/>
+<area shape="rect" id="node7" href="$classgdf_1_1_record_buffer.html#a1ae270e60f9d483a06fe92df0cd664e4" title="Called when a record becomes full." alt="" coords="503,59,748,88"/>
+<area shape="rect" id="node11" href="$classgdf_1_1_record_buffer.html#a3573e58d036d703a5862d859e9f7395c" title="Get number of full records in the buffer." alt="" coords="495,112,756,141"/>
+</map>
