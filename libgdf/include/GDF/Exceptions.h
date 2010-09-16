@@ -131,6 +131,13 @@ namespace gdf {
             file_not_open( std::string str ) : invalid_argument("File is not open: "+str) { }
         };
 
+        /// File is not open
+        class file_open : public std::invalid_argument
+        {
+        public:
+            file_open( std::string str ) : invalid_argument("File is open: "+str) { }
+        };
+
         /// File exists
         class file_exists : public std::invalid_argument
         {

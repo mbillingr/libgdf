@@ -52,10 +52,22 @@ private:
 // ===================================================================================================
 
 class CMD_init : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_clear : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_clearall : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_getheader : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_setheader : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_createsignal : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_recduration : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_eventconfig : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_addsample : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_addrawsample : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_addsamplevector : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_blitsamples : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_blitrawsamples : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_mode1event : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_mode3event : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_open : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_close : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 
 // ===================================================================================================
 //      mexFunction
@@ -76,10 +88,22 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
 CmexObject::CmexObject( )
 {
     commands.registerCommand( "Init", new CMD_init( ), 1, 0 );
+    commands.registerCommand( "Clear", new CMD_clear( ), 0, 1 );
+    commands.registerCommand( "Clear All", new CMD_clearall( ), 0, 0 );
+    commands.registerCommand( "CreateSignal", new CMD_createsignal( ), 0, 2 );
+    commands.registerCommand( "Open", new CMD_open( ), 0, 2 );
+    commands.registerCommand( "Close", new CMD_close( ), 0, 1 );
     commands.registerCommand( "GetHeader", new CMD_getheader( ), 1, 1 );
     commands.registerCommand( "SetHeader", new CMD_setheader( ), 0, 2 );
-    commands.registerCommand( "CreateSignal", new CMD_createsignal( ), 0, 2 );
     commands.registerCommand( "RecordDuration", new CMD_recduration( ), 0, 2 );
+    commands.registerCommand( "EventConfig", new CMD_eventconfig( ), 0, 3 );
+    commands.registerCommand( "AddSample", new CMD_addsample( ), 0, 3 );
+    commands.registerCommand( "AddRawSample", new CMD_addrawsample( ), 0, 3 );
+    commands.registerCommand( "AddVecSamples", new CMD_addsamplevector( ), 0, 3 );
+    commands.registerCommand( "BlitSamples", new CMD_blitsamples( ), 0, 3 );
+    commands.registerCommand( "BlitRawSamples", new CMD_blitrawsamples( ), 0, 3 );
+    commands.registerCommand( "Mode1Ev", new CMD_mode1event( ), 0, 3 );
+    commands.registerCommand( "Mode3Ev", new CMD_mode3event( ), 0, 5 );
 }
 
 CmexObject::~CmexObject( )
@@ -112,6 +136,17 @@ void CMD_init::execute( mxArray *plhs[], const mxArray *prhs[] )
     size_t handle = CmexObject::getInstance().writers.newInstance( );
     plhs[0] = mxCreateNumericMatrix( 1, 1, mxUINT64_CLASS, mxREAL );
     *reinterpret_cast<size_t*>(mxGetData( plhs[0] )) = handle;
+}
+
+void CMD_clear::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    CmexObject::getInstance().writers.remove( handle );
+}
+
+void CMD_clearall::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    CmexObject::getInstance().writers.clear( );
 }
 
 void CMD_getheader::execute( mxArray *plhs[], const mxArray *prhs[] )
@@ -159,3 +194,95 @@ void CMD_recduration::execute( mxArray *plhs[], const mxArray *prhs[] )
         w->getHeaderAccess( ).setRecordDuration( num, den );
     }
 }
+
+void CMD_eventconfig::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    gdf::uint8 mode = mx::getNumeric<gdf::uint8>( prhs[1] );
+    gdf::float32 fs = mx::getNumeric<gdf::float32>( prhs[2] );
+    w->setEventMode( mode );
+    w->setEventSamplingRate( fs );
+}
+
+void CMD_addsample::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    size_t channel_idx = mx::getNumeric<size_t>( prhs[1] );
+    double value = mx::getNumeric<double>( prhs[2] );
+    w->addSamplePhys( channel_idx, value );
+}
+
+void CMD_addrawsample::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    size_t channel_idx = mx::getNumeric<size_t>( prhs[1] );
+    double value = mx::getNumeric<double>( prhs[2] );
+    w->addSampleRaw( channel_idx, value );
+}
+
+void CMD_addsamplevector::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    size_t first_channel = mx::getNumeric<size_t>( prhs[1] );
+    std::vector<double> vals = mx::getNumericArray<double>( prhs[2] );
+    for( size_t i=0; i<vals.size(); i++ )
+        w->addSamplePhys( first_channel+i, vals[i] );
+}
+
+void CMD_blitsamples::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    size_t channel_idx = mx::getNumeric<size_t>( prhs[1] );
+    std::vector<double> vals = mx::getNumericArray<double>( prhs[2] );
+    w->blitSamplesPhys( channel_idx, vals );
+}
+
+void CMD_blitrawsamples::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    size_t channel_idx = mx::getNumeric<size_t>( prhs[1] );
+    std::vector<double> vals = mx::getNumericArray<double>( prhs[2] );
+    w->blitSamplesRaw( channel_idx, vals );
+}
+
+void CMD_mode1event::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    gdf::uint32 pos = mx::getNumeric<gdf::uint32>( prhs[1] );
+    gdf::uint16 type = mx::getNumeric<gdf::uint16>( prhs[2] );
+    w->addEvent( pos, type );
+}
+
+void CMD_mode3event::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    gdf::uint32 pos = mx::getNumeric<gdf::uint32>( prhs[1] );
+    gdf::uint16 type = mx::getNumeric<gdf::uint16>( prhs[2] );
+    gdf::uint16 chan = mx::getNumeric<gdf::uint16>( prhs[3] );
+    gdf::uint32 dur = mx::getNumeric<gdf::uint32>( prhs[4] );
+    w->addEvent( pos, type, chan, dur );
+}
+
+void CMD_open::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    std::string filename = mx::getString( prhs[1] );
+    w->open( filename );
+}
+
+void CMD_close::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    w->close( );
+}
+

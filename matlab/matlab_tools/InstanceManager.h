@@ -69,6 +69,11 @@ public:
         instances.erase( id );
     }
 
+    void clear( )
+    {
+        instances.clear( );
+    }
+
 private:
     std::map<size_t,C*> instances;
 };

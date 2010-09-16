@@ -46,6 +46,9 @@ namespace gdf
 
     void Writer::open(const int flags )
     {
+        if( m_file.is_open() )
+            throw exception::file_open( "" );
+
         assert( !m_file.is_open() );
         m_header.setLock( true );
 
@@ -107,7 +110,8 @@ namespace gdf
 
     void Writer::close( )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
 
         if( !m_eventbuffermemory )
             m_evbuf_file.close( );
@@ -198,7 +202,8 @@ namespace gdf
 
     void Writer::blitFromSerialBufferPhys( const double *buf, const std::vector<size_t> &samples_per_channel )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
 
         size_t M = samples_per_channel.size( );
         std::vector<size_t> samples_remaining = samples_per_channel;
@@ -228,7 +233,8 @@ namespace gdf
 
     void Writer::addSamplePhys( const size_t channel_idx, const float64 value )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
         m_recbuf.addSamplePhys( channel_idx, value );
     }
 
@@ -237,7 +243,8 @@ namespace gdf
 
     void Writer::blitSamplesPhys( const size_t channel_idx, const float64 *values, size_t num )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
         m_recbuf.blitSamplesPhys( channel_idx, values, num );
     }
 
@@ -246,7 +253,8 @@ namespace gdf
 
     void Writer::blitSamplesPhys( const size_t channel_idx, const std::vector<float64> &values )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
         m_recbuf.blitSamplesPhys( channel_idx, &values[0], values.size() );
     }
 
@@ -263,7 +271,8 @@ namespace gdf
 
     void Writer::writeRecord( )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
         Record *r = m_recbuf.getFirstFullRecord( );
         if( r != NULL )
         {
@@ -278,7 +287,8 @@ namespace gdf
 
     void Writer::flush( )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
         while( m_recbuf.getNumFullRecords() > 0 )
             writeRecord( );
     }
@@ -288,7 +298,8 @@ namespace gdf
 
     void Writer::setEventMode( uint8 mode )
     {
-        assert( !m_file.is_open() );
+        if( m_file.is_open() )
+            throw exception::file_open( "" );
         m_header.getEventHeader( ).setMode( mode );
     }
 
@@ -297,7 +308,8 @@ namespace gdf
 
     void Writer::setEventSamplingRate( float32 fs )
     {
-        assert( !m_file.is_open() );
+        if( m_file.is_open() )
+            throw exception::file_open( "" );
         m_header.getEventHeader( ).setSamplingRate( fs );
     }
 
@@ -306,7 +318,8 @@ namespace gdf
 
     void Writer::addEvent( const Mode1Event &ev )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
         if( m_header.getEventHeader( ).getMode() != 1 )
             throw exception::wrong_eventmode( "Expected mode 1" );
         m_eventbuffer.write( reinterpret_cast<const char*>(&ev), sizeof(ev) );
@@ -317,7 +330,8 @@ namespace gdf
 
     void Writer::addEvent( uint32 position, uint16 type )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
         Mode1Event ev;
         ev.position = position;
         ev.type = type;
@@ -329,7 +343,8 @@ namespace gdf
 
     void Writer::addEvent( const Mode3Event &ev )
     {
-        assert( m_file.is_open() );
+        if( !m_file.is_open() )
+            throw exception::file_not_open( "" );
         if( m_header.getEventHeader( ).getMode() != 3 )
             throw exception::wrong_eventmode( "Expected mode 3" );
         m_eventbuffer.write( reinterpret_cast<const char*>(&ev), sizeof(ev) );

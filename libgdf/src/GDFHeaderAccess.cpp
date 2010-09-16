@@ -89,7 +89,8 @@ namespace gdf
         std::vector<uint32> fs;
         for( it=m_sighdr.begin( ); it!=m_sighdr.end(); it++ )
         {
-            fs.push_back( it->second.get_samplerate( ) );
+            uint32 rate = it->second.get_samplerate( );
+            fs.push_back( rate );
         }
 
         uint32 ddur[2];
@@ -104,6 +105,12 @@ namespace gdf
             // ------------ Automatically Set datarecord duration ------------------
             ddur[0] = 1;
             ddur[1] =gcd( fs );
+
+            if( ddur[1] == 0 )  // invalid sampling rates, set record duration to 0
+            {
+                ddur[0] = 0;
+                ddur[1] = 1;
+            }
         }
         else
         {

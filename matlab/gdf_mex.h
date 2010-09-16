@@ -736,9 +736,13 @@ void Struct2SignalHeader( std::map<std::string,const mxArray*> &elements, gdf::G
             {
                 size_t index_begin = it->first.find('(')+1;
                 size_t index_len = it->first.find(')') - index_begin;
-                size_t index = lexical_cast<size_t>( it->first.substr(index_begin, index_len) );
-
-                indexstrings[index] = it->first.substr( 0, pre_len+index_len+3 );
+                if( index_begin == 0 )
+                    indexstrings[0] = it->first.substr( 0, pre_len+1 );
+                else
+                {
+                    size_t index = lexical_cast<size_t>( it->first.substr(index_begin, index_len) );
+                    indexstrings[index] = it->first.substr( 0, pre_len+index_len+3 );
+                }
             }
         }
 
@@ -746,11 +750,140 @@ void Struct2SignalHeader( std::map<std::string,const mxArray*> &elements, gdf::G
         for( ; pre_it!=indexstrings.end(); pre_it++ )
         {
             size_t index = pre_it->first;
+
             it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_Label );
             if( it != elements.end() )
             {
                 gdf::SignalHeader *h = &headers->getSignalHeader( index );
-                //h->set_label( mx::getString( it->second ) );
+                h->set_label( mx::getString( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_Transducer );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_transducer_type( mx::getString( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_PhysDim );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_physical_dimension( mx::getString( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_PhysCode );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_physical_dimension_code( mx::getNumeric<gdf::uint16>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_PhysMin );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_physmin( mx::getNumeric<double>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_PhysMax );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_physmax( mx::getNumeric<double>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_DigMin );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_digmin( mx::getNumeric<double>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_DigMax );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_digmax( mx::getNumeric<double>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_Lowpass );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_lowpass( mx::getNumeric<gdf::float32>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_Highpass );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_highpass( mx::getNumeric<gdf::float32>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_Notch );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_notch( mx::getNumeric<gdf::float32>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_RecSamples );
+            if( it != elements.end() )
+            {
+                warn( "Warning: '"+pre_it->second + GDFH_STRUCT_SIGNAL_RecSamples+"' ignored." );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_SampleRate );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_samplerate(mx::getNumeric<gdf::uint32>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_Datatype );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_datatype( mx::getNumeric<gdf::uint32>( it->second ) );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_SensorPos );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                gdf::float32 pos[3];
+                mx::getNumericArray( pos, 3, it->second );
+                h->set_sensor_pos( pos, 3 );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_Sensinf_Info );
+            if( it != elements.end() )
+            {
+                warn( "Warning: '"+pre_it->second + GDFH_STRUCT_SIGNAL_Sensinf_Info+"' ignored." );
+                elements.erase( it );
+            }
+
+            it = elements.find( pre_it->second + GDFH_STRUCT_SIGNAL_Sensinf_Value );
+            if( it != elements.end() )
+            {
+                gdf::SignalHeader *h = &headers->getSignalHeader( index );
+                h->set_sensor_info( mx::getNumeric<gdf::float32>( it->second ) );
                 elements.erase( it );
             }
         }

@@ -28,6 +28,7 @@
 #include <mex.h>
 #include <memory.h>
 #include <map>
+#include <vector>
 #include <iostream>
 
 namespace mx
@@ -410,6 +411,16 @@ namespace mx
         catch(bad_numeric_cast& e) {
             throw mx::Exception( e.what() );
         }
+    }
+
+    template<class T>
+    std::vector<T> getNumericArray( const mxArray *field )
+    {
+        size_t N = mxGetNumberOfElements( field );
+        std::vector<T> vec;
+        vec.resize( N );
+
+        getNumericArray<T>( &vec[0], N, field );
     }
 
     std::map<std::string,const mxArray*> getFieldRecursive( const mxArray *struc, std::string prefix = "" )
