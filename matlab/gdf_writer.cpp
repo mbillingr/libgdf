@@ -55,6 +55,7 @@ class CMD_init : public Command { void execute( mxArray *plhs[], const mxArray *
 class CMD_getheader : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_setheader : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_createsignal : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_recduration : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 
 // ===================================================================================================
 //      mexFunction
@@ -77,7 +78,8 @@ CmexObject::CmexObject( )
     commands.registerCommand( "Init", new CMD_init( ), 1, 0 );
     commands.registerCommand( "GetHeader", new CMD_getheader( ), 1, 1 );
     commands.registerCommand( "SetHeader", new CMD_setheader( ), 0, 2 );
-    commands.registerCommand( "createsignal", new CMD_createsignal( ), 0, 2 );
+    commands.registerCommand( "CreateSignal", new CMD_createsignal( ), 0, 2 );
+    commands.registerCommand( "RecordDuration", new CMD_recduration( ), 0, 2 );
 }
 
 CmexObject::~CmexObject( )
@@ -137,3 +139,23 @@ void CMD_createsignal::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->createSignal( channel - 1, true );
 }
 
+void CMD_recduration::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    double recdur = mx::getNumeric<double>( prhs[1] );
+    if( recdur == 0 || !isfinite(recdur) )
+        w->getHeaderAccess( ).enableAutoRecordDuration( );
+    else
+    {
+        gdf::uint32 num = boost::numeric_cast<gdf::uint32>( trunc(recdur) );
+        gdf::uint32 den = 1;
+        while( recdur*den - num != 0 )
+        {
+            cout << num << "/" << den << endl;
+            den *= 10;
+            num = boost::numeric_cast<gdf::uint32>( trunc(recdur*den) );
+        }
+        w->getHeaderAccess( ).setRecordDuration( num, den );
+    }
+}
