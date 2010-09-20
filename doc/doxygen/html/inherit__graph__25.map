@@ -1,5 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$structgdf_1_1_header_item_base.html" title="gdf::HeaderItemBase" alt="" coords="7,32,164,61"/>
-<area shape="rect" id="node3" href="$structgdf_1_1_header_array.html" title="Store array&#45;style header variable of length L and type T at offset P." alt="" coords="215,5,412,35"/>
-<area shape="rect" id="node5" href="$structgdf_1_1_header_item.html" title="Store header variable of type T at offset P." alt="" coords="224,59,403,88"/>
-</map>

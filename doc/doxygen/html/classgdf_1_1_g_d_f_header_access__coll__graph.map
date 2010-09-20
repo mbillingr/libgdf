@@ -1,5 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classgdf_1_1_main_header.html" title="Contains all information required to construct the GDF fixed header." alt="" coords="5,5,131,35"/>
-<area shape="rect" id="node4" href="$classgdf_1_1_event_header.html" title="Class that provides access to GDF events." alt="" coords="155,5,288,35"/>
-<area shape="rect" id="node6" href="$classgdf_1_1_tag_header.html" title="Contains all information required to construct the optional GDF tag header." alt="" coords="312,5,429,35"/>
-</map>

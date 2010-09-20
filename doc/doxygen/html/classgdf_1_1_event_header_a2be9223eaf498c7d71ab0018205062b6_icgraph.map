@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$classgdf_1_1_event_header.html#a0f6967002bb5766d55a683beae63ebd5" title="Deserializer." alt="" coords="315,5,533,35"/>
-<area shape="rect" id="node5" href="$classgdf_1_1_g_d_f_header_access.html#a16f91d1cb964f0acd3c842cf87c9d959" title="perform sanity check on header and normalize header information." alt="" coords="311,59,537,88"/>
-<area shape="rect" id="node11" href="$classgdf_1_1_writer.html#aeabb4626bd62684d0c9e5d3222e83fff" title="Set Sampling Rate associated with event positions." alt="" coords="305,112,543,141"/>
-<area shape="rect" id="node7" href="$classgdf_1_1_writer.html#a984bb670f2ca17c85916924877edab39" title="Opens file for writing and writes Header." alt="" coords="593,59,719,88"/>
-<area shape="rect" id="node9" href="$classgdf_1_1_writer.html#ab493c0c6beb99d11d0cba1a229681e44" title="Opens file for writing and writes Header." alt="" coords="769,59,895,88"/>
-</map>
