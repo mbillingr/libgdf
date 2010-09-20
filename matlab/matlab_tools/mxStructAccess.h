@@ -421,6 +421,7 @@ namespace mx
         vec.resize( N );
 
         getNumericArray<T>( &vec[0], N, field );
+        return vec;
     }
 
     std::map<std::string,const mxArray*> getFieldRecursive( const mxArray *struc, std::string prefix = "" )

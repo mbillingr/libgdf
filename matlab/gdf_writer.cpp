@@ -99,7 +99,7 @@ CmexObject::CmexObject( )
     commands.registerCommand( "EventConfig", new CMD_eventconfig( ), 0, 3 );
     commands.registerCommand( "AddSample", new CMD_addsample( ), 0, 3 );
     commands.registerCommand( "AddRawSample", new CMD_addrawsample( ), 0, 3 );
-    commands.registerCommand( "AddVecSamples", new CMD_addsamplevector( ), 0, 3 );
+    commands.registerCommand( "AddVecSample", new CMD_addsamplevector( ), 0, 3 );
     commands.registerCommand( "BlitSamples", new CMD_blitsamples( ), 0, 3 );
     commands.registerCommand( "BlitRawSamples", new CMD_blitrawsamples( ), 0, 3 );
     commands.registerCommand( "Mode1Ev", new CMD_mode1event( ), 0, 3 );
@@ -211,7 +211,7 @@ void CMD_addsample::execute( mxArray *plhs[], const mxArray *prhs[] )
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
     size_t channel_idx = mx::getNumeric<size_t>( prhs[1] );
     double value = mx::getNumeric<double>( prhs[2] );
-    w->addSamplePhys( channel_idx, value );
+    w->addSamplePhys( channel_idx-1, value );
 }
 
 void CMD_addrawsample::execute( mxArray *plhs[], const mxArray *prhs[] )
@@ -220,14 +220,14 @@ void CMD_addrawsample::execute( mxArray *plhs[], const mxArray *prhs[] )
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
     size_t channel_idx = mx::getNumeric<size_t>( prhs[1] );
     double value = mx::getNumeric<double>( prhs[2] );
-    w->addSampleRaw( channel_idx, value );
+    w->addSampleRaw( channel_idx-1, value );
 }
 
 void CMD_addsamplevector::execute( mxArray *plhs[], const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
-    size_t first_channel = mx::getNumeric<size_t>( prhs[1] );
+    size_t first_channel = mx::getNumeric<size_t>( prhs[1] ) - 1;
     std::vector<double> vals = mx::getNumericArray<double>( prhs[2] );
     for( size_t i=0; i<vals.size(); i++ )
         w->addSamplePhys( first_channel+i, vals[i] );
@@ -239,7 +239,7 @@ void CMD_blitsamples::execute( mxArray *plhs[], const mxArray *prhs[] )
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
     size_t channel_idx = mx::getNumeric<size_t>( prhs[1] );
     std::vector<double> vals = mx::getNumericArray<double>( prhs[2] );
-    w->blitSamplesPhys( channel_idx, vals );
+    w->blitSamplesPhys( channel_idx-1, vals );
 }
 
 void CMD_blitrawsamples::execute( mxArray *plhs[], const mxArray *prhs[] )
@@ -248,7 +248,7 @@ void CMD_blitrawsamples::execute( mxArray *plhs[], const mxArray *prhs[] )
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
     size_t channel_idx = mx::getNumeric<size_t>( prhs[1] );
     std::vector<double> vals = mx::getNumericArray<double>( prhs[2] );
-    w->blitSamplesRaw( channel_idx, vals );
+    w->blitSamplesRaw( channel_idx-1, vals );
 }
 
 void CMD_mode1event::execute( mxArray *plhs[], const mxArray *prhs[] )
@@ -268,7 +268,7 @@ void CMD_mode3event::execute( mxArray *plhs[], const mxArray *prhs[] )
     gdf::uint16 type = mx::getNumeric<gdf::uint16>( prhs[2] );
     gdf::uint16 chan = mx::getNumeric<gdf::uint16>( prhs[3] );
     gdf::uint32 dur = mx::getNumeric<gdf::uint32>( prhs[4] );
-    w->addEvent( pos, type, chan, dur );
+    w->addEvent( pos, type, chan-1, dur );
 }
 
 void CMD_open::execute( mxArray *plhs[], const mxArray *prhs[] )

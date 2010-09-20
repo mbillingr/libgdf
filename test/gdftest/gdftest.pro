@@ -38,4 +38,5 @@ HEADERS += ../../libgdf/include/GDF/Types.h \
     ../../libgdf/include/GDF/tools.h \
     ../../libgdf/include/GDF/EventHeader.h \
     ../../libgdf/include/GDF/Reader.h \
-    ../../libgdf/include/GDF/Modifier.h
+    ../../libgdf/include/GDF/Modifier.h \
+    ../../libgdf/include/GDF/pointerpool.h
