@@ -137,6 +137,9 @@ namespace gdf
         /// set header items to default values
         void setDefaultValues( );
 
+        /// copy another Signal Header
+        void copyFrom( const SignalHeader &other );
+
         /// Converts from physical units to raw digital representation
         double phys_to_raw( const double phy ) const;
 

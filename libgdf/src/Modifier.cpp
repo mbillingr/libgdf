@@ -45,7 +45,7 @@ namespace gdf
     {
         Reader::open( filename );
 
-        resetCache( );
+        initCache( );
     }
 
     //===================================================================================================
@@ -70,7 +70,7 @@ namespace gdf
             if( m_record_changed[i] )
             {
                 ofile.seekp( m_record_offset + m_record_length * i );
-                ofile << *m_record_cache[i].get( );
+                ofile << *m_record_cache[i];
             }
         }
 
@@ -86,10 +86,27 @@ namespace gdf
     //===================================================================================================
     //===================================================================================================
 
+    void Modifier::initCache( )
+    {
+        Reader::initCache( );
+        m_record_changed.resize( boost::numeric_cast<size_t>( m_header.getMainHeader_readonly().get_num_datarecords() ), false );
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
     void Modifier::resetCache( )
     {
-        Reader::resetCache( );
-        m_record_changed.resize( boost::numeric_cast<size_t>( m_header.getMainHeader_readonly().get_num_datarecords() ), false );
+
+        for( size_t i=0; i<m_record_cache.size(); i++ )
+        {
+            if( m_record_cache[i] != NULL )
+            {
+                delete m_record_cache[i];
+                m_record_cache[i] = NULL;
+                m_record_changed[i] = NULL;
+            }
+        }
     }
 
     //===================================================================================================

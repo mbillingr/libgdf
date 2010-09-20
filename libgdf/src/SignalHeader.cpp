@@ -49,6 +49,7 @@ namespace gdf {
         set_physmax( 0.0 );
         set_digmin( 0.0 );
         set_digmax( 0.0 );
+        memset( reserved_1.item, 0, reserved_1.len );
         set_lowpass( std::numeric_limits<float32>::quiet_NaN() );
         set_highpass( std::numeric_limits<float32>::quiet_NaN() );
         set_notch( std::numeric_limits<float32>::quiet_NaN() );
@@ -58,6 +59,7 @@ namespace gdf {
         sensor_pos[1] = 0;
         sensor_pos[2] = 0;
         set_sensor_info( 0 );
+        memset( reserved_2.item, 0, reserved_2.len );
     }
 
     //===================================================================================================
@@ -86,4 +88,26 @@ namespace gdf {
 
     //===================================================================================================
     //===================================================================================================
+
+    void SignalHeader::copyFrom( const SignalHeader &other )
+    {
+        set_label( other.get_label() );
+        memcpy( transducer_type.item, other.transducer_type.item, transducer_type.len );
+        set_physical_dimension( other.get_physical_dimension() );
+        set_physical_dimension_code( other.get_physical_dimension_code() );
+        set_physmin( other.get_physmin() );
+        set_physmax( other.get_physmax() );
+        set_digmin( other.get_digmin() );
+        set_digmax( other.get_digmax() );
+        set_lowpass( other.get_lowpass() );
+        set_highpass( other.get_highpass() );
+        set_notch( other.get_notch() );
+        set_samples_per_record( other.get_samples_per_record() );
+        set_datatype( other.get_datatype() );
+        sensor_pos[0] = other.sensor_pos[0];
+        sensor_pos[1] = other.sensor_pos[1];
+        sensor_pos[2] = other.sensor_pos[2];
+        set_sensor_info( other.get_sensor_info() );
+        set_samplerate( other.get_samplerate() );
+    }
 }

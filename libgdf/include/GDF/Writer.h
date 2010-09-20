@@ -185,8 +185,13 @@ namespace gdf
         }
 
         /// Add a complete Record
-        /** There must not be any partial records in the buffer in order to add a complete record. */
-        void addRecord( Record &r );
+        void addRecord( Record *r );
+
+        /// Get pointer to a fresh Record
+        Record *acquireRecord( );
+
+        /// writes record to disc
+        void writeRecordDirect( Record *r );
 
         /// writes all full records from buffer to disc
         void flush( );

@@ -20,7 +20,9 @@
 #define __RECORD_H_INCLUDED__
 
 #include "GDF/Channel.h"
+#include "pointerpool.h"
 #include <vector>
+#include <list>
 
 namespace gdf {
 
@@ -29,12 +31,23 @@ namespace gdf {
     /// A Record is a block of data that contains a short time period of samples from all channels.
     class Record
     {
-    public:
+    private:
         /// Constructor
         Record( const GDFHeaderAccess *hdr );
 
+    public:
+
+        /// Copy Constructor
+        Record( const Record &other );
+
         /// Destructor
         virtual ~Record( );
+
+        /// clear Record (revert to initial state)
+        void clear( );
+
+        /// copy from another Record
+        void operator=( const Record &other );
 
         /// Fills free samples in all channels with defined values.
         /** This function is used to fill unfinished records before writing them to disc. For now
@@ -56,8 +69,12 @@ namespace gdf {
         friend std::ostream &operator<<( std::ostream &out, const Record &c );
         friend std::istream &operator>>( std::istream &in, Record &c );
 
+        friend class RecordBuffer;
+        friend class Reader;
+        //friend class PointerPool<Record>;
+
     private:
-        std::vector< boost::shared_ptr<Channel> > channels;
+        std::vector< Channel* > channels;
     };
 
     /// Record Serializer

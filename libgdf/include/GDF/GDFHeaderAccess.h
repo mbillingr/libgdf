@@ -76,6 +76,11 @@ namespace gdf
 
         /// Lock write access to headers
         void setLock( bool b) { m_lock = b; }
+
+        // Utility functions
+
+        size_t getNumberOfSamplesInSignal( size_t signal_index ) const;
+
     private:
         MainHeader m_mainhdr;
         std::map<uint16,SignalHeader> m_sighdr;

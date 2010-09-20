@@ -24,7 +24,6 @@
 #include "GDF/GDFHeaderAccess.h"
 #include "GDF/Types.h"
 #include "GDF/tools.h"
-#include <boost/shared_ptr.hpp>
 #include <vector>
 #include <string>
 #include <fstream>
@@ -53,6 +52,9 @@ namespace gdf
 
         /// Enable or disable cache
         void enableCache( bool b );
+
+        /// Set cache to the correct size
+        virtual void initCache( );
 
         /// Reset cache to empty state
         virtual void resetCache( );
@@ -87,11 +89,23 @@ namespace gdf
         /// Returns a reference to Record
         Record *getRecordPtr( size_t index );
 
+        /// Read directly into Record rec
+        void readRecord( size_t index, Record *rec );
+
         /// Precache a range of Records
         void precacheRecords( size_t start, size_t end );
 
         /// get reference to event header
         EventHeader *getEventHeader( );
+
+        /// get Constant reference to header access
+        const GDFHeaderAccess &getHeaderAccess_readonly( ) const { return m_header; }
+
+        /// get Constant reference to main header
+        const MainHeader &getMainHeader_readonly( ) const { return m_header.getMainHeader_readonly( ); }
+
+        /// get constant reference to a signal's header
+        const SignalHeader &getSignalHeader_readonly( size_t idx ) const { return m_header.getSignalHeader_readonly(idx); }
 
     protected:
         void readEvents( );
@@ -99,7 +113,9 @@ namespace gdf
         std::string m_filename;
         GDFHeaderAccess m_header;
         EventHeader *m_events;
-        std::vector< boost::shared_ptr<Record> > m_record_cache;
+        std::vector< Record* > m_record_cache;
+        Record* m_record_nocache;
+        std::list<size_t> m_cache_entries;
         std::ifstream m_file;
         bool m_cache_enabled;
 

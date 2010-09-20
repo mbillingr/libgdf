@@ -29,7 +29,19 @@ namespace gdf
         size_t M = hdr->getMainHeader_readonly( ).get_num_signals( );
         for( size_t i=0; i<M; i++ )
         {
-            channels.push_back( boost::shared_ptr<Channel>( new Channel( &hdr->getSignalHeader_readonly(i) ) ) );
+            channels.push_back( new Channel( &hdr->getSignalHeader_readonly(i) ) );
+        }
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    Record::Record( const Record &other )
+    {
+        size_t M = other.channels.size( );
+        for( size_t i=0; i<M; i++ )
+        {
+            channels.push_back( new Channel( *other.channels[i] ) );
         }
     }
 
@@ -38,7 +50,42 @@ namespace gdf
 
     Record::~Record( )
     {
-//        std::cout << "~Record( )" << std::endl;
+        size_t M = channels.size();
+        for( size_t i=0; i<M; i++ )
+        {
+            delete channels[i];
+        }
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    void Record::clear( )
+    {
+        size_t M = channels.size();
+        for( size_t i=0; i<M; i++ )
+        {
+            channels[i]->clear( );
+        }
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    void Record::operator=( const Record &other )
+    {
+        size_t M = channels.size();
+        for( size_t i=0; i<M; i++ )
+        {
+            delete channels[i];
+        }
+        channels.clear( );
+
+        M = other.channels.size( );
+        for( size_t i=0; i<M; i++ )
+        {
+            channels.push_back( new Channel( *other.channels[i] ) );
+        }
     }
 
     //===================================================================================================
@@ -91,7 +138,7 @@ namespace gdf
 
     Channel *Record::getChannel( const size_t chan_idx )
     {
-        return channels[chan_idx].get( );
+        return channels[chan_idx];
     }
 
     //===================================================================================================
@@ -99,7 +146,8 @@ namespace gdf
 
     std::ostream &operator<<( std::ostream &out, const Record &r )
     {
-        for( size_t i=0; i<r.channels.size(); i++ )
+        size_t M = r.channels.size();
+        for( size_t i=0; i<M; i++ )
         {
             out << *r.channels[i];
         }
@@ -111,7 +159,8 @@ namespace gdf
 
     std::istream &operator>>( std::istream &in, Record &r )
     {
-        for( size_t i=0; i<r.channels.size(); i++ )
+        size_t M = r.channels.size();
+        for( size_t i=0; i<M; i++ )
             in >> *r.channels[i];
         return in;
     }

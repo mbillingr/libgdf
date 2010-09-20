@@ -92,6 +92,9 @@ namespace gdf
         virtual float32 getSample( size_t, float32 /*dummy*/ ) { throw exception::bad_type_assigned_to_channel( ); }
         virtual float64 getSample( size_t, float64 /*dummy*/ ) { throw exception::bad_type_assigned_to_channel( ); }
 
+        /// Reset read and write positions
+        virtual void clear( ) = 0;
+
         /// Get number of free samples.
         virtual size_t getFree( ) = 0;
 

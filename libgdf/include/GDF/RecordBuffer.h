@@ -20,10 +20,10 @@
 #define __RECORDBUFFER_H_INCLUDED__
 
 #include "GDF/Channel.h"
+#include "GDF/pointerpool.h"
 
 #include <list>
 #include <vector>
-#include <boost/smart_ptr/shared_ptr.hpp>
 
 namespace gdf
 {
@@ -49,6 +49,9 @@ namespace gdf
 
         /// Destructor
         virtual ~RecordBuffer( );
+
+        /// Clear all buffers
+        void clearBuffers( );
 
         /// Resets the buffer to a valid initial state
         void reset( );
@@ -107,10 +110,14 @@ namespace gdf
 
         /// Add a complete Record
         /** There may not be any partial records in the buffer in order to add a complete record. */
-        void addRecord( Record &r );
+        void addRecord( Record *r );
+
+        /// Returns a reference to a free record.
+        /** Use this instead of 'new Record()'. **/
+        Record *acquireRecord( );
 
         /// Put a new record to the end of the list.
-        std::list< boost::shared_ptr<Record> >::iterator createNewRecord( );
+        std::list< Record* >::iterator createNewRecord( );
 
         /// Reference to first (oldest) full record in list. This is also the first record that gets filled.
         Record *getFirstFullRecord( );
@@ -119,10 +126,10 @@ namespace gdf
         void removeFirstFullRecord( );
 
         /// Get number of full records in the buffer.
-        size_t getNumFullRecords( );
+        inline size_t getNumFullRecords( ) const { return m_num_full; }
 
         /// Get number of partially filled records currently in the list.
-        size_t getNumPartialRecords( );
+        inline size_t getNumPartialRecords( ) const { return m_records.size( ); }
 
         /// Returns reference to channel specified by channel_idx
         /** If channel does not exist gdf::nonexistent_channel_access::nonexistent_channel_access is thrown.
@@ -135,11 +142,15 @@ namespace gdf
         /// Fills all partial records with default values
         void flood( );
 
+    protected:
+
     private:
         const GDFHeaderAccess *m_gdfh;
-        std::list< boost::shared_ptr<Record> > m_records;
-        std::list< boost::shared_ptr<Record> > m_records_full;
-        std::vector< std::list< boost::shared_ptr<Record> >::iterator > m_channelhead;
+        PointerPool<Record> *m_pool;
+        std::list< Record* > m_records;
+        std::list< Record* > m_records_full;
+        size_t m_num_full;
+        std::vector< std::list< Record* >::iterator > m_channelhead;
         std::list<RecordFullHandler*> m_recfull_callbacks;
     };
 }

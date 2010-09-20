@@ -26,6 +26,7 @@ namespace gdf
 {
     RecordBuffer::RecordBuffer( const GDFHeaderAccess *gdfh ) : m_gdfh(gdfh)
     {
+        m_pool = NULL;
     }
 
     //===================================================================================================
@@ -33,7 +34,31 @@ namespace gdf
 
     RecordBuffer::~RecordBuffer( )
     {
-        //std::cout << "~RecordBuffer( )" << std::endl;
+        clearBuffers( );
+        if( m_pool )
+            delete m_pool;
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    void RecordBuffer::clearBuffers( )
+    {
+        if( m_pool )
+        {
+            std::list<Record*>::iterator it = m_records.begin( );
+            for( ; it != m_records.end(); it++ )
+                m_pool->push( *it );
+
+            it = m_records_full.begin( );
+            for( ; it != m_records_full.end(); it++ )
+                m_pool->push( *it );
+        }
+
+        m_records.clear( );
+        m_records_full.clear( );
+
+        m_num_full = 0;
     }
 
     //===================================================================================================
@@ -42,11 +67,13 @@ namespace gdf
     void RecordBuffer::reset( )
     {
         size_t M = m_gdfh->getMainHeader_readonly( ).get_num_signals( );
-        m_records.clear( );
-        m_records_full.clear( );
+        clearBuffers( );
         m_channelhead.resize( M );
         for( size_t i=0; i<M; i++ )
             m_channelhead[i] =m_records.begin( );
+        if( m_pool )
+            delete m_pool;
+        m_pool = new PointerPool<Record>( Record(m_gdfh) );
     }
 
     //===================================================================================================
@@ -55,7 +82,7 @@ namespace gdf
     void RecordBuffer::handleChannelFull( const size_t channel_idx )
     {
         //std::cout << "Channel Full" << std::endl;
-        Record *r = m_channelhead[channel_idx]->get( );
+        Record *r = *m_channelhead[channel_idx];
         m_channelhead[channel_idx]++;
         if( r->isFull() )
             handleRecordFull( );
@@ -69,10 +96,11 @@ namespace gdf
         //std::cout << "Record Full" << std::endl;
         m_records_full.push_back( m_records.front() );
         m_records.pop_front( );
+        m_num_full++;
 
         std::list<RecordFullHandler*>::iterator it = m_recfull_callbacks.begin( );
         for( ; it != m_recfull_callbacks.end(); it++ )
-            (*it)->triggerRecordFull( m_records_full.back().get() );
+            (*it)->triggerRecordFull( m_records_full.back() );
     }
 
     //===================================================================================================
@@ -122,20 +150,35 @@ namespace gdf
     //===================================================================================================
     //===================================================================================================
 
-    void RecordBuffer::addRecord( Record &r )
+    void RecordBuffer::addRecord( Record *r )
     {
         if( getNumPartialRecords( ) > 0 )
             throw exception::invalid_operation( "RecordBuffer::addRecord called, but buffer contains partial records." );
-        m_records_full.push_back( boost::shared_ptr<Record>( new Record(r) ) );
+        m_records_full.push_back( r );
+        m_num_full++;
+
+        std::list<RecordFullHandler*>::iterator it = m_recfull_callbacks.begin( );
+        for( ; it != m_recfull_callbacks.end(); it++ )
+            (*it)->triggerRecordFull( m_records_full.back() );
     }
 
     //===================================================================================================
     //===================================================================================================
 
-    std::list< boost::shared_ptr<Record> >::iterator RecordBuffer::createNewRecord( )
+    Record *RecordBuffer::acquireRecord( )
     {
-        m_records.push_back( boost::shared_ptr<Record>( new Record(m_gdfh) ) );
-        std::list< boost::shared_ptr<Record> >::iterator it = m_records.end( );
+        return m_pool->pop( );
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    std::list< Record* >::iterator RecordBuffer::createNewRecord( )
+    {
+        Record *r = m_pool->pop( );
+        r->clear( );
+        m_records.push_back( r );
+        std::list< Record* >::iterator it = m_records.end( );
         it--;
         return it;
     }
@@ -145,8 +188,8 @@ namespace gdf
 
     Record *RecordBuffer::getFirstFullRecord( )
     {
-        if( m_records_full.size() > 0 )
-            return m_records_full.front( ).get( );
+        if( m_num_full > 0 )
+            return m_records_full.front( );
         else
             return NULL;
     }
@@ -156,23 +199,9 @@ namespace gdf
 
     void RecordBuffer::removeFirstFullRecord( )
     {
+        m_pool->push( m_records_full.front() );
         m_records_full.pop_front( );
-    }
-
-    //===================================================================================================
-    //===================================================================================================
-
-    size_t RecordBuffer::getNumFullRecords( )
-    {
-        return m_records_full.size( );
-    }
-
-    //===================================================================================================
-    //===================================================================================================
-
-    size_t RecordBuffer::getNumPartialRecords( )
-    {
-        return m_records.size( );
+        m_num_full--;
     }
 
     //===================================================================================================
@@ -195,7 +224,7 @@ namespace gdf
             else
             {
                 // list was empty: set all channel heads to the new record.
-                std::list< boost::shared_ptr<Record> >::iterator r = createNewRecord( );
+                std::list< Record* >::iterator r = createNewRecord( );
                 for( size_t i=0; i<m_channelhead.size(); i++ )
                     m_channelhead[i] = r;
             }
@@ -211,10 +240,10 @@ namespace gdf
     {
         size_t num = 0;
         getValidChannel( channel_idx );
-        std::list< boost::shared_ptr<Record> >::iterator it = m_channelhead[channel_idx];
+        std::list< Record* >::iterator it = m_channelhead[channel_idx];
         while( it != m_records.end() )
         {
-            num += it->get( )->getChannel( channel_idx )->getFree( );
+            num += (*it)->getChannel( channel_idx )->getFree( );
             it ++;
         }
         return num;
@@ -227,12 +256,15 @@ namespace gdf
     {
         while( getNumPartialRecords( ) > 0 )
         {
-            m_records.begin( )->get( )->fill( );
+            m_records.front( )->fill( );
             handleRecordFull( );
         }
 
         for( size_t i=0; i<m_channelhead.size(); i++ )
             m_channelhead[i] =m_records.begin( );
     }
+
+    //===================================================================================================
+    //===================================================================================================
 
 }

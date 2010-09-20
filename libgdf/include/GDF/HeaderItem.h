@@ -113,6 +113,7 @@ namespace gdf {
     {
         HeaderArray( ) : pos(P), len(L) { }
         T &operator[]( size_t idx ) { return item[idx]; }
+        const T &operator[]( size_t idx ) const { return item[idx]; }
         void tostream( std::ostream & out ) const { out.write( reinterpret_cast<const char*>(item), sizeof(item) ); }
         void fromstream( std::istream &in ) { in.read( reinterpret_cast<char*>(item), sizeof(item) ); }
         T item[L];

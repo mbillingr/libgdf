@@ -358,6 +358,8 @@ namespace gdf
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader_readonly(i).sensor_info.tostream( out );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader_readonly(i).reserved_2.tostream( out );
 
+        assert( out.tellp() == std::streampos(256+256*ns) );
+
         //throw exception::feature_not_implemented( );
 
         return out;
@@ -417,7 +419,22 @@ namespace gdf
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).datatype.fromstream( in );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).sensor_pos.fromstream( in );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).sensor_info.fromstream( in );
+        for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).reserved_2.fromstream( in );
+
+        assert( in.tellg() == std::streampos(256+256*ns) );
 
         return in;
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    size_t GDFHeaderAccess::getNumberOfSamplesInSignal( size_t signal_index ) const
+    {
+        std::map<uint16,SignalHeader>::const_iterator it = m_sighdr.find( signal_index );
+        if( it == m_sighdr.end() )
+            return 0;
+
+        return m_mainhdr.get_num_datarecords() * it->second.get_samples_per_record();
     }
 }

@@ -22,7 +22,6 @@
 #include "GDF/SignalHeader.h"
 #include "ChannelDataBase.h"
 #include "GDF/Types.h"
-#include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -43,8 +42,14 @@ namespace gdf
         /** Channel length is initialized to channel's samples_per_record. */
         Channel( const SignalHeader *sig_hdr );
 
+        /// Copy Constructor
+        Channel( const Channel &other );
+
         /// Destructor
         virtual ~Channel( );
+
+        /// Reset read and write positions
+        void clear( );
 
         /// Add a physical sample to the channel.
         /** value is scaled from [phys_min..phys_max] to [dig_min..dig_max] and converted to the channel's data type */
@@ -97,7 +102,7 @@ namespace gdf
 
     private:
         const SignalHeader *m_signalheader;
-        boost::shared_ptr<ChannelDataBase> m_data;
+        ChannelDataBase *m_data;
     };
 
     /// Channel Serializer

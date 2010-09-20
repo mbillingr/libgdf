@@ -86,6 +86,9 @@ namespace gdf
         /// set header items to default values
         void setDefaultValues( );
 
+        /// copy another Main Header
+        void copyFrom( const MainHeader &other );
+
         /// Assign a string valued item
         void setString( std::string item, std::string value )
         {

@@ -25,6 +25,7 @@ namespace gdf
 {
     Reader::Reader( )
     {
+        m_record_nocache = NULL;
         m_cache_enabled = true;
         m_events = NULL;
         m_filename = "";
@@ -35,6 +36,7 @@ namespace gdf
 
     Reader::~Reader( )
     {
+        if( m_record_nocache ) delete m_record_nocache;
         if( m_events ) delete m_events;
     }
 
@@ -49,6 +51,8 @@ namespace gdf
             throw exception::file_exists_not( filename );
 
         m_filename = filename;
+        if( m_record_nocache ) delete m_record_nocache;
+        m_record_nocache = NULL;
 
         if( m_events ) delete m_events;
         m_events = NULL;
@@ -69,7 +73,7 @@ namespace gdf
         m_record_offset = m_header.getMainHeader_readonly().get_header_length( ) * 256;
         m_event_offset = boost::numeric_cast<size_t>( m_record_offset + m_header.getMainHeader_readonly().get_num_datarecords() * m_record_length );
 
-        resetCache( );
+        initCache( );
     }
 
     //===================================================================================================
@@ -86,11 +90,18 @@ namespace gdf
     void Reader::enableCache( bool b )
     {
         m_cache_enabled = b;
+        resetCache( );
+    }
 
-        if( !b )
-        {
-            resetCache( );
-        }
+    //===================================================================================================
+    //===================================================================================================
+
+    void Reader::initCache( )
+    {
+        resetCache( );
+        m_record_cache.clear( );
+        size_t num_records = m_header.getMainHeader_readonly().get_num_datarecords();
+        m_record_cache.resize( num_records, NULL );
     }
 
     //===================================================================================================
@@ -98,8 +109,15 @@ namespace gdf
 
     void Reader::resetCache( )
     {
-        m_record_cache.clear( );
-        m_record_cache.resize( boost::numeric_cast<size_t>( m_header.getMainHeader_readonly().get_num_datarecords() ) );
+        for( std::list<size_t>::iterator it = m_cache_entries.begin(); it != m_cache_entries.end(); it++ )
+        {
+            delete m_record_cache[*it];
+            m_record_cache[*it] = NULL;
+        }
+        m_cache_entries.clear( );
+
+        if( m_record_nocache ) delete m_record_nocache;
+        m_record_nocache = new Record( &m_header );
     }
 
     //===================================================================================================
@@ -213,17 +231,52 @@ namespace gdf
     Record *Reader::getRecordPtr( size_t index )
     {
         assert( index < boost::numeric_cast<size_t>(m_header.getMainHeader_readonly().get_num_datarecords()) );
-        Record *r = m_record_cache[index].get( );
+        Record *r = m_record_cache[index];
         if( r == NULL )
         {
-            if( !m_cache_enabled )
-                resetCache( );
-            m_file.seekg( m_record_offset + m_record_length*index );
-            r = new Record( &m_header );
-            m_file >> *r;
-            m_record_cache[index].reset( r );
+            size_t pos = m_record_offset + m_record_length*index;
+            m_file.seekg( pos );
+            if( m_cache_enabled )
+            {
+                r = new Record( &m_header );
+                m_file >> *r;
+                m_record_cache[index] = r;
+                m_cache_entries.push_back( index );
+            }
+            else
+            {
+                m_file >> *m_record_nocache;
+                r = m_record_nocache;
+            }
         }
         return r;
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    void Reader::readRecord( size_t index, Record *rec )
+    {
+        assert( index < boost::numeric_cast<size_t>(m_header.getMainHeader_readonly().get_num_datarecords()) );
+        Record *r = m_record_cache[index];
+        if( r == NULL )
+        {
+            size_t pos = m_record_offset + m_record_length*index;
+            m_file.seekg( pos );
+            if( m_cache_enabled )
+            {
+                r = new Record( &m_header );
+                m_file >> *r;
+                m_record_cache[index] = r;
+                m_cache_entries.push_back( index );
+            }
+            else
+            {
+                m_file >> *rec; // read directly
+                return;
+            }
+        }
+        *rec = *r;  // copy from cache
     }
 
     //===================================================================================================

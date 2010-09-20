@@ -24,6 +24,7 @@ set( HEADERS
 	include/GDF/HeaderItem.h
 	include/GDF/MainHeader.h
 	include/GDF/Modifier.h
+	include/GDF/pointerpool.h
 	include/GDF/Reader.h
 	include/GDF/RecordBuffer.h
 	include/GDF/Record.h

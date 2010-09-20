@@ -20,7 +20,6 @@
 #define __MODIFIER_H_INCLUDED__
 
 #include "GDF/Reader.h"
-#include <boost/shared_ptr.hpp>
 #include <vector>
 #include <string>
 #include <fstream>
@@ -71,6 +70,9 @@ namespace gdf
         const EventHeader *getEventHeader_readonly( );
 
     private:
+
+        /// Initialize cache to correct size
+        void initCache( );
 
         /// Reset cache to empty state
         void resetCache( );

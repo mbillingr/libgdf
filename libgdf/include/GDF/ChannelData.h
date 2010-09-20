@@ -43,6 +43,17 @@ namespace gdf
             m_writepos = 0;
         }
 
+        /// Copy Constructor
+        ChannelData( ChannelDataBase *base )
+        {
+            ChannelData<T>* other = reinterpret_cast<ChannelData<T>*>( base );
+            m_data.resize( other->m_data.size( ) );
+            size_t N = m_data.size();
+            for( size_t i=0; i<N; i++)
+                m_data[i] = other->m_data[i];
+            m_writepos = other->m_writepos;
+        }
+
         /// Destructor
         virtual ~ChannelData( )
         {
@@ -84,6 +95,12 @@ namespace gdf
             return m_data[pos];
         }
 
+        /// Reset read and write positions
+        virtual void clear( )
+        {
+            m_writepos = 0;
+        }
+
         /// Get number of free samples
         size_t getFree( )
         {
@@ -105,7 +122,16 @@ namespace gdf
         /// Deserializer
         void fromstream( std::istream &in )
         {
+            //char *charbuf = new char[sizeof(T)*m_data.size()];
+
             in.read( reinterpret_cast<char*>(&m_data[0]), sizeof(T)*m_data.size() );
+            /*in.read( charbuf, sizeof(T)*m_data.size() );
+
+            for( size_t i=0; i<m_data.size(); i++ )
+                std::cout << ((T*)charbuf)[i] << " ";*/
+
+            /*for( size_t i=0; i<m_data.size(); i++ )
+                std::cout << m_data[i] << " ";*/
         }
 
     protected:

@@ -32,53 +32,43 @@ namespace gdf {
         {
         case INT8:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<int8>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<int8>( length );
             } break;
         case UINT8:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<uint8>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<uint8>( length );
             } break;
         case INT16:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<int16>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<int16>( length );
             } break;
         case UINT16:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<uint16>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<uint16>( length );
             } break;
         case INT32:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<int32>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<int32>( length );
             } break;
         case UINT32:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<uint32>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<uint32>( length );
             } break;
         case INT64:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<int64>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<int64>( length );
             } break;
         case UINT64:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<uint64>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<uint64>( length );
             } break;
         case FLOAT32:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<float32>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<float32>( length );
             } break;
         case FLOAT64:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<float64>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<float64>( length );
             } break;
         default: throw exception::invalid_type_id( boost::lexical_cast<std::string>(m_signalheader->get_datatype( )) ); break;
         }
@@ -97,53 +87,97 @@ namespace gdf {
         {
         case INT8:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<int8>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<int8>( length );
             } break;
         case UINT8:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<uint8>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<uint8>( length );
             } break;
         case INT16:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<int16>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<int16>( length );
             } break;
         case UINT16:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<uint16>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<uint16>( length );
             } break;
         case INT32:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<int32>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<int32>( length );
             } break;
         case UINT32:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<uint32>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<uint32>( length );
             } break;
         case INT64:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<int64>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<int64>( length );
             } break;
         case UINT64:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<uint64>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<uint64>( length );
             } break;
         case FLOAT32:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<float32>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<float32>( length );
             } break;
         case FLOAT64:
             {
-                boost::shared_ptr<ChannelDataBase> temp_pointer( new ChannelData<float64>( length ) );
-                m_data = temp_pointer;
+                m_data = new ChannelData<float64>( length );
+            } break;
+        default: throw exception::invalid_type_id( boost::lexical_cast<std::string>(m_signalheader->get_datatype( )) ); break;
+        }
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    Channel::Channel( const Channel &other )
+    {
+        m_signalheader = other.m_signalheader;
+        //size_t length = m_signalheader->get_samples_per_record( );
+
+        switch( m_signalheader->get_datatype( ) )
+        {
+        case INT8:
+            {
+                m_data = new ChannelData<int8>( other.m_data );
+            } break;
+        case UINT8:
+            {
+                m_data = new ChannelData<uint8>( other.m_data );
+            } break;
+        case INT16:
+            {
+                m_data = new ChannelData<int16>( other.m_data );
+            } break;
+        case UINT16:
+            {
+                m_data = new ChannelData<uint16>( other.m_data );
+            } break;
+        case INT32:
+            {
+                m_data = new ChannelData<int32>( other.m_data );
+            } break;
+        case UINT32:
+            {
+                m_data = new ChannelData<uint32>( other.m_data );
+            } break;
+        case INT64:
+            {
+                m_data = new ChannelData<int64>( other.m_data );
+            } break;
+        case UINT64:
+            {
+                m_data = new ChannelData<uint64>( other.m_data );
+            } break;
+        case FLOAT32:
+            {
+                m_data = new ChannelData<float32>( other.m_data );
+            } break;
+        case FLOAT64:
+            {
+                m_data = new ChannelData<float64>( other.m_data );
             } break;
         default: throw exception::invalid_type_id( boost::lexical_cast<std::string>(m_signalheader->get_datatype( )) ); break;
         }
@@ -154,7 +188,15 @@ namespace gdf {
 
     Channel::~Channel( )
     {
-        //std::cout << "~Channel( )" << std::endl;
+        delete m_data;
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    void Channel::clear( )
+    {
+        m_data->clear( );
     }
 
     //===================================================================================================
