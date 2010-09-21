@@ -182,11 +182,9 @@ void RFC_to_uint32( const gdf::uint32 &loc, gdf::uint8 version, double size, dou
 // =================================================================================================
 // =================================================================================================
 
-mxArray *constructHeaderStruct( gdf::Writer *w )
+mxArray *constructHeaderStruct( size_t num_signals )
 {
         mxArray *h;
-
-        size_t num_signals = w->getNumSignals( );
 
         // most of the following commands are not really neccessary
         // but pre-creating the structure allows to determine the order

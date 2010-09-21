@@ -172,23 +172,17 @@ void test_simple( )
     f.push_back( 2 );
     f.push_back( 1 );
 
-    /*w.blitSamplesPhys( 0, f );
+    w.blitSamplesPhys( 0, f );
+    w.blitSamplesPhys( 0, f );
     w.blitSamplesRaw( 1, f );
 
-    w.addSamplePhys( 0, 1 );
+    /*w.addSamplePhys( 0, 1 );
     w.addSamplePhys( 0, 2 );
     w.addSamplePhys( 0, 3 );
     w.addSamplePhys( 0, 4 );
     w.addSamplePhys( 0, 5 );
     w.addSampleRaw( 1, 0 );
     w.addSampleRaw( 1, 10 );*/
-
-    for( size_t i=0; i<20000; i++)
-    {
-        w.addSamplePhys( 0, i );
-        w.addSamplePhys( 0, i );
-        w.addSamplePhys( 1, i );
-    }
 
     w.addEvent( 0, 0x300 );
     w.addEvent( 10, 0x300 );

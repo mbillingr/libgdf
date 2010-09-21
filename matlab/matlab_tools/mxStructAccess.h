@@ -151,7 +151,7 @@ namespace mx
     std::string getString( const mxArray *field, StringConversion conv = TONORMAL )
     {
         if( mxGetClassID(field) != mxCHAR_CLASS )
-            throw mx::Exception( "MATLAB Class is no character type" );
+            throw mx::Exception( "MATLAB Class is no character/string type" );
 
         char *ch;
         ch = new char[2048];

@@ -153,7 +153,7 @@ void CMD_getheader::execute( mxArray *plhs[], const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
-    plhs[0] = constructHeaderStruct( w );
+    plhs[0] = constructHeaderStruct( w->getNumSignals( ) );
     Header2Struct( plhs[0], &w->getHeaderAccess_readonly() );
 }
 
