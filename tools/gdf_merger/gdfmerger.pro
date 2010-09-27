@@ -27,6 +27,6 @@ HEADERS += gdfmerger.h
 LIBS += -lboost_filesystem \
         -lboost_system \
         -lboost_program_options \
-        -L../../libgdf/build  -lGDF
+        -L../../libgdf/lib  -lGDF
 
 # -----------------------------------------------------------------------------
