@@ -123,7 +123,7 @@ namespace gdf
     //===================================================================================================
     //===================================================================================================
 
-    inline size_t Reader::findRecord( uint16 channel_idx, size_t sample_idx )
+    size_t Reader::findRecord( uint16 channel_idx, size_t sample_idx )
     {
         return boost::numeric_cast<size_t>( floor( ((double)sample_idx) / ((double)m_header.getSignalHeader_readonly( channel_idx ).get_samples_per_record( )) ) );
     }
