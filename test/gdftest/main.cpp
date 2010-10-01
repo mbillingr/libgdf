@@ -26,6 +26,7 @@
 using namespace std;
 using boost::lexical_cast;
 
+void test_guillaume( );
 void test_simple( );
 void test_events( );
 void test_buffer( size_t M, size_t T );
@@ -34,13 +35,25 @@ void test_modify( );
 
 int main( )
 {
+    test_guillaume( );
     //test_buffer( 100, 100 );
-    test_simple( );
+    //test_simple( );
     /*test_load( );
     test_modify( );
     test_load( );
     test_events( );*/
     return 0;
+}
+
+void test_guillaume( )
+{
+    gdf::Reader r;
+
+    r.open( "/media/bci-public/clauzel/Clemens/bo8_2dCenterOut_01.gdf");
+
+    r.getEventHeader( );
+
+    r.close( );
 }
 
 void test_modify( )

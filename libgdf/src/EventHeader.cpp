@@ -118,7 +118,7 @@ namespace gdf
                 addEvent( e );
             }
         }
-        else if( getMode() == 1 )
+        else if( getMode() == 3 )
         {
             std::vector<uint16> channels;
             std::vector<uint32> durations;
