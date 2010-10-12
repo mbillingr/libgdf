@@ -166,30 +166,38 @@ void CmexObject::execute( )
     num_signals = reader.getMainHeader_readonly().get_num_signals();
     num_records = reader.getMainHeader_readonly().get_num_datarecords();
 
-    // === order signals by samplerate ===
-
-    samples_per_record.resize( num_signals );
-    for( gdf::uint16 i = 0; i < num_signals; i++ )
+    if( num_signals > 0 )
     {
-        gdf::uint32 sr = reader.getSignalHeader_readonly( i ).get_samples_per_record( );
-        samples_per_record[i] = sr;
-        signals_by_samplerate[sr].push_back( i );
+
+        // === order signals by samplerate ===
+
+        samples_per_record.resize( num_signals );
+        for( gdf::uint16 i = 0; i < num_signals; i++ )
+        {
+            gdf::uint32 sr = reader.getSignalHeader_readonly( i ).get_samples_per_record( );
+            samples_per_record[i] = sr;
+            signals_by_samplerate[sr].push_back( i );
+        }
+
+        num_samplerates = signals_by_samplerate.size( );
+        max_rate = (signals_by_samplerate.rbegin())->first;  // map is supposed to be ordered
+
+        if( num_samplerates == 1 )
+            multirate_mode = MR_UPSAMPLE;   // override mode for unirate data
+
+        // === get data ===
+
+        switch( multirate_mode )
+        {
+        default: throw invalid_argument( " invalid multirate mode" ); break;
+        case MR_UPSAMPLE: getUpsampleData( reader ); break;
+        case MR_GROUP: getGroupData( reader ); break;
+        case MR_SINGLE: getSingleData( reader ); break;
+        }
     }
-
-    num_samplerates = signals_by_samplerate.size( );
-    max_rate = (signals_by_samplerate.rbegin())->first;  // map is supposed to be ordered
-
-    if( num_samplerates == 1 )
-        multirate_mode = MR_UPSAMPLE;   // override mode for unirate data
-
-    // === get data ===
-
-    switch( multirate_mode )
+    else
     {
-    default: throw invalid_argument( " invalid multirate mode" ); break;
-    case MR_UPSAMPLE: getUpsampleData( reader ); break;
-    case MR_GROUP: getGroupData( reader ); break;
-    case MR_SINGLE: getSingleData( reader ); break;
+        plhs_[0] = mxCreateNumericMatrix( 0, 0, mxDOUBLE_CLASS, mxREAL );
     }
 
     // === load events ===
@@ -201,7 +209,12 @@ void CmexObject::execute( )
     // === construct header ===
     if( nlhs_ > 1 )
     {
-        constructHeader( reader );
+        try {
+            constructHeader( reader );
+        } catch( std::exception &e )
+        {
+            mexPrintf( "Exception while constructing the header:\n%s", e.what() );
+        }
     }
 
     reader.close( );
