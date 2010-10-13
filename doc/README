@@ -20,7 +20,7 @@ For advanced configuration of the build process, please refer to the cmake docum
 
 b. Linux:
 
-		>> cd <path_to_toplevel_sourcedir>
+		>> cd path/to/toplevel/sourcedir
 		>> mkdir build
 		>> cd build
 dynamic build:	>> cmake ..
@@ -30,6 +30,21 @@ static build:	>> cmake .. -DBUILD_SHARED_LIBS=OFF
 
 c. Windows:
 	(TODO)
+
+
+ Building the MATLAB functions
+===============================
+
+a. libGDF was installed into the system
+	At the MATLAB prompt:
+		>> mex gdf_writer.cpp -lGDF
+		>> mex gdf_reader.cpp -lGDF
+
+b. libGDF was not installed
+	First build libGDF as described above.
+	At the MATLAB prompt:
+		>> mex gdf_writer.cpp -Ipath/to/toplevel/sourcedir/libgdf/include -Lpath/to/build/dir/libgdf -lGDF
+		>> mex gdf_reader.cpp -Ipath/to/toplevel/sourcedir/libgdf/include -Lpath/to/build/dir/libgdf -lGDF
 
 
  GDF Specification
