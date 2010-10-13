@@ -25,7 +25,7 @@ class Command
 public:
     virtual void execute( mxArray *plhs[], const mxArray *prhs[] ) = 0;
 
-    void operator()( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
+    void operator()( size_t nlhs, mxArray *plhs[], size_t nrhs, const mxArray *prhs[] )
     {
         if( m_nlhs != nlhs )
             throw std::invalid_argument( "Invalid number of output arguments." );

@@ -39,7 +39,7 @@ namespace mx
     {
         TONORMAL,
         TOUPPER,
-        TOLOWER,
+        TOLOWER
     };
 
     std::string toUpper( const std::string str )

@@ -131,20 +131,20 @@ void CmexObject::execute( size_t nlhs, mxArray *plhs[], size_t nrhs, const mxArr
 //      Command Definitions
 // ===================================================================================================
 
-void CMD_init::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_init::execute( mxArray *plhs[], const mxArray ** /*prhs*/ )
 {
     size_t handle = CmexObject::getInstance().writers.newInstance( );
     plhs[0] = mxCreateNumericMatrix( 1, 1, mxUINT64_CLASS, mxREAL );
     *reinterpret_cast<size_t*>(mxGetData( plhs[0] )) = handle;
 }
 
-void CMD_clear::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_clear::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     CmexObject::getInstance().writers.remove( handle );
 }
 
-void CMD_clearall::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_clearall::execute( mxArray ** /*plhs*/, const mxArray ** /*prhs*/ )
 {
     CmexObject::getInstance().writers.clear( );
 }
@@ -157,14 +157,14 @@ void CMD_getheader::execute( mxArray *plhs[], const mxArray *prhs[] )
     Header2Struct( plhs[0], &w->getHeaderAccess_readonly() );
 }
 
-void CMD_setheader::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_setheader::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
     Struct2Header( prhs[1], &w->getHeaderAccess( ) );
 }
 
-void CMD_createsignal::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_createsignal::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -174,7 +174,7 @@ void CMD_createsignal::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->createSignal( channel - 1, true );
 }
 
-void CMD_recduration::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_recduration::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -195,7 +195,7 @@ void CMD_recduration::execute( mxArray *plhs[], const mxArray *prhs[] )
     }
 }
 
-void CMD_eventconfig::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_eventconfig::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -205,7 +205,7 @@ void CMD_eventconfig::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->setEventSamplingRate( fs );
 }
 
-void CMD_addsample::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_addsample::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -214,7 +214,7 @@ void CMD_addsample::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->addSamplePhys( channel_idx-1, value );
 }
 
-void CMD_addrawsample::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_addrawsample::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -223,7 +223,7 @@ void CMD_addrawsample::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->addSampleRaw( channel_idx-1, value );
 }
 
-void CMD_addsamplevector::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_addsamplevector::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -233,7 +233,7 @@ void CMD_addsamplevector::execute( mxArray *plhs[], const mxArray *prhs[] )
         w->addSamplePhys( first_channel+i, vals[i] );
 }
 
-void CMD_blitsamples::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_blitsamples::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -242,7 +242,7 @@ void CMD_blitsamples::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->blitSamplesPhys( channel_idx-1, vals );
 }
 
-void CMD_blitrawsamples::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_blitrawsamples::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -251,7 +251,7 @@ void CMD_blitrawsamples::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->blitSamplesRaw( channel_idx-1, vals );
 }
 
-void CMD_mode1event::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_mode1event::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -260,7 +260,7 @@ void CMD_mode1event::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->addEvent( pos, type );
 }
 
-void CMD_mode3event::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_mode3event::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -271,7 +271,7 @@ void CMD_mode3event::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->addEvent( pos, type, chan-1, dur );
 }
 
-void CMD_open::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_open::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
@@ -279,7 +279,7 @@ void CMD_open::execute( mxArray *plhs[], const mxArray *prhs[] )
     w->open( filename );
 }
 
-void CMD_close::execute( mxArray *plhs[], const mxArray *prhs[] )
+void CMD_close::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
