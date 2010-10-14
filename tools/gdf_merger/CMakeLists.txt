@@ -3,6 +3,8 @@ project( gdf_merger )
 
 if( UNIX )
 	add_definitions( -Wall -Wextra -pedantic -Werror -fPIC)
+elseif( MINGW )
+	add_definitions( -Wall -Wextra -pedantic -Werror )
 elseif( WIN32 )
 	add_definitions( -W3 )
 endif( UNIX )
