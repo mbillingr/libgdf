@@ -79,7 +79,7 @@ void gdfMerger::merge()
     cout << "  -- merging: " << input_files_[n];
     cout << "     Warning: No header checks performed yet!" << endl;
 
-    size_t num_recs = reader_.getMainHeader_readonly( ).get_num_datarecords( );
+	size_t num_recs = boost::numeric_cast<size_t>( reader_.getMainHeader_readonly( ).get_num_datarecords( ) );
 
     for( size_t r = 0; r< num_recs; r++ )
     //for( size_t r = 0; r< 1; r++ )
