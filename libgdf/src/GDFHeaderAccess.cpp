@@ -152,7 +152,12 @@ namespace gdf
             errors.push_back( "Event Mode "+lexical_cast<std::string>(m_events.getMode())+" is not valid.");
 
         if( m_events.getSamplingRate() < 0 )
-            m_events.setSamplingRate( boost::numeric_cast<float32>( max(fs) ) );
+        {
+            if( fs.size() > 0)
+                m_events.setSamplingRate( boost::numeric_cast<float32>( max(fs) ) );
+            else
+                errors.push_back( "Could not determine event sampling rate." );
+        }
 
         if( warnings.size() > 0 || errors.size() > 0 )
             throw exception::header_issues( warnings, errors );
@@ -435,6 +440,6 @@ namespace gdf
         if( it == m_sighdr.end() )
             return 0;
 
-		return boost::numeric_cast<size_t>( m_mainhdr.get_num_datarecords() ) * it->second.get_samples_per_record();
+        return m_mainhdr.get_num_datarecords() * it->second.get_samples_per_record();
     }
 }
