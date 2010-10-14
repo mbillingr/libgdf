@@ -20,17 +20,16 @@
 %   EVENTS:     Event Structure
 %
 %   OPTIONS:    Options are provided as Option-Value pairs.
-%       "MULTIRATESIGNALS" possible values:
-%           "UPSAMPLE"  All signals are upsampled to the highest sampling
-%                       rate that occurs in the file and returned in a matrix.
-%						Upsampling is performed by interpolation (see
-%						Option "UPSAMPLEMODE").
+%       "DATAFORMAT"    possible values:
+%           "MATRIX"    Signals are arranged in a matrix. To use this format with multirate
+%			data, "UPSAMPLEMODE" must be specified. This causes all signals to
+%			be upsampled to the highest sampling rate in the file.
 %           "SINGLE"    (default) A cell array is returned, that contains each signal
 %                       as a separate vector.
 %           "GROUP"     All signals with the same sampling rates are grouped
 %                       into matrices, which are returned in a cell array.
 %
-%       "UPSAMPLEMODE"  determines how upsampling is performed when "MULTIRATESIGNALS"
-%						is set to "UPSAMPLE".
+%       "UPSAMPLEMODE"  determines how upsampling of multirate data is performed
+%			when "DATAFORMAT" is set to "MATRIX".
 %			"NEAREST"	Nearest Neighbor interpolation
 %			"LINEAR"	Linear Interpolation

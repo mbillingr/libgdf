@@ -29,8 +29,8 @@ using namespace std;
 // Calling options:
 //   [s,h,e] = mex_reader( 'file.gdf', 'option', value, ... );
 
-#define OPTION_MULTIRATESIGNALS             "MULTIRATESIGNALS"
-#define OPTION_MULTIRATESIGNALS_UPSAMPLE    "UPSAMPLE"
+#define OPTION_MULTIRATESIGNALS             "DATAFORMAT"
+#define OPTION_MULTIRATESIGNALS_UPSAMPLE    "MATRIX"
 #define OPTION_MULTIRATESIGNALS_GROUOP      "GROUP"
 #define OPTION_MULTIRATESIGNALS_SINGLE      "SINGLE"
 
@@ -65,6 +65,12 @@ class InterpolatorLinear : public Interpolator
 {
 public:
     virtual double interpolate( double d1, double d2, double ratio );
+};
+
+class InterpolatorDummy : public Interpolator
+{
+public:
+    virtual double interpolate( double, double, double ) { throw std::invalid_argument( "Attempting to load multirate data in a matrix without upsampling. Either set UPSAMPLEMODE, or choose GROUP or SINGLE data output." ); }
 };
 
 // ===========================================================================
@@ -137,7 +143,7 @@ CmexObject::CmexObject( size_t nlhs, mxArray *plhs[], size_t nrhs, const mxArray
 
     // set defaults
     multirate_mode = MR_SINGLE;
-    interpolator = new InterpolatorLinear( );
+    interpolator = new InterpolatorDummy( );
 
     nlhs_ = nlhs;
     plhs_ = plhs;
@@ -182,8 +188,8 @@ void CmexObject::execute( )
         num_samplerates = signals_by_samplerate.size( );
         max_rate = (signals_by_samplerate.rbegin())->first;  // map is supposed to be ordered
 
-        if( num_samplerates == 1 )
-            multirate_mode = MR_UPSAMPLE;   // override mode for unirate data
+        //if( num_samplerates == 1 )
+        //    multirate_mode = MR_UPSAMPLE;   // override mode for unirate data
 
         // === get data ===
 
