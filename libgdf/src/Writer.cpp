@@ -69,7 +69,11 @@ namespace gdf
         {
             m_file.open( m_filename.c_str(), std::ios_base::in );
             if( !m_file.fail() )
+            {
+                m_header.setLock( false );
+                m_file.close( );
                 throw exception::file_exists( m_filename );
+            }
         }
 
         m_file.open( m_filename.c_str(), std::ios_base::out | std::ios_base::binary | std::ios_base::trunc );
@@ -111,7 +115,8 @@ namespace gdf
     void Writer::close( )
     {
         if( !m_file.is_open() )
-            throw exception::file_not_open( "" );
+            return;
+            //throw exception::file_not_open( "" );
 
         if( !m_eventbuffermemory )
             m_evbuf_file.close( );
