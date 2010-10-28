@@ -1,5 +1,5 @@
-libgdf (0.0.0.31-1) unstable; urgency=low
+libgdf (0.0.0.31-1~pre1) unstable; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Initial release (Closes: #601707)
 
- -- NeuroDebian Team <team@neuro.debian.net>  Thu, 28 Oct 2010 10:46:52 -0400
+ -- Yaroslav Halchenko <debian@onerussian.com>  Thu, 28 Oct 2010 14:27:26 -0400
