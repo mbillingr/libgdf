@@ -1,0 +1,55 @@
+
+ Introduction
+==============
+
+libGDF is an implementation of "GDF - A General Dataformat for Biosignals Version V2.20" (See GDF Specification below). It consists of a library, tools and MATLAB bindings, all written in C++.
+
+
+ License
+=========
+libGDF is licensed under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+
+
+ Building libGDF
+=================
+
+a. General
+libGDF is using cmake as build system. Out-of-Source builds are recommended. Libraries are built as shared by default. This can be changed at build time.
+The default installation prefix is /usr/local.
+For advanced configuration of the build process, please refer to the cmake documentation.
+
+b. Linux:
+
+		>> cd path/to/toplevel/sourcedir
+		>> mkdir build
+		>> cd build
+dynamic build:	>> cmake ..
+static build:	>> cmake .. -DBUILD_SHARED_LIBS=OFF
+		>> make
+		>> make install
+
+c. Windows:
+	(TODO)
+
+
+ Building the MATLAB functions
+===============================
+
+a. libGDF was installed into the system
+	At the MATLAB prompt:
+		>> mex gdf_writer.cpp -lGDF
+		>> mex gdf_reader.cpp -lGDF
+
+b. libGDF was not installed
+	First build libGDF as described above.
+	At the MATLAB prompt:
+		>> mex gdf_writer.cpp -Ipath/to/toplevel/sourcedir/libgdf/include -Lpath/to/build/dir/libgdf -lGDF
+		>> mex gdf_reader.cpp -Ipath/to/toplevel/sourcedir/libgdf/include -Lpath/to/build/dir/libgdf -lGDF
+
+
+ GDF Specification
+===================
+
+The specification of the GDF file format can be found at
+http://arxiv.org/pdf/cs/0608052
+
