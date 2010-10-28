@@ -9,5 +9,14 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+DEB_CMAKE_EXTRA_FLAGS = \
+	-DCMAKE_SKIP_RPATH:BOOL=ON \
+	-DBUILD_SHARED_LIBS:BOOL=OFF
+
 %:
-	dh $@ 
+	dh $@ --buildsystem=cmake
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(DEB_CMAKE_EXTRA_FLAGS)
+
+
