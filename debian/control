@@ -1,0 +1,49 @@
+Source: libgdf
+Priority: extra
+Maintainer: NeuroDebian Team <team@neuro.debian.net>
+Uploaders: Yaroslav Halchenko <debian@onerussian.com>, Michael Hanke <michael.hanke@gmail.com>
+Build-Depends: debhelper (>= 7.0.50~), cmake
+Standards-Version: 3.9.1
+Section: libs
+Homepage: http://sourceforge.net/projects/libgdf
+Vcs-Browser: http://git.debian.org/?p=pkg-exppsy/libgdf.git
+Vcs-Git: git://git.debian.org/git/pkg-exppsy/libgdf.git
+XS-DM-Upload-Allowed: yes
+
+
+Package: libgdf0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: IO library for the GDF (general dataformat for biosignals)
+ <insert long description, indented with spaces>
+ .
+ This package contains the shared library.
+
+
+Package: libgdf0-dbg
+Section: debug
+Architecture: any
+Depends: libgdf0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: IO library for the GDF (general dataformat for biosignals)
+ <insert long description, indented with spaces>
+
+Package: libgdf-dev
+Section: libdevel
+Architecture: any
+Depends: libgdf0 (= ${binary:Version})
+Description: IO library for the GDF (general dataformat for biosignals)
+ <insert long description, indented with spaces>
+ .
+ This package provides the header files and static library.
+
+Package: gdf-tools
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: IO library for the GDF (general dataformat for biosignals)
+ <insert long description, indented with spaces>
+ .
+ This package provides the tool shipped with the library
+ (gdf_merger).
+
