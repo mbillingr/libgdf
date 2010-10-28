@@ -2,7 +2,8 @@ Source: libgdf
 Priority: extra
 Maintainer: NeuroDebian Team <team@neuro.debian.net>
 Uploaders: Yaroslav Halchenko <debian@onerussian.com>, Michael Hanke <michael.hanke@gmail.com>
-Build-Depends: debhelper (>= 7.0.50~), cmake
+Build-Depends: debhelper (>= 7.0.50~), cmake,
+			   octave-pkg-dev (>= 0.5.7)
 Standards-Version: 3.9.1
 Section: libs
 Homepage: http://sourceforge.net/projects/libgdf
@@ -21,19 +22,20 @@ XS-DM-Upload-Allowed: yes
 # This package contains the shared library.
 
 
-Package: libgdf0-dbg
-Section: debug
-Architecture: any
-Depends: libgdf0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
-Description: IO library for the GDF (general dataformat for biosignals)
- <insert long description, indented with spaces>
+#Package: libgdf0-dbg
+#Section: debug
+#Architecture: any
+#Depends: ${shlibs:Depends}, ${misc:Depends}, libgdf0 (= ${binary:Version})
+#Description: IO library for the GDF (general dataformat for biosignals)
+# <insert long description, indented with spaces>
 
 Package: libgdf-dev
 Section: libdevel
 Architecture: any
-Depends: libgdf0 (= ${binary:Version})
-Description: IO library for the GDF (general dataformat for biosignals)
- <insert long description, indented with spaces>
+Depends: ${misc:Depends}, libgdf0 (= ${binary:Version})
+Description: IO library for the GDF -- development library
+ GDF (General Dataformat for Biosignals) is intended to provide a generic
+ storage for biosignals, such as EEG, ECG, MEG etc.
  .
  This package provides the header files and static library.
 
@@ -41,9 +43,32 @@ Package: gdf-tools
 Section: utils
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: IO library for the GDF (general dataformat for biosignals)
- <insert long description, indented with spaces>
+Description: IO library for the GDF -- helper tools
+ GDF (General Dataformat for Biosignals) is intended to provide a generic
+ storage for biosignals, such as EEG, ECG, MEG etc.
  .
  This package provides the tool shipped with the library
  (gdf_merger).
 
+
+Package: libgdf-octave
+Section: science
+Architecture: any
+Depends: ${octave:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: IO library for the GDF -- Octave interface
+ GDF (General Dataformat for Biosignals) is intended to provide a generic
+ storage for biosignals, such as EEG, ECG, MEG etc.
+ .
+ This package provides Octave bindings for libgdf.
+
+Package: libgdf-matlab
+Section: contrib/science
+Architecture: all
+Depends: matlab, libgdf-dev (= ${source:Version}), ${misc:Depends}
+Description: IO library for the GDF -- Matlab interface
+ GDF (General Dataformat for Biosignals) is intended to provide a generic
+ storage for biosignals, such as EEG, ECG, MEG etc.
+ .
+ This package builds Matlab bindings for GDF at installation
+ time. Note that this package depends on Matlab -- a commercial
+ software that needs to be obtain and installed separately.

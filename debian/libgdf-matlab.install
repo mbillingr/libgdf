@@ -1,0 +1,2 @@
+matlab/{*.h,*.c} usr/src/libgdf-matlab/
+matlab/{examples,*.m} usr/lib/matlab/site/libgdf

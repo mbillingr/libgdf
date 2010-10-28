@@ -13,10 +13,37 @@ DEB_CMAKE_EXTRA_FLAGS = \
 	-DCMAKE_SKIP_RPATH:BOOL=ON \
 	-DBUILD_SHARED_LIBS:BOOL=OFF
 
+# OCTDIR=$(shell octave-config --oct-site-dir)
+# get octave paths (have to build-depend on octave-headers)
+# Note: bdepending on octave-pkg-dev since it is not
+#       embedding version information ;) so we could backport
+#       easily
+include /usr/share/octave/debian/defs.make
+
 %:
 	dh $@ --buildsystem=cmake
 
 override_dh_auto_configure:
-	dh_auto_configure -- $(DEB_CMAKE_EXTRA_FLAGS)
+	dh_auto_configure -- \
+		$(DEB_CMAKE_EXTRA_FLAGS)
+
+override_dh_auto_build:
+	dh_auto_build
+	: # Build Octave bindings
+	cd matlab; \
+	 for f in *.cpp; do \
+		mkoctfile --mex $$f -I../libgdf/include ../obj-*/libgdf/libGDF.a; \
+	 done
+
+override_dh_auto_install:
+	dh_auto_install
+	: # Install Octave bindings
+	mkdir -p debian/libgdf-octave$(OCTDIR)
+	install matlab/*.mex debian/libgdf-octave$(OCTDIR)
+	[ -e /usr/bin/octave-depends ] && octave-depends
+
+override_dh_clean:
+	dh_clean
+	-cd matlab; rm *.mex *.o
 
 
