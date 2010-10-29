@@ -41,7 +41,7 @@ override_dh_auto_build:
 	: # Build Octave bindings
 	cd matlab; \
 	 for f in *.cpp; do \
-		mkoctfile --mex $$f -I../libgdf/include -L$$objpath/libgdf -lGDF; \
+		mkoctfile --mex $$f -I../libgdf/include -L$$(/bin/ls -d $$PWD/../obj-*)/libgdf -lGDF; \
 	 done
 
 
