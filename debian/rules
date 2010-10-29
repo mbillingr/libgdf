@@ -48,9 +48,9 @@ override_dh_auto_build:
 override_dh_auto_install:
 	dh_auto_install
 	: # Install Octave bindings
-	mkdir -p debian/libgdf-octave$(OCTDIR)
-	install matlab/*.mex debian/libgdf-octave$(OCTDIR)
-	[ -e /usr/bin/octave-depends ] && octave-depends -plibgdf-octave
+	mkdir -p debian/octave-gdf$(OCTDIR)
+	install matlab/*.mex debian/octave-gdf$(OCTDIR)
+	[ -e /usr/bin/octave-depends ] && octave-depends -poctave-gdf
 
 override_dh_strip:
 	dh_strip --dbg-package=libgdf0-dbg

@@ -57,7 +57,7 @@ Description: IO library for the GDF -- helper tools
  (gdf_merger).
 
 
-Package: libgdf-octave
+Package: octave-gdf
 Section: science
 Architecture: any
 Depends: ${octave:Depends}, ${shlibs:Depends}, ${misc:Depends}
@@ -67,7 +67,7 @@ Description: IO library for the GDF -- Octave interface
  .
  This package provides Octave bindings for libgdf.
 
-Package: libgdf-matlab
+Package: matlab-gdf
 Section: contrib/science
 Architecture: all
 Depends: libgdf-dev (>= ${source:Version}), ${misc:Depends}

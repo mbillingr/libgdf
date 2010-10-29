@@ -1,0 +1,30 @@
+#!/bin/sh
+set -e
+umask 002
+
+# Build the MEX files
+# logfile=$(mktemp mktemp matlab-gdf-XXXXXX)
+distdir=/usr/lib/matlab/site/gdf
+
+cd /usr/src/matlab/gdf
+
+#if [ -z "$MATLAB_USER" ]
+#then
+
+echo "Building MEX extensions"
+for f in *.cpp; do
+	mex $f -lGDF
+done
+
+# remove possible junk
+rm -f *.o *.a
+# install extensions
+mv -t $distdir *.mex?*
+
+# install symlinks to /usr/share/gdf
+# for m in /usr/lib/gdf/*.mex?*; do
+# 	mbase=$(basename $m)
+# 	[ ! -L /usr/share/gdf/$mbase ] && ln -s ../../lib/gdf/$mbase /usr/share/gdf/$mbase
+# done
+
+#DEBHELPER#
