@@ -27,7 +27,7 @@ Package: libgdf0-dbg
 Section: debug
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libgdf0 (= ${binary:Version})
-Description: IO library for the GDF (general dataformat for biosignals)
+Description: IO library for the GDF -- debug symbols
  GDF (General Dataformat for Biosignals) is intended to provide a generic
  storage for biosignals, such as EEG, ECG, MEG etc.
  .
