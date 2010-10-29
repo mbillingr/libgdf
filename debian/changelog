@@ -1,4 +1,4 @@
-libgdf (0.0.0.31-1~pre1) unstable; urgency=low
+libgdf (0.1.0+svn31-1~pre1) unstable; urgency=low
 
   * Initial release (Closes: #601707)
 
