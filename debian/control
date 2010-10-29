@@ -66,6 +66,8 @@ Description: IO library for the GDF -- Octave interface
  storage for biosignals, such as EEG, ECG, MEG etc.
  .
  This package provides Octave bindings for libgdf.
+ .
+ HIGHLY EXPERIMENTAL -- USE AT YOUR OWN RISK.
 
 Package: matlab-gdf
 Section: contrib/science
