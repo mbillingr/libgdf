@@ -32,7 +32,8 @@ XS-DM-Upload-Allowed: yes
 Package: libgdf-dev
 Section: libdevel
 Architecture: any
-Depends: ${misc:Depends}, libgdf0 (= ${binary:Version})
+Depends: ${misc:Depends}
+#, libgdf0 (= ${binary:Version})
 Description: IO library for the GDF -- development library
  GDF (General Dataformat for Biosignals) is intended to provide a generic
  storage for biosignals, such as EEG, ECG, MEG etc.
