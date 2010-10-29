@@ -13,7 +13,7 @@ cd /usr/src/matlab/libgdf
 
 echo "Building MEX extensions"
 for f in *.cpp; do
-	mex $f /usr/lib/libGDF.a
+	mex $f -lGDF
 done
 
 # remove possible junk

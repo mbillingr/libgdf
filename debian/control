@@ -12,33 +12,38 @@ Vcs-Git: git://git.debian.org/git/pkg-exppsy/libgdf.git
 XS-DM-Upload-Allowed: yes
 
 
-#Package: libgdf0
-#Section: libs
-#Architecture: any
-#Depends: ${shlibs:Depends}, ${misc:Depends}
-#Description: IO library for the GDF (general dataformat for biosignals)
-# <insert long description, indented with spaces>
-# .
-# This package contains the shared library.
+Package: libgdf0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: IO library for the GDF (general dataformat for biosignals)
+ GDF (General Dataformat for Biosignals) is intended to provide a generic
+ storage for biosignals, such as EEG, ECG, MEG etc.
+ .
+ This package contains the shared library.
 
 
-#Package: libgdf0-dbg
-#Section: debug
-#Architecture: any
-#Depends: ${shlibs:Depends}, ${misc:Depends}, libgdf0 (= ${binary:Version})
-#Description: IO library for the GDF (general dataformat for biosignals)
-# <insert long description, indented with spaces>
+Package: libgdf0-dbg
+Section: debug
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libgdf0 (= ${binary:Version})
+Description: IO library for the GDF (general dataformat for biosignals)
+ GDF (General Dataformat for Biosignals) is intended to provide a generic
+ storage for biosignals, such as EEG, ECG, MEG etc.
+ .
+ This package provides debug symbols.
+
 
 Package: libgdf-dev
 Section: libdevel
 Architecture: any
-Depends: ${misc:Depends}
-#, libgdf0 (= ${binary:Version})
+Depends: ${misc:Depends}, libgdf0 (= ${binary:Version})
 Description: IO library for the GDF -- development library
  GDF (General Dataformat for Biosignals) is intended to provide a generic
  storage for biosignals, such as EEG, ECG, MEG etc.
  .
  This package provides the header files and static library.
+
 
 Package: gdf-tools
 Section: utils

@@ -1,0 +1,19 @@
+From: Yaroslav Halchenko <debian@onerussian.com>
+Subject: Versioned (0.1.0 ATM) GDF target and corresponding dynamic library
+ 
+ Add later on separate SOVERSION if it needs to diverge.
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+--- libgdf-0.0.0.31.orig/CMakeLists.txt
++++ libgdf-0.0.0.31/CMakeLists.txt
+@@ -6,3 +6,6 @@ set( BUILD_SHARED_LIBS true CACHE BOOL "
+ add_subdirectory( libgdf )
+ add_subdirectory( tools )
+ 
++SET_TARGET_PROPERTIES(GDF PROPERTIES
++                      VERSION 0.1.0)
++
