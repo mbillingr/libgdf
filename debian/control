@@ -65,7 +65,7 @@ Description: IO library for the GDF -- Octave interface
 Package: libgdf-matlab
 Section: contrib/science
 Architecture: all
-Depends: libgdf-dev (= ${source:Version}), ${misc:Depends}
+Depends: libgdf-dev (>= ${source:Version}), ${misc:Depends}
 Recommends: matlab
 Description: IO library for the GDF -- Matlab interface
  GDF (General Dataformat for Biosignals) is intended to provide a generic
