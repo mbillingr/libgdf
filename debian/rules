@@ -29,6 +29,9 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	dh_auto_build
+	: # Build quick and dirty manpage
+	help2man --no-info -S libGDF -s 1 --version-string=0.1 \
+		obj-*/tools/gdf_merger/gdf_merger >| gdf_merger.1
 	: # Build Octave bindings
 	cd matlab; \
 	 for f in *.cpp; do \
@@ -44,6 +47,7 @@ override_dh_auto_install:
 
 override_dh_clean:
 	dh_clean
+	rm -f gdf_merger.1
 	-cd matlab; rm *.mex *.o
 
 
