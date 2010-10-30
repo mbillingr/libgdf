@@ -2,7 +2,8 @@ Source: libgdf
 Priority: extra
 Maintainer: NeuroDebian Team <team@neuro.debian.net>
 Uploaders: Yaroslav Halchenko <debian@onerussian.com>, Michael Hanke <michael.hanke@gmail.com>
-Build-Depends: debhelper (>= 7.0.50~), cmake,
+Build-Depends: debhelper (>= 7.0.50~), cmake, help2man,
+			   libboost-dev, libboost-filesystem-dev, libboost-program-options-dev, libboost-date-time-dev,
 			   octave-pkg-dev (>= 0.5.7)
 Standards-Version: 3.9.1
 Section: libs
