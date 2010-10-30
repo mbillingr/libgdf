@@ -1,0 +1,25 @@
+From: Yaroslav Halchenko <debian@onerussian.com>
+Subject: Versioned (0.1.0 ATM) GDF target and corresponding dynamic library
+ 
+ Add later on separate SOVERSION if it needs to diverge.
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -6,3 +6,12 @@ set( BUILD_SHARED_LIBS true CACHE BOOL "
+ add_subdirectory( libgdf )
+ add_subdirectory( tools )
+ 
++# shared library API versioning (soversion) -- NOT the same as the release version
++# it follows first number
++SET(GDF_VERSION "0.1.0")
++STRING( REGEX MATCH "^[0-9]+" GDF_SHAREDLIB_SOVERSION ${GDF_VERSION})
++
++SET_TARGET_PROPERTIES(GDF PROPERTIES
++                      VERSION ${GDF_VERSION}
++                      SOVERSION ${GDF_SHAREDLIB_SOVERSION})
++

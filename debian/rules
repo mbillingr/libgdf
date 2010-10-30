@@ -9,14 +9,55 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+export LDFLAGS = -Wl,--as-needed
+
+UVER = $(shell LC_ALL=C dpkg-parsechangelog | grep '^Version:' | cut -d ' ' -f 2,2 | cut -d '-' -f 1,1)
+
 DEB_CMAKE_EXTRA_FLAGS = \
 	-DCMAKE_SKIP_RPATH:BOOL=ON \
-	-DBUILD_SHARED_LIBS:BOOL=OFF
+	-DBUILD_SHARED_LIBS:BOOL=ON
+
+# OCTDIR=$(shell octave-config --oct-site-dir)
+# get octave paths (have to build-depend on octave-headers)
+# Note: bdepending on octave-pkg-dev since it is not
+#       embedding version information ;) so we could backport
+#       easily
+include /usr/share/octave/debian/defs.make
 
 %:
 	dh $@ --buildsystem=cmake
 
 override_dh_auto_configure:
-	dh_auto_configure -- $(DEB_CMAKE_EXTRA_FLAGS)
+	dh_auto_configure -- \
+		$(DEB_CMAKE_EXTRA_FLAGS)
+
+override_dh_auto_build:
+	dh_auto_build
+
+	: # Build quick and dirty manpage
+	LD_LIBRARY_PATH=$$(/bin/ls -d $$PWD/obj-*)/libgdf \
+		help2man --no-info -S libGDF -s 1 --version-string=$(UVER) \
+		*/tools/gdf_merger/gdf_merger >| gdf_merger.1
+	: # Build Octave bindings
+	cd matlab; \
+	 for f in *.cpp; do \
+		mkoctfile --mex $$f -I../libgdf/include -L$$(/bin/ls -d $$PWD/../obj-*)/libgdf -lGDF; \
+	 done
+
+
+override_dh_auto_install:
+	dh_auto_install
+	: # Install Octave bindings
+	mkdir -p debian/octave-gdf$(OCTDIR)
+	install matlab/*.mex debian/octave-gdf$(OCTDIR)
+	[ -e /usr/bin/octave-depends ] && octave-depends -poctave-gdf
+
+override_dh_strip:
+	dh_strip --dbg-package=libgdf0-dbg
+
+override_dh_clean:
+	dh_clean
+	rm -f gdf_merger.1
+	-cd matlab; rm *.mex *.o
 
 

@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+distdir=/usr/lib/matlab/site/libgdf
+
+# remove compiled binaries
+rm -f $distdir/*.mex?*
+
+# try removing the libdir, but don't fail if not empty
+rmdir --ignore-fail-on-non-empty $distdir
+
+#DEBHELPER#
