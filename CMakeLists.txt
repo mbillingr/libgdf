@@ -6,3 +6,5 @@ set( BUILD_SHARED_LIBS true CACHE BOOL "Wether we shall build shared or dynamic 
 add_subdirectory( libgdf )
 add_subdirectory( tools )
 
+set_target_properties( GDF PROPERTIES VERSION 0.1.1 )
+
