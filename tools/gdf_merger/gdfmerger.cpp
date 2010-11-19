@@ -54,10 +54,12 @@ void gdfMerger::merge()
   reader_.open(input_files_[0]);
 
   writer_.getMainHeader( ).copyFrom( reader_.getMainHeader_readonly() );
+  writer_.getHeaderAccess().setRecordDuration( reader_.getMainHeader_readonly().get_datarecord_duration( 0 ), reader_.getMainHeader_readonly().get_datarecord_duration( 1 ) );
   for( size_t m = 0; m < writer_.getMainHeader_readonly().get_num_signals(); m++ )
   {
       writer_.createSignal( m, true );
       writer_.getSignalHeader( m ).copyFrom( reader_.getSignalHeader_readonly( m ) );
+      //writer_.getSignalHeader( m ).set_samplerate( reader_.getSignalHeader_readonly( m ).get_samplerate() );
   }
 
   gdf::EventHeader* ev_header = reader_.getEventHeader();
@@ -71,6 +73,10 @@ void gdfMerger::merge()
   writer_.setMaxFullRecords( 0 );
   writer_.open( output_file_, gdf::writer_ev_memory | gdf::writer_overwrite );
 
+  std::cout << "Record Duration   : " << writer_.getMainHeader_readonly( ).get_datarecord_duration(0) << " : " << writer_.getMainHeader_readonly( ).get_datarecord_duration(1) << std::endl;
+  std::cout << "Sampling Rate     : " << writer_.getSignalHeader_readonly( 1 ).get_samplerate() << std::endl;
+  std::cout << "Samples per Record: " << writer_.getSignalHeader_readonly( 1 ).get_samples_per_record() << std::endl;
+
   for(unsigned int n = 0; n < input_files_.size(); n++)
   {
     reader_.enableCache( false );
@@ -79,7 +85,9 @@ void gdfMerger::merge()
     cout << "  -- merging: " << input_files_[n];
     cout << "     Warning: No header checks performed yet!" << endl;
 
-	size_t num_recs = boost::numeric_cast<size_t>( reader_.getMainHeader_readonly( ).get_num_datarecords( ) );
+    size_t num_recs = boost::numeric_cast<size_t>( reader_.getMainHeader_readonly( ).get_num_datarecords( ) );
+
+    std::cout << "     Number of records: " << num_recs << std::endl;
 
     for( size_t r = 0; r< num_recs; r++ )
     //for( size_t r = 0; r< 1; r++ )
@@ -91,6 +99,13 @@ void gdfMerger::merge()
         gdf::Record *rec = writer_.acquireRecord( );
         reader_.readRecord( r, rec );
         writer_.addRecord( rec );
+
+        /*for( size_t i=0; i< rec->getNumChannels( ); i++ )
+        {
+            gdf::Channel *ch = rec->getChannel( i );
+            std::cout << ch->getSize( ) << "  ";
+        }
+        std::cout << std::endl;*/
 
         /*for( size_t c = 0; c < reader_.getMainHeader_readonly().get_num_signals(); c++ )
         {
