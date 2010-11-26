@@ -26,8 +26,11 @@
 %   SETHEADER: set header struct
 %       gdf_writer( 'SetHeader', handle, header );
 %
-%   CREATESIGNAL: create a new signal
+%   CREATESIGNAL: create a new signal (with specified index)
 %       gdf_writer( 'CreateSignal', handle, index );
+%
+%   NEWSIGNAL: create a new signal (with first free index, which is returned)
+%       index = gdf_writer( 'NewSignal', handle, datatype, samplerate );
 %
 %   RECORDDURATION: set record duration
 %       gdf_writer( 'RecordDuration', handle, seconds );
