@@ -3,6 +3,8 @@ project( GDF )
 
 set( BUILD_SHARED_LIBS true CACHE BOOL "Wether we shall build shared or dynamic libraries." )
 
+ENABLE_TESTING( )
+
 add_subdirectory( libgdf )
 add_subdirectory( tools )
 
@@ -14,4 +16,7 @@ string( REGEX MATCH "^[0-9]+" GDF_SHAREDLIB_SOVERSION ${GDF_VERSION})
 set_target_properties(GDF PROPERTIES
 	VERSION ${GDF_VERSION}
 	SOVERSION ${GDF_SHAREDLIB_SOVERSION})
+
+add_subdirectory( test )
+
 
