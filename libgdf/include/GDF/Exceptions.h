@@ -213,6 +213,9 @@ namespace gdf {
                 }
                 return ss.str( ).c_str( );
             }
+
+            size_t num_warnings( ) { return warnings.size(); }
+            size_t num_errors( ) { return errors.size(); }
         };
     }
 }
