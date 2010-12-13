@@ -36,6 +36,7 @@ namespace gdf
 
     Reader::~Reader( )
     {
+        resetCache( );
         if( m_record_nocache ) delete m_record_nocache;
         if( m_events ) delete m_events;
     }
@@ -100,7 +101,7 @@ namespace gdf
     {
         resetCache( );
         m_record_cache.clear( );
-		size_t num_records = boost::numeric_cast<size_t>( m_header.getMainHeader_readonly().get_num_datarecords() );
+        size_t num_records = boost::numeric_cast<size_t>( m_header.getMainHeader_readonly().get_num_datarecords() );
         m_record_cache.resize( num_records, NULL );
     }
 
