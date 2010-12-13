@@ -1,7 +1,9 @@
 cmake_minimum_required( VERSION 2.8 )
-project( GDF )
+#project( GDF )
 
 set( BUILD_SHARED_LIBS true CACHE BOOL "Wether we shall build shared or dynamic libraries." )
+
+set( GDF_SOURCE_ROOT ${Project_SOURCE_DIR} )
 
 ENABLE_TESTING( )
 

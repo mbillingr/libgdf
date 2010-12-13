@@ -1,0 +1,7 @@
+#ifndef __CONFIG_TESTS_H_INCLUDED__
+#define __CONFIG_TESTS_H_INCLUDED__
+
+#cmakedefine GDF_SOURCE_ROOT "@GDF_SOURCE_ROOT@"
+
+#endif
+
