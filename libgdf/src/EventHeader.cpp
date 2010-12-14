@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with libGDF.  If not, see <http://www.gnu.org/licenses/>.
 //
-// Copyright 2010 Martin Billinger
+// Copyright 2010 Martin Billinger, Christoph Eibel
 
 #include "GDF/EventHeader.h"
 #include "GDF/Exceptions.h"
@@ -162,6 +162,19 @@ namespace gdf
         }
     }
 
+    //-------------------------------------------------------------------------
+    std::vector<Mode1Event> EventHeader::getMode1Events () const
+    {
+        return m_mode1;
+    }
+
+    //-------------------------------------------------------------------------
+    std::vector<Mode3Event> EventHeader::getMode3Events () const
+    {
+        return m_mode3;
+    }
+
+    //-------------------------------------------------------------------------
     void EventHeader::getEvent( uint32 index, Mode1Event &ev )
     {
         if( m_mode != 1 )

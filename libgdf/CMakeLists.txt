@@ -2,11 +2,11 @@ cmake_minimum_required( VERSION 2.6 )
 project( GDF )
 
 if( UNIX )
-	add_definitions( -Wall -Wextra -pedantic -Werror -fPIC)
+        add_definitions( -Wall -Wextra -pedantic -Werror -fPIC -O2 )
 elseif( MINGW )
-	add_definitions( -Wall -Wextra -pedantic -Werror )
+        add_definitions( -Wall -Wextra -pedantic -Werror -O2 )
 elseif( WIN32 )
-	add_definitions( -W3 )
+        add_definitions( -W3 -O2 )
 endif( UNIX )
 
 #set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${GDF_SOURCE_DIR}/lib )
@@ -39,6 +39,7 @@ set( HEADERS
 	include/GDF/tools.h
 	include/GDF/Types.h
 	include/GDF/Writer.h
+        include/GDF/EventConverter.h
 )
 
 set( SOURCES
@@ -53,6 +54,7 @@ set( SOURCES
 	src/SignalHeader.cpp
 	src/Types.cpp
 	src/Writer.cpp
+        src/EventConverter.cpp
 )
 
 add_library( GDF ${HEADERS} ${SOURCES} ${Boost_LIBRARIES} )
