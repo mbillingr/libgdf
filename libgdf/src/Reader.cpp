@@ -19,6 +19,7 @@
 #include "GDF/Reader.h"
 #include "GDF/tools.h"
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/lexical_cast.hpp>
 //#include <iostream>
 
 namespace gdf
@@ -60,6 +61,9 @@ namespace gdf
 
         m_file >> m_header;
 
+	if (boost::lexical_cast<float>(m_header.getMainHeader_readonly ().get_version_id ().substr(4, m_header.getMainHeader_readonly ().get_version_id ().size () - 4)) < 2)
+	  throw exception::general (std::string("Version ") + m_header.getMainHeader_readonly ().get_version_id () + " is not supported by this reader.");
+	
         // determine record length
         m_record_length = 0;
         for( size_t i=0; i<m_header.getMainHeader_readonly().get_num_signals(); i++ )
