@@ -1,0 +1,69 @@
+From 1e32b8557e6dfc822561ac8a4c59f7347124131d Mon Sep 17 00:00:00 2001
+From: Yaroslav Halchenko <debian@onerussian.com>
+Date: Wed, 22 Dec 2010 09:53:11 -0500
+Subject: [PATCH 1/3] make explicit option either to build/include tests
+
+---
+ CMakeLists.txt      |   12 +++++++-----
+ test/CMakeLists.txt |    8 ++++----
+ 2 files changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3be4b98..8f088cc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,12 +1,12 @@
+ cmake_minimum_required( VERSION 2.8 )
+ #project( GDF )
+ 
++option( BUILD_TESTING "Build tests" OFF )
++
+ set( BUILD_SHARED_LIBS true CACHE BOOL "Wether we shall build shared or dynamic libraries." )
+ 
+ set( GDF_SOURCE_ROOT ${Project_SOURCE_DIR} )
+ 
+-ENABLE_TESTING( )
+-
+ add_subdirectory( libgdf )
+ add_subdirectory( tools )
+ 
+@@ -19,6 +19,8 @@ set_target_properties(GDF PROPERTIES
+ 	VERSION ${GDF_VERSION}
+ 	SOVERSION ${GDF_SHAREDLIB_SOVERSION})
+ 
+-add_subdirectory( test )
+-
+-
++if (BUILD_TESTING)
++	include( CTest )
++	enable_testing( )
++	add_subdirectory( test )
++endif()
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+index c1c5d78..f6d66b9 100644
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -23,16 +23,16 @@ set( SOURCES
+ 	testtest.cpp
+ )
+ 
+-add_executable( testok EXCLUDE_FROM_ALL testOK.cpp )
++add_executable( testok testOK.cpp )
+ target_link_libraries( testok ${Boost_LIBRARIES} GDF )
+ 
+-add_executable( testfail EXCLUDE_FROM_ALL testFail.cpp )
++add_executable( testfail testFail.cpp )
+ target_link_libraries( testfail ${Boost_LIBRARIES} GDF )
+ 
+-add_executable( testCreateGDF EXCLUDE_FROM_ALL testCreateGDF.cpp )
++add_executable( testCreateGDF testCreateGDF.cpp )
+ target_link_libraries( testCreateGDF ${Boost_LIBRARIES} GDF )
+ 
+-add_executable( testRWConsistency EXCLUDE_FROM_ALL testRWConsistency.cpp )
++add_executable( testRWConsistency testRWConsistency.cpp )
+ target_link_libraries( testRWConsistency ${Boost_LIBRARIES} GDF )
+ 
+ add_test( NAME testok COMMAND testok )
+-- 
+1.7.2.3
+
