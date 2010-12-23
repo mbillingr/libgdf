@@ -1,0 +1,7 @@
+Format: extended
+Tasks: debian-science/electrophysiology,
+	   debian-med/imaging-dev
+Depends: libgdf-dev
+Pkg-URL: http://neuro.debian.net/pkgs/%(Pkg-Name)s.html
+Language: C++, Octave/Matlab
+

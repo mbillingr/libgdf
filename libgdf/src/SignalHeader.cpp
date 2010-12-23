@@ -60,6 +60,8 @@ namespace gdf {
         sensor_pos[2] = 0;
         set_sensor_info( 0 );
         memset( reserved_2.item, 0, reserved_2.len );
+
+        samplerate = 0;
     }
 
     //===================================================================================================

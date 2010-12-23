@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 2.6 )
+cmake_minimum_required( VERSION 2.8 )
 project( gdf_merger )
 
 if( UNIX )
@@ -9,7 +9,7 @@ elseif( WIN32 )
 	add_definitions( -W3 )
 endif( UNIX )
 
-find_package( Boost 1.36.0 COMPONENTS date_time filesystem system program_options )
+find_package( Boost 1.36.0 COMPONENTS filesystem program_options )
 
 include_directories(
 	../../libgdf/include

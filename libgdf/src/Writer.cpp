@@ -76,7 +76,14 @@ namespace gdf
             }
         }
 
+        m_file.clear( );
+
         m_file.open( m_filename.c_str(), std::ios_base::out | std::ios_base::binary | std::ios_base::trunc );
+
+        if( m_file.fail() )
+        {
+            throw std::invalid_argument( "Error opening file for writing." );
+        }
 
         m_eventbuffermemory = flags & writer_ev_memory;
         if( m_eventbuffermemory )
@@ -134,7 +141,10 @@ namespace gdf
         writeEvents( );
 
         if( !m_eventbuffermemory )
+        {
             m_evbuf_file.close( );
+            remove( (m_filename+".events").c_str() );
+        }
 
         m_header.setLock( false );
 

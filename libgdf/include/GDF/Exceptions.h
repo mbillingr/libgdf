@@ -180,6 +180,21 @@ namespace gdf {
             wrong_eventmode( std::string str ) : domain_error("Wrong event mode: "+str) { }
         };
 
+        ///
+        class incompatible_gdf_version : public general
+        {
+        public:
+            incompatible_gdf_version (std::string version_of_file) :
+                    general ("Version \""+version_of_file+"\" not supported!"),
+                    version_of_file_ (version_of_file) {}
+
+            virtual ~incompatible_gdf_version () throw () {}
+
+            std::string getVersionOfFile () {return version_of_file_;}
+        private:
+            std::string version_of_file_;
+        };
+
         /// Header Issues
         class header_issues : public std::exception
         {
@@ -196,12 +211,12 @@ namespace gdf {
 
             virtual ~header_issues( ) throw() { }
 
-            const char *what( ) const throw()
+            void generate_message( )
             {
                 std::stringstream ss;
                 std::list< std::string >::const_iterator it;
                 if( warnings.size( ) > 0 )
-                    ss << "Warnings: " << std::endl;
+                    ss << std::string("Warnings: ") << std::endl;
                 for( it=warnings.begin(); it!=warnings.end(); it++ )
                     ss << " -> " << *it << std::endl;
 
@@ -211,8 +226,20 @@ namespace gdf {
                 for( it=errors.begin(); it!=errors.end(); it++ )
                     ss << " -> " << *it << std::endl;
                 }
-                return ss.str( ).c_str( );
+
+                std::string str = ss.str( );
             }
+
+            const char *what( ) const throw()
+            {
+                return str.c_str( );
+            }
+
+            size_t num_warnings( ) { return warnings.size(); }
+            size_t num_errors( ) { return errors.size(); }
+
+        private:
+            std::string str;
         };
     }
 }

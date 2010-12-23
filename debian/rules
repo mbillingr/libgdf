@@ -14,8 +14,8 @@ export LDFLAGS = -Wl,--as-needed
 UVER = $(shell LC_ALL=C dpkg-parsechangelog | grep '^Version:' | cut -d ' ' -f 2,2 | cut -d '-' -f 1,1)
 
 DEB_CMAKE_EXTRA_FLAGS = \
-	-DCMAKE_SKIP_RPATH:BOOL=ON \
-	-DBUILD_SHARED_LIBS:BOOL=ON
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DBUILD_TESTING:BOOL=ON
 
 # OCTDIR=$(shell octave-config --oct-site-dir)
 # get octave paths (have to build-depend on octave-headers)

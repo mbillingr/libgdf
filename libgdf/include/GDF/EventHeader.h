@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with libGDF.  If not, see <http://www.gnu.org/licenses/>.
 //
-// Copyright 2010 Martin Billinger
+// Copyright 2010 Martin Billinger, Christoph Eibel
 
 #ifndef __EVENTHEADER_H_INCLUDED__
 #define __EVENTHEADER_H_INCLUDED__
@@ -85,6 +85,12 @@ namespace gdf
 
         /// Returns a Mode 1 Event
         void getEvent( uint32 index, Mode1Event &ev );
+
+        /// Returns all Mode 1 Events
+        std::vector<Mode1Event> getMode1Events () const;
+
+        /// Returns all Mode 3 Events
+        std::vector<Mode3Event> getMode3Events () const;
 
         /// Returns a Mode 3 Event
         void getEvent( uint32 index, Mode3Event &ev );

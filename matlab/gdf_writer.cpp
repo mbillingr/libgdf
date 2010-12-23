@@ -22,8 +22,17 @@
 #include "matlab_tools/mxStructAccess.h"
 #include <GDF/Writer.h>
 #include <mex.h>
+#include "math.h"
 
 using namespace std;
+
+#ifndef trunc
+inline double trunc( const double a ) { return floor( a ); }
+#endif
+
+#ifdef _WIN32
+inline bool isfinite( const double a ) { return _finite( a ); }
+#endif
 
 // ===================================================================================================
 //      Object Interface to mex
@@ -57,6 +66,7 @@ class CMD_clearall : public Command { void execute( mxArray *plhs[], const mxArr
 class CMD_getheader : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_setheader : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_createsignal : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
+class CMD_newsignal : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_recduration : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_eventconfig : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
 class CMD_addsample : public Command { void execute( mxArray *plhs[], const mxArray *prhs[] ); };
@@ -91,6 +101,7 @@ CmexObject::CmexObject( )
     commands.registerCommand( "Clear", new CMD_clear( ), 0, 1 );
     commands.registerCommand( "Clear All", new CMD_clearall( ), 0, 0 );
     commands.registerCommand( "CreateSignal", new CMD_createsignal( ), 0, 2 );
+    commands.registerCommand( "NewSignal", new CMD_newsignal( ), 1, 3 );
     commands.registerCommand( "Open", new CMD_open( ), 0, 2 );
     commands.registerCommand( "Close", new CMD_close( ), 0, 1 );
     commands.registerCommand( "GetHeader", new CMD_getheader( ), 1, 1 );
@@ -174,7 +185,22 @@ void CMD_createsignal::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
     w->createSignal( channel - 1, true );
 }
 
-void CMD_recduration::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
+void CMD_newsignal::execute( mxArray *plhs[], const mxArray *prhs[] )
+{
+    size_t handle = mx::getNumeric<size_t>( prhs[0] );
+    gdf::uint32 type = mx::getNumeric<gdf::uint32>( prhs[1] );
+    gdf::uint32 fs = mx::getNumeric<gdf::uint32>( prhs[2] );
+    gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
+    size_t channel = w->getFirstFreeSignalIndex( );
+    w->createSignal( channel, true );
+    plhs[0] = mxCreateNumericMatrix( 1, 1, mxUINT64_CLASS, mxREAL );
+    *reinterpret_cast<size_t*>(mxGetData( plhs[0] )) = channel + 1;
+    
+    w->getSignalHeader(channel).set_datatype( type );
+    w->getSignalHeader(channel).set_samplerate( fs );    
+}
+
+void CMD_recduration::execute( mxArray ** /*plhs[]*/, const mxArray *prhs[] )
 {
     size_t handle = mx::getNumeric<size_t>( prhs[0] );
     gdf::Writer *w = CmexObject::getInstance().writers.get( handle );
