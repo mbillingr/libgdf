@@ -1,11 +1,11 @@
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required( VERSION 2.6 )
 #project( GDF )
+
+option( BUILD_TESTING "Build tests" OFF )
 
 set( BUILD_SHARED_LIBS true CACHE BOOL "Wether we shall build shared or dynamic libraries." )
 
 set( GDF_SOURCE_ROOT ${Project_SOURCE_DIR} )
-
-ENABLE_TESTING( )
 
 add_subdirectory( libgdf )
 add_subdirectory( tools )
@@ -19,6 +19,8 @@ set_target_properties(GDF PROPERTIES
 	VERSION ${GDF_VERSION}
 	SOVERSION ${GDF_SHAREDLIB_SOVERSION})
 
-add_subdirectory( test )
-
-
+if (BUILD_TESTING)
+	include( CTest )
+	enable_testing( )
+	add_subdirectory( test )
+endif()
