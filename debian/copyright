@@ -23,8 +23,16 @@ License: LGPL-3
  On Debian systems, the complete text of the GNU Lesser General
  Public License can be found in "/usr/share/common-licenses/LGPL-3".
 
+Files: libgdf/{src,include/GDF}/EventConverter.*
+Copyright: 2010, Christoph Eibel
+License: LGPL-3
+
+Files: libgdf/{src,include/GDF}/EventHeader.*
+Copyright: 2010, Martin Billinger, Christoph Eibel
+License: LGPL-3
+
 Files: tools/gdf_merger/{main.cpp,gdfmerger.h}
-Copyright: 2010, Martin Billinger
+Copyright: 2010, Christian Breitwieser
 License: LGPL-3
 
 Files: debian/*
