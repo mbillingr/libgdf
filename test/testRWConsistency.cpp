@@ -51,6 +51,8 @@ bool fcompare( std::string fileA, std::string fileB )
     std::ifstream f1( fileA.c_str(), std::ios_base::in | std::ios_base::binary );
     std::ifstream f2( fileB.c_str(), std::ios_base::in | std::ios_base::binary );
 
+    bool state = true;
+
     size_t ofs = 0;
     while( !( f1.eof() || f2.eof() ) )
     {
@@ -58,15 +60,17 @@ bool fcompare( std::string fileA, std::string fileB )
         f1 >> a;
         f2 >> b;
 
-        cout << ofs << " : " << (int)a << " ... " << (int)b << endl;
 
         if( a != b )
-            return false;
+        {
+            cout << ofs << " : " << (int)a << " ... " << (int)b << endl;
+            state = false;
+        }
 
         ofs++;
 
     }
-    return true;
+    return state;
 }
 
 int main( )
@@ -133,6 +137,8 @@ int main( )
             } break;
         }
         cout << "OK" << endl;
+
+        w.close( );
 
         cout << "Comparing files .... ";
         if( !fcompare( reffile, testfile ) )
