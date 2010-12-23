@@ -1,11 +1,9 @@
-libgdf (0.1.0+svn57-1) UNRELEASED; urgency=low
+libgdf (0.1.1~svn62-1) UNRELEASED; urgency=low
 
   * Fresh upstream snapshot (needed for sigviewer 0.5.0)
-  * Added patches submitted upstream:
+  * Patches submitted and adopted upstream:
     - 0001-make-explicit-option-either-to-build-include-tests
     - 0002-testfail-must-fail-so-lets-state-that
-  * Temporary patch to assure that 1 unittest fails consistently:
-    - 0003-TEMPORARY-testRWConsistency-is-known-to-fail
 
  -- Yaroslav Halchenko <debian@onerussian.com>  Wed, 22 Dec 2010 12:23:40 -0500
 
