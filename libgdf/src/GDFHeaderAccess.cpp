@@ -379,6 +379,8 @@ namespace gdf
 
         MainHeader *mh = &hdr.m_mainhdr;
         mh->version_id.fromstream( in );
+        if (mh->get_version_id() != "GDF 2.10")
+            throw exception::incompatible_gdf_version (mh->get_version_id ());
         mh->patient_id.fromstream( in );
         mh->reserved_1.fromstream( in );
         mh->patient_drugs.fromstream( in );
