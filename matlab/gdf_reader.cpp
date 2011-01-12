@@ -439,6 +439,8 @@ void CmexObject::parseInputArguments( )
             if( opt == OPTION_UPSAMPLEMODE )
             {
                 n++;
+		if( n >= nrhs_ )
+			throw invalid_argument( " No Upsamplemode specified." );
                 string arg = mx::getString( prhs_[n], mx::TOUPPER );
                 if( arg == OPTION_UPSAMPLEMODE_NEAREST )
                 {
@@ -456,6 +458,8 @@ void CmexObject::parseInputArguments( )
             else if( opt == OPTION_MULTIRATESIGNALS )
             {
                 n++;
+		if( n >= nrhs_ )
+			throw invalid_argument( " No Multirate mode specified." );
                 string arg = mx::getString( prhs_[n], mx::TOUPPER );
                 if( arg == OPTION_MULTIRATESIGNALS_UPSAMPLE )
                     multirate_mode = MR_UPSAMPLE;
