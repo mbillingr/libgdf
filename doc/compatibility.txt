@@ -1,0 +1,28 @@
+
+libGDF is an implementation of "GDF - A General Dataformat for Biosignals Version V2.20", http://arxiv.org/pdf/cs/0608052
+
+
+ 1. Major deviations from the specification
+======================================
+
+* The tag header (header3) is not supported.
+	Writing: It's not possible to create files that contain this header.
+	Reading: Header3 is ignored when reading a file that contains such a header.
+
+* Non-equidistant (sparse) sampling is not supported.
+	The specification defines sparsely sampled signals with a signal's samples_per_record set to 0.
+	Writing: Setting a signals sampling rate to 0 results in undefined behaviour.
+	Reading: Opening a file that contains sparsely sampled signals will result in undefined behaviour.
+
+
+ 2. General GDF related issues
+===============================
+
+* Although the version of the specification is 2.20, files are required to start with the string "GDF 2.10".
+
+* MainHeader.recording_start and MainHeader.patient_birthday are specified as uint32[2], but time conversion treats
+  these dates as int64. Implemented as uint64.
+
+* MainHeader.patient_ICD is defined as byte[6]. Implemented as a string of length 6.
+
+* SignalHeader.physical_dimension is specified as a 6 byte long char[8]. Implemented as a string of length 6.
