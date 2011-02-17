@@ -1,7 +1,7 @@
 
 
 
-% function [SIGNALS, HEADER, EVENTS] = gdf_writer( FILENAME, OPTION, VALUE, ... )
+% function [SIGNALS, HEADER, EVENTS] = gdf_reader( FILENAME, OPTION, VALUE, ... )
 %
 % Load GDF files.
 %
@@ -33,3 +33,7 @@
 %			when "DATAFORMAT" is set to "MATRIX".
 %			"NEAREST"	Nearest Neighbor interpolation
 %			"LINEAR"	Linear Interpolation
+%
+%       "DATAORIENTATION"   wether channels should be arranged in rows or columns
+%           "COL"           (default) each signal is a column vector.
+%           "ROW"           each signal is a row vector.

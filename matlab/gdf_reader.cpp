@@ -38,11 +38,22 @@ using namespace std;
 #define OPTION_UPSAMPLEMODE_NEAREST     "NEAREST"
 #define OPTION_UPSAMPLEMODE_LINEAR      "LINEAR"
 
+#define OPTION_DATAFORMAT       "DATAORIENTATION"
+#define OPTION_DATAFORMAT_ROW   "ROW"
+#define OPTION_DATAFORMAT_COL1  "COL"
+#define OPTION_DATAFORMAT_COL2  "COLUMN"
+
 enum eMultirateMode
 {
     MR_UPSAMPLE,
     MR_GROUP,
     MR_SINGLE
+};
+
+enum eDataOrientation
+{
+    DO_ROW,
+    DO_COL
 };
 
 // ===========================================================================
@@ -101,6 +112,7 @@ private:
     string filename;
     eMultirateMode multirate_mode;
     Interpolator *interpolator;
+    eDataOrientation data_orientation;
 
     gdf::uint16 num_signals;
     gdf::uint64 num_records;
@@ -144,6 +156,7 @@ CmexObject::CmexObject( size_t nlhs, mxArray *plhs[], size_t nrhs, const mxArray
     // set defaults
     multirate_mode = MR_SINGLE;
     interpolator = new InterpolatorDummy( );
+    data_orientation = DO_COL;
 
     nlhs_ = nlhs;
     plhs_ = plhs;
@@ -231,7 +244,13 @@ void CmexObject::execute( )
 void CmexObject::getUpsampleData( gdf::Reader &reader )
 {
     // construct output structure
-    plhs_[0] = mxCreateNumericMatrix( num_signals, num_records*max_rate, mxDOUBLE_CLASS, mxREAL );
+    if( data_orientation == DO_COL )
+        plhs_[0] = mxCreateNumericMatrix( num_signals, num_records*max_rate, mxDOUBLE_CLASS, mxREAL );
+    else if( data_orientation == DO_ROW )
+        plhs_[0] = mxCreateNumericMatrix( num_records*max_rate, num_signals, mxDOUBLE_CLASS, mxREAL );
+    else
+        throw invalid_argument( "Invalid data orientation in CmexObject::getUpsampleData()." );
+
     double *data = mxGetPr( plhs_[0] );
 
     // fill output structure with data
@@ -243,8 +262,16 @@ void CmexObject::getUpsampleData( gdf::Reader &reader )
             // signals with lower sampling rate only fill the beginning of the channel
             for( gdf::uint32 n=0; n<samples_per_record[s]; n++ )
             {
-                size_t column = n + r * samples_per_record[s];
-                data[s+column*num_signals] = rec->getChannel( s )->getSamplePhys( n );
+                if( data_orientation == DO_COL )
+                {
+                    size_t column = n + r * samples_per_record[s];
+                    data[s+column*num_signals] = rec->getChannel( s )->getSamplePhys( n );
+                }
+                else
+                {
+                    size_t row = n + r * samples_per_record[s];
+                    data[row+s*num_records*max_rate] = rec->getChannel( s )->getSamplePhys( n );
+                }
             }
         }
     }
@@ -255,7 +282,10 @@ void CmexObject::getUpsampleData( gdf::Reader &reader )
     {
         if( samples_per_record[s] != max_rate )
         {
-            interpolator->expand( &data[s], num_signals, samples_per_record[s]*num_records, max_rate*num_records );
+            if( data_orientation == DO_COL )
+                interpolator->expand( &data[s], num_signals, samples_per_record[s]*num_records, max_rate*num_records );
+            else
+                interpolator->expand( &data[s*num_records*max_rate], 1, samples_per_record[s]*num_records, max_rate*num_records );
         }
     }
 }
@@ -276,10 +306,22 @@ void CmexObject::getGroupData( gdf::Reader &reader )
         gdf::uint16 signal = it->second.front( );   // just one of the signals in this group
         size_t num_samples = samples_per_record[signal] * num_records;
 
-        mxArray *datablock = mxCreateNumericMatrix( it->second.size(), num_samples, mxDOUBLE_CLASS, mxREAL );
-        mx::setField( plhs_[0], datablock, "data", g+1 );
+        mxArray *datablock, *channel_table;
 
-        mxArray *channel_table = mxCreateNumericMatrix( 1, it->second.size(), mxDOUBLE_CLASS, mxREAL );
+        if( data_orientation == DO_COL )
+        {
+            datablock = mxCreateNumericMatrix( it->second.size(), num_samples, mxDOUBLE_CLASS, mxREAL );
+            channel_table = mxCreateNumericMatrix( 1, it->second.size(), mxDOUBLE_CLASS, mxREAL );
+        }
+        else if( data_orientation == DO_ROW)
+        {
+            datablock = mxCreateNumericMatrix( num_samples, it->second.size(), mxDOUBLE_CLASS, mxREAL );
+            channel_table = mxCreateNumericMatrix( it->second.size(), 1, mxDOUBLE_CLASS, mxREAL );
+        }
+        else
+            throw invalid_argument( "Invalid data orientation in CmexObject::getGroupData()." );
+
+        mx::setField( plhs_[0], datablock, "data", g+1 );
         mx::setField( plhs_[0], channel_table, "channels", g+1 );
 
         for( size_t c=0; c<it->second.size(); c++ )
@@ -302,8 +344,16 @@ void CmexObject::getGroupData( gdf::Reader &reader )
                 gdf::uint16 signal = it->second[s];
                 for( gdf::uint32 n=0; n<samples_per_record[signal]; n++ )
                 {
-                    size_t column = n + r*samples_per_record[signal];
-                    data[s+column*rows] = rec->getChannel(signal)->getSamplePhys( n );
+                    if( data_orientation == DO_COL )
+                    {
+                        size_t column = n + r * samples_per_record[signal];
+                        data[s+column*rows] = rec->getChannel(signal)->getSamplePhys( n );
+                    }
+                    else
+                    {
+                        size_t row = n + r * samples_per_record[s];
+                        data[row+s*num_records*samples_per_record[signal]] = rec->getChannel( s )->getSamplePhys( n );
+                    }
                 }
             }
         }
@@ -318,7 +368,14 @@ void CmexObject::getSingleData( gdf::Reader &reader )
     plhs_[0] = mxCreateCellMatrix( num_signals, 1 );
     for( gdf::uint16 s=0; s<num_signals; s++ )
     {
-        mxArray *signal = mxCreateNumericMatrix( 1, samples_per_record[s] * num_records, mxDOUBLE_CLASS, mxREAL );
+        mxArray *signal;
+        if( data_orientation == DO_COL)
+            signal = mxCreateNumericMatrix( 1, samples_per_record[s] * num_records, mxDOUBLE_CLASS, mxREAL );
+        else if( data_orientation == DO_ROW)
+            signal = mxCreateNumericMatrix( samples_per_record[s] * num_records, 1, mxDOUBLE_CLASS, mxREAL );
+        else
+            throw invalid_argument( "Invalid data orientation in CmexObject::getSingleData()." );
+
         mxSetCell( plhs_[0], s, signal );
     }
 
@@ -439,8 +496,8 @@ void CmexObject::parseInputArguments( )
             if( opt == OPTION_UPSAMPLEMODE )
             {
                 n++;
-		if( n >= nrhs_ )
-			throw invalid_argument( " No Upsamplemode specified." );
+                if( n >= nrhs_ )
+                    throw invalid_argument( " No Upsamplemode specified." );
                 string arg = mx::getString( prhs_[n], mx::TOUPPER );
                 if( arg == OPTION_UPSAMPLEMODE_NEAREST )
                 {
@@ -458,9 +515,9 @@ void CmexObject::parseInputArguments( )
             else if( opt == OPTION_MULTIRATESIGNALS )
             {
                 n++;
-		if( n >= nrhs_ )
-			throw invalid_argument( " No Multirate mode specified." );
-                string arg = mx::getString( prhs_[n], mx::TOUPPER );
+                if( n >= nrhs_ )
+                throw invalid_argument( " No Multirate mode specified." );
+                    string arg = mx::getString( prhs_[n], mx::TOUPPER );
                 if( arg == OPTION_MULTIRATESIGNALS_UPSAMPLE )
                     multirate_mode = MR_UPSAMPLE;
                 else if( arg == OPTION_MULTIRATESIGNALS_GROUOP )
@@ -469,6 +526,21 @@ void CmexObject::parseInputArguments( )
                     multirate_mode = MR_SINGLE;
                 else
                     throw invalid_argument( " Unknown Multirate mode: '"+arg+"'" );
+            }
+            else if( opt == OPTION_DATAFORMAT )
+            {
+                n++;
+                if( n >= nrhs_ )
+                throw invalid_argument( " No Data Orientation specified." );
+                    string arg = mx::getString( prhs_[n], mx::TOUPPER );
+                if( arg == OPTION_DATAFORMAT_COL1 )
+                    data_orientation = DO_COL;
+                else if( arg == OPTION_DATAFORMAT_COL2 )
+                    data_orientation = DO_COL;
+                else if( arg == OPTION_DATAFORMAT_ROW )
+                    data_orientation = DO_ROW;
+                else
+                    throw invalid_argument( " Unknown Data Orientation: '"+arg+"'" );
             }
         } catch( mx::Exception &e )
         {
