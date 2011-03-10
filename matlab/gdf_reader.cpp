@@ -232,7 +232,7 @@ void CmexObject::execute( )
             constructHeader( reader );
         } catch( std::exception &e )
         {
-            mexPrintf( "Exception while constructing the header:\n%s", e.what() );
+            mexPrintf( "Exception while constructing the header:\n%s\nThe header structure may be incomplete!\n", e.what() );
         }
     }
 
