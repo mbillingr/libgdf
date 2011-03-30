@@ -244,9 +244,9 @@ void CmexObject::execute( )
 void CmexObject::getUpsampleData( gdf::Reader &reader )
 {
     // construct output structure
-    if( data_orientation == DO_COL )
+    if( data_orientation == DO_ROW )
         plhs_[0] = mxCreateNumericMatrix( num_signals, num_records*max_rate, mxDOUBLE_CLASS, mxREAL );
-    else if( data_orientation == DO_ROW )
+    else if( data_orientation == DO_COL )
         plhs_[0] = mxCreateNumericMatrix( num_records*max_rate, num_signals, mxDOUBLE_CLASS, mxREAL );
     else
         throw invalid_argument( "Invalid data orientation in CmexObject::getUpsampleData()." );
@@ -262,7 +262,7 @@ void CmexObject::getUpsampleData( gdf::Reader &reader )
             // signals with lower sampling rate only fill the beginning of the channel
             for( gdf::uint32 n=0; n<samples_per_record[s]; n++ )
             {
-                if( data_orientation == DO_COL )
+                if( data_orientation == DO_ROW )
                 {
                     size_t column = n + r * samples_per_record[s];
                     data[s+column*num_signals] = rec->getChannel( s )->getSamplePhys( n );
@@ -282,7 +282,7 @@ void CmexObject::getUpsampleData( gdf::Reader &reader )
     {
         if( samples_per_record[s] != max_rate )
         {
-            if( data_orientation == DO_COL )
+            if( data_orientation == DO_ROW )
                 interpolator->expand( &data[s], num_signals, samples_per_record[s]*num_records, max_rate*num_records );
             else
                 interpolator->expand( &data[s*num_records*max_rate], 1, samples_per_record[s]*num_records, max_rate*num_records );
@@ -308,12 +308,12 @@ void CmexObject::getGroupData( gdf::Reader &reader )
 
         mxArray *datablock, *channel_table;
 
-        if( data_orientation == DO_COL )
+        if( data_orientation == DO_ROW )
         {
             datablock = mxCreateNumericMatrix( it->second.size(), num_samples, mxDOUBLE_CLASS, mxREAL );
             channel_table = mxCreateNumericMatrix( 1, it->second.size(), mxDOUBLE_CLASS, mxREAL );
         }
-        else if( data_orientation == DO_ROW)
+        else if( data_orientation == DO_COL)
         {
             datablock = mxCreateNumericMatrix( num_samples, it->second.size(), mxDOUBLE_CLASS, mxREAL );
             channel_table = mxCreateNumericMatrix( it->second.size(), 1, mxDOUBLE_CLASS, mxREAL );
@@ -344,7 +344,7 @@ void CmexObject::getGroupData( gdf::Reader &reader )
                 gdf::uint16 signal = it->second[s];
                 for( gdf::uint32 n=0; n<samples_per_record[signal]; n++ )
                 {
-                    if( data_orientation == DO_COL )
+                    if( data_orientation == DO_ROW )
                     {
                         size_t column = n + r * samples_per_record[signal];
                         data[s+column*rows] = rec->getChannel(signal)->getSamplePhys( n );
@@ -369,9 +369,9 @@ void CmexObject::getSingleData( gdf::Reader &reader )
     for( gdf::uint16 s=0; s<num_signals; s++ )
     {
         mxArray *signal;
-        if( data_orientation == DO_COL)
+        if( data_orientation == DO_ROW)
             signal = mxCreateNumericMatrix( 1, samples_per_record[s] * num_records, mxDOUBLE_CLASS, mxREAL );
-        else if( data_orientation == DO_ROW)
+        else if( data_orientation == DO_COL)
             signal = mxCreateNumericMatrix( samples_per_record[s] * num_records, 1, mxDOUBLE_CLASS, mxREAL );
         else
             throw invalid_argument( "Invalid data orientation in CmexObject::getSingleData()." );
