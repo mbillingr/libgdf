@@ -3,7 +3,11 @@ cmake_minimum_required( VERSION 2.8 )
 
 option( BUILD_TESTING "Build tests" OFF )
 
-set( BUILD_SHARED_LIBS true CACHE BOOL "Wether we shall build shared or dynamic libraries." )
+if( WIN32 )
+	set( BUILD_SHARED_LIBS false CACHE BOOL "Wether we shall build shared or dynamic libraries." )
+else( WIN32 )
+	set( BUILD_SHARED_LIBS true CACHE BOOL "Wether we shall build shared or dynamic libraries." )
+endif( WIN32 )
 
 set( GDF_SOURCE_ROOT ${Project_SOURCE_DIR} )
 
