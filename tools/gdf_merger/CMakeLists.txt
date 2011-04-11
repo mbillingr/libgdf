@@ -9,7 +9,7 @@ elseif( WIN32 )
 	add_definitions( -W3 )
 endif( UNIX )
 
-find_package( Boost 1.36.0 COMPONENTS filesystem program_options )
+find_package( Boost COMPONENTS filesystem program_options )
 
 include_directories(
 	../../libgdf/include
@@ -26,7 +26,9 @@ set( SOURCES
 )
 
 add_executable( gdf_merger ${HEADERS} ${SOURCES} )
-target_link_libraries( gdf_merger ${Boost_LIBRARIES} GDF )
+if( BUILD_SHARED_LIBS MATCHES true )
+	target_link_libraries( gdf_merger ${Boost_LIBRARIES} GDF)
+endif( BUILD_SHARED_LIBS MATCHES true )	
 
 INSTALL( TARGETS gdf_merger
 	RUNTIME DESTINATION bin
