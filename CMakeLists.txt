@@ -16,7 +16,7 @@ add_subdirectory( tools )
 
 # shared library API versioning (soversion) -- NOT the same as the release version
 # it follows first number
-set(GDF_VERSION "0.1.1")
+set(GDF_VERSION "0.1.2")
 string( REGEX MATCH "^[0-9]+" GDF_SHAREDLIB_SOVERSION ${GDF_VERSION})
 
 set_target_properties(GDF PROPERTIES
