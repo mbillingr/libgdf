@@ -2,7 +2,7 @@ function gdf_resample( fs_new, inputfile, outputfile, datatype )
 
 % 1. load gdf file
 
-    [signals, header, events] = gdf_reader( inputfile, 'multiratesignals', 'single' );
+    [signals, header, events] = gdf_reader( inputfile, 'multiratesignals', 'single', 'dataorientation', 'row' );
 
     num_channels = length( signals );
     
