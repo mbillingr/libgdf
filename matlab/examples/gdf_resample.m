@@ -44,6 +44,10 @@ function gdf_resample( fs_new, inputfile, outputfile, datatype )
     
 % 3. fix event positions
 
+    if events.mode == 3
+        events.duration = events.duration * double(fs_new / events.sample_rate);
+    end
+
     events.position = events.position * double(fs_new / events.sample_rate);
     events.sample_rate = fs_new;
     
