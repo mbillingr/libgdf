@@ -1,5 +1,4 @@
 # Compulsory line, this is a version 3 file
 version=3
-# for devscripts >= 2.9
-# no releases yet -- so commented out
-# http://sf.net/libgdf/libgdf-(.*)\.tar\.gz
+opts=filenamemangle=s/-source// \
+    http://sf.net/libgdf/libgdf-(.*)-source\.tar\.gz

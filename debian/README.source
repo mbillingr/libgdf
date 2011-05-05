@@ -4,8 +4,7 @@ libgdf for Debian
 Upstream sources are obtained directly from SVN via git-svn bridge due
 to:
 
-- no public release yet available
 - simplify interactions with upstream
 - advocate use of GIT by providing ready to use clone
 
- -- Yaroslav Halchenko <debian@onerussian.com>, Thu, 28 Oct 2010 11:30:34 -0400
+ -- Yaroslav Halchenko <debian@onerussian.com>, Thu,  5 May 2011 00:24:50 -0400
