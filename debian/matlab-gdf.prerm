@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-distdir=/usr/lib/matlab/site/libgdf
+distdir=/usr/lib/matlab/site/gdf
 
 # remove compiled binaries
 rm -f $distdir/*.mex?*
