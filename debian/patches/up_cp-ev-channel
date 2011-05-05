@@ -1,0 +1,23 @@
+--- a/matlab/gdf_writer.cpp
++++ b/matlab/gdf_writer.cpp
+@@ -195,9 +195,9 @@ void CMD_newsignal::execute( mxArray *pl
+     w->createSignal( channel, true );
+     plhs[0] = mxCreateNumericMatrix( 1, 1, mxUINT64_CLASS, mxREAL );
+     *reinterpret_cast<size_t*>(mxGetData( plhs[0] )) = channel + 1;
+-    
++
+     w->getSignalHeader(channel).set_datatype( type );
+-    w->getSignalHeader(channel).set_samplerate( fs );    
++    w->getSignalHeader(channel).set_samplerate( fs );
+ }
+ 
+ void CMD_recduration::execute( mxArray ** /*plhs[]*/, const mxArray *prhs[] )
+@@ -294,7 +294,7 @@ void CMD_mode3event::execute( mxArray **
+     gdf::uint16 type = mx::getNumeric<gdf::uint16>( prhs[2] );
+     gdf::uint16 chan = mx::getNumeric<gdf::uint16>( prhs[3] );
+     gdf::uint32 dur = mx::getNumeric<gdf::uint32>( prhs[4] );
+-    w->addEvent( pos, type, chan-1, dur );
++    w->addEvent( pos, type, chan, dur );
+ }
+ 
+ void CMD_open::execute( mxArray ** /*plhs*/, const mxArray *prhs[] )
