@@ -1,11 +1,18 @@
 #!/bin/sh
 set -e
-distdir=/usr/lib/matlab/site/gdf
 
-# remove compiled binaries
-rm -f $distdir/*.mex?*
+case "$1" in
+    remove|upgrade|deconfigure)
+        debian-matlab-mexhelper gdf clean
+    ;;
 
-# try removing the libdir, but don't fail if not empty
-rmdir --ignore-fail-on-non-empty $distdir
+    failed-upgrade)
+    ;;
+
+    *)
+        echo "prerm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
 
 #DEBHELPER#

@@ -12,6 +12,7 @@
 export LDFLAGS = -Wl,--as-needed
 
 UVER = $(shell LC_ALL=C dpkg-parsechangelog | grep '^Version:' | cut -d ' ' -f 2,2 | cut -d '-' -f 1,1)
+H2MVER = $(shell help2man --version | head -1 | sed -e 's/.* //g')
 
 DEB_CMAKE_EXTRA_FLAGS = \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
@@ -34,10 +35,16 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	dh_auto_build
 
-	: # Build quick and dirty manpage
-	LD_LIBRARY_PATH=$$(/bin/ls -d $$PWD/obj-*)/libgdf \
+	: # Build quick and dirty manpage whenever recent help2man is available
+	if dpkg --compare-versions $(H2MVER) ge 1.37.1; then \
+	  LD_LIBRARY_PATH=$$(/bin/ls -d $$PWD/obj-*)/libgdf \
 		help2man --no-info -S libGDF -s 1 --version-string=$(UVER) \
-		*/tools/gdf_merger/gdf_merger >| gdf_merger.1
+		-n "Merge multiple GDF files" \
+		*/tools/gdf_merger/gdf_merger >| gdf_merger.1; \
+	else \
+		touch gdf_merger.1; \
+	fi
+
 	: # Build Octave bindings
 	cd matlab; \
 	 for f in *.cpp; do \

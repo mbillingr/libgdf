@@ -10,7 +10,6 @@ Section: libs
 Homepage: http://sourceforge.net/projects/libgdf
 Vcs-Browser: http://git.debian.org/?p=pkg-exppsy/libgdf.git
 Vcs-Git: git://git.debian.org/git/pkg-exppsy/libgdf.git
-XS-DM-Upload-Allowed: yes
 
 
 Package: libgdf0
@@ -67,14 +66,12 @@ Description: IO library for the GDF -- Octave interface
  storage for biosignals, such as EEG, ECG, MEG etc.
  .
  This package provides Octave bindings for libgdf.
- .
- HIGHLY EXPERIMENTAL -- USE AT YOUR OWN RISK.
+
 
 Package: matlab-gdf
 Section: contrib/science
 Architecture: all
-Depends: libgdf-dev (>= ${source:Version}), ${misc:Depends}
-Recommends: matlab
+Depends: libgdf-dev (>= ${source:Version}), matlab-support, ${misc:Depends}
 Description: IO library for the GDF -- Matlab interface
  GDF (General Dataformat for Biosignals) is intended to provide a generic
  storage for biosignals, such as EEG, ECG, MEG etc.
