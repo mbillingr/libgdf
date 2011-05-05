@@ -5,6 +5,8 @@ libgdf (0.1.1-1) unstable; urgency=low
     - fixed data orientation in the resampling example
     - fixed event channel numbering in gdf_writer
     - fixed event mode 3 handling in the resampling example
+  * Depend on matlab-support package for install-time building of Matlab
+    extensions
 
  -- Yaroslav Halchenko <debian@onerussian.com>  Wed, 04 May 2011 21:29:24 -0400
 

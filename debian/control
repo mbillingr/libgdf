@@ -3,14 +3,13 @@ Priority: extra
 Maintainer: NeuroDebian Team <team@neuro.debian.net>
 Uploaders: Yaroslav Halchenko <debian@onerussian.com>, Michael Hanke <michael.hanke@gmail.com>
 Build-Depends: debhelper (>= 7.0.50~), cmake (>= 2.8), help2man,
-			   libboost-dev (> 1.34.2~), libboost-filesystem-dev, libboost-program-options-dev, libboost-date-time-dev,
+			   libboost-dev (>> 1.34.2~), libboost-filesystem-dev, libboost-program-options-dev, libboost-date-time-dev,
 			   octave-pkg-dev (>= 0.5.7)
-Standards-Version: 3.9.1
+Standards-Version: 3.9.2
 Section: libs
 Homepage: http://sourceforge.net/projects/libgdf
 Vcs-Browser: http://git.debian.org/?p=pkg-exppsy/libgdf.git
 Vcs-Git: git://git.debian.org/git/pkg-exppsy/libgdf.git
-XS-DM-Upload-Allowed: yes
 
 
 Package: libgdf0
@@ -67,14 +66,12 @@ Description: IO library for the GDF -- Octave interface
  storage for biosignals, such as EEG, ECG, MEG etc.
  .
  This package provides Octave bindings for libgdf.
- .
- HIGHLY EXPERIMENTAL -- USE AT YOUR OWN RISK.
+
 
 Package: matlab-gdf
 Section: contrib/science
 Architecture: all
-Depends: libgdf-dev (>= ${source:Version}), ${misc:Depends}
-Recommends: matlab
+Depends: libgdf-dev (>= ${source:Version}), matlab-support, ${misc:Depends}
 Description: IO library for the GDF -- Matlab interface
  GDF (General Dataformat for Biosignals) is intended to provide a generic
  storage for biosignals, such as EEG, ECG, MEG etc.

@@ -1,2 +1,2 @@
-matlab/{*.h,*.cpp,matlab_tools} usr/src/matlab/gdf/
-matlab/{examples,*.m} usr/lib/matlab/site/gdf
+matlab/{*.h,*.cpp,matlab_tools} usr/src/matlab/gdf
+matlab/{examples,*.m} usr/share/matlab/site/m/gdf
