@@ -1,3 +1,13 @@
+libgdf (0.1.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #601707)
+  * Few post-release upstream bugfixes absorbed into quilt patches:
+    - fixed data orientation in the resampling example
+    - fixed event channel numbering in gdf_writer
+    - fixed event mode 3 handling in the resampling example
+
+ -- Yaroslav Halchenko <debian@onerussian.com>  Wed, 04 May 2011 21:29:24 -0400
+
 libgdf (0.1.1~svn62-1) UNRELEASED; urgency=low
 
   * Fresh upstream snapshot (needed for sigviewer 0.5.0)
@@ -9,6 +19,6 @@ libgdf (0.1.1~svn62-1) UNRELEASED; urgency=low
 
 libgdf (0.1.0~svn31-1) UNRELEASED; urgency=low
 
-  * Initial release (Closes: #601707)
+  * Initial packaging
 
  -- Yaroslav Halchenko <debian@onerussian.com>  Thu, 28 Oct 2010 14:27:26 -0400
