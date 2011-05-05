@@ -9,7 +9,12 @@ elseif( WIN32 )
 	add_definitions( -W3 )
 endif( UNIX )
 
-find_package( Boost 1.36.0 COMPONENTS filesystem program_options )
+if( WIN32 )
+	set(Boost_USE_STATIC_LIBS        ON)
+	set(Boost_USE_MULTITHREADED      ON)
+	set(Boost_USE_STATIC_RUNTIME    OFF)
+endif( WIN32 )
+find_package( Boost COMPONENTS program_options filesystem system )
 
 include_directories(
 	../../libgdf/include
@@ -25,8 +30,9 @@ set( SOURCES
 	main.cpp
 )
 
+#message( ${Boost_LIBRARIES}  )
 add_executable( gdf_merger ${HEADERS} ${SOURCES} )
-target_link_libraries( gdf_merger ${Boost_LIBRARIES} GDF )
+target_link_libraries( gdf_merger ${Boost_LIBRARIES} GDF)	
 
 INSTALL( TARGETS gdf_merger
 	RUNTIME DESTINATION bin

@@ -60,7 +60,6 @@ namespace gdf
                 event_3.channel = 0;                             // ALL CHANNELS
                 event_3.type = iter->first;
                 event_3.position = iter->second[index].position;
-                mode_3_events.push_back (event_3);
 
                 if (iter->second[index+1].type == (iter->first | STOP_FLAG))
                 {
@@ -69,6 +68,8 @@ namespace gdf
                 }
                 else
                     event_3.duration = 0;
+
+                mode_3_events.push_back (event_3);
             }
         }
 

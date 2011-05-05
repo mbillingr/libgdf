@@ -442,6 +442,6 @@ namespace gdf
         if( it == m_sighdr.end() )
             return 0;
 
-        return m_mainhdr.get_num_datarecords() * it->second.get_samples_per_record();
+        return boost::numeric_cast<size_t>(m_mainhdr.get_num_datarecords()) * boost::numeric_cast<size_t>(it->second.get_samples_per_record());
     }
 }
