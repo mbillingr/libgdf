@@ -18,6 +18,7 @@
 
 #include "gdf_mex.h"
 #include "matlab_tools/mxStructAccess.h"
+#include <GDF/EventConverter.h>
 #include <GDF/Reader.h>
 #include <mex.h>
 
@@ -42,6 +43,8 @@ using namespace std;
 #define OPTION_DATAFORMAT_ROW   "ROW"
 #define OPTION_DATAFORMAT_COL1  "COL"
 #define OPTION_DATAFORMAT_COL2  "COLUMN"
+
+#define OPTION_CONVERTEVENTS    "FORCEMODE3EVENTS"
 
 enum eMultirateMode
 {
@@ -113,6 +116,7 @@ private:
     eMultirateMode multirate_mode;
     Interpolator *interpolator;
     eDataOrientation data_orientation;
+    bool convert_events;
 
     gdf::uint16 num_signals;
     gdf::uint64 num_records;
@@ -157,6 +161,7 @@ CmexObject::CmexObject( size_t nlhs, mxArray *plhs[], size_t nrhs, const mxArray
     multirate_mode = MR_SINGLE;
     interpolator = new InterpolatorDummy( );
     data_orientation = DO_COL;
+    convert_events = false;
 
     nlhs_ = nlhs;
     plhs_ = plhs;
@@ -403,7 +408,18 @@ void CmexObject::loadEvents( gdf::Reader &reader )
     gdf::EventHeader *evh = reader.getEventHeader( );
     gdf::uint32 num_ev = evh->getNumEvents( );
 
-    switch( evh->getMode() )
+    std::vector<gdf::Mode3Event> ev3;
+
+    gdf::uint8 mode = evh->getMode( );
+
+    if( convert_events && mode == 1 )
+    {
+        ev3 = gdf::convertMode1EventsIntoMode3Events( evh->getMode1Events() );
+        mode = 3;
+        num_ev = ev3.size( );
+    }
+
+    switch( mode )
     {
     default: throw invalid_argument( " Invalid Event Mode." );
     case 1: {
@@ -413,7 +429,7 @@ void CmexObject::loadEvents( gdf::Reader &reader )
             mx::setField( plhs_[2], NULL, GDFE_TYP );
 
             mx::setFieldNumeric( plhs_[2], evh->getSamplingRate( ), GDFE_FS );
-            mx::setFieldNumeric( plhs_[2], evh->getMode( ), GDFE_MODE );
+            mx::setFieldNumeric( plhs_[2], mode, GDFE_MODE );
 
             mxArray *mxpos = mxCreateNumericMatrix( 1, num_ev, mxUINT32_CLASS, mxREAL );
             mx::setField( plhs_[2], mxpos, GDFE_POS );
@@ -432,6 +448,10 @@ void CmexObject::loadEvents( gdf::Reader &reader )
             }
         } break;
     case 3: {
+
+            if( !convert_events )
+                ev3 = evh->getMode3Events( );
+
             mx::setField( plhs_[2], NULL, GDFE_MODE );
             mx::setField( plhs_[2], NULL, GDFE_FS );
             mx::setField( plhs_[2], NULL, GDFE_POS );
@@ -440,7 +460,7 @@ void CmexObject::loadEvents( gdf::Reader &reader )
             mx::setField( plhs_[2], NULL, GDFE_3_DUR );
 
             mx::setFieldNumeric( plhs_[2], evh->getSamplingRate( ), GDFE_FS );
-            mx::setFieldNumeric( plhs_[2], evh->getMode( ), GDFE_MODE );
+            mx::setFieldNumeric( plhs_[2], mode, GDFE_MODE );
 
             mxArray *mxpos = mxCreateNumericMatrix( 1, num_ev, mxUINT32_CLASS, mxREAL );
             mx::setField( plhs_[2], mxpos, GDFE_POS );
@@ -461,7 +481,8 @@ void CmexObject::loadEvents( gdf::Reader &reader )
             for( gdf::uint32 e=0; e<num_ev; e++ )
             {
                 gdf::Mode3Event event;
-                evh->getEvent( e, event );
+                //evh->getEvent( e, event );
+                event = ev3[e];
                 positions[e] = event.position;
                 types[e] = event.type;
                 channels[e] = event.channel;
@@ -541,6 +562,10 @@ void CmexObject::parseInputArguments( )
                     data_orientation = DO_ROW;
                 else
                     throw invalid_argument( " Unknown Data Orientation: '"+arg+"'" );
+            }
+            else if( opt == OPTION_CONVERTEVENTS )
+            {
+                convert_events = true;
             }
         } catch( mx::Exception &e )
         {

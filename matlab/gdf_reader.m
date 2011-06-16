@@ -37,3 +37,5 @@
 %       "DATAORIENTATION"   wether channels should be arranged in rows or columns
 %           "COL"           (default) each signal is a column vector.
 %           "ROW"           each signal is a row vector.
+%
+%       "FORCEMODE3EVENTS"  events are converted to mode 3.

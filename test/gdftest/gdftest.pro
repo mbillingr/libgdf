@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     ../../libgdf/src/EventHeader.cpp \
     ../../libgdf/src/Reader.cpp \
     ../../libgdf/src/Types.cpp \
-    ../../libgdf/src/Modifier.cpp
+    ../../libgdf/src/Modifier.cpp \
+    ../../libgdf/src/EventConverter.cpp
 HEADERS += ../../libgdf/include/GDF/Types.h \
     ../../libgdf/include/GDF/SignalHeader.h \
     ../../libgdf/include/GDF/Exceptions.h \
@@ -39,4 +40,5 @@ HEADERS += ../../libgdf/include/GDF/Types.h \
     ../../libgdf/include/GDF/EventHeader.h \
     ../../libgdf/include/GDF/Reader.h \
     ../../libgdf/include/GDF/Modifier.h \
-    ../../libgdf/include/GDF/pointerpool.h
+    ../../libgdf/include/GDF/pointerpool.h \
+    ../../libgdf/include/GDF/EventConverter.h
