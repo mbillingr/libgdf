@@ -25,6 +25,9 @@
 #include <boost/lexical_cast.hpp>
 
 
+#define VERBOSE
+
+
 using namespace std;
 
 // Calling options:
@@ -57,6 +60,16 @@ enum eDataOrientation
 {
     DO_ROW,
     DO_COL
+};
+
+enum eVerboseLevels
+{
+    V_NONE = 0,
+    V_CONSTRUCTOR_CALLS,
+    V_FUNCTION_CALLS,
+    V_FUNCTION_DETAILS,
+    V_FUNCTION_LOOPS,
+    V_ALL
 };
 
 // ===========================================================================
@@ -106,6 +119,8 @@ public:
 
     void parseInputArguments( );
 
+    void verboseMessage( int level, std::string message );
+
 private:
 
     size_t nlhs_, nrhs_;
@@ -125,6 +140,8 @@ private:
 
     map< gdf::uint32, vector<gdf::uint16> > signals_by_samplerate;
     vector<gdf::uint32> samples_per_record;
+
+    int verbose_level;
 };
 
 // ===========================================================================
@@ -140,8 +157,11 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
 // ===========================================================================
 
 CmexObject::CmexObject( size_t nlhs, mxArray *plhs[], size_t nrhs, const mxArray *prhs[] )
+    : verbose_level( V_NONE )
 {
     using boost::numeric_cast;
+
+    verboseMessage( V_CONSTRUCTOR_CALLS, "entering CmexObject::CmexObject( );");
 
     interpolator = NULL;
 
@@ -169,19 +189,23 @@ CmexObject::CmexObject( size_t nlhs, mxArray *plhs[], size_t nrhs, const mxArray
     prhs_ = prhs;
 
     parseInputArguments( );
+    verboseMessage( V_CONSTRUCTOR_CALLS, "leaving CmexObject::CmexObject( );");
 }
 
 // ===========================================================================
 
 CmexObject::~CmexObject( )
 {
+    verboseMessage( V_CONSTRUCTOR_CALLS, "entering CmexObject::~CmexObject( );");
     if( interpolator ) delete interpolator;
+    verboseMessage( V_CONSTRUCTOR_CALLS, "leaving CmexObject::~CmexObject( );");
 }
 
 // ===========================================================================
 
 void CmexObject::execute( )
 {
+    verboseMessage( V_FUNCTION_CALLS, "entering CmexObject::execute( );");
     gdf::Reader reader;
 
     reader.enableCache( false );
@@ -189,6 +213,8 @@ void CmexObject::execute( )
 
     num_signals = reader.getMainHeader_readonly().get_num_signals();
     num_records = reader.getMainHeader_readonly().get_num_datarecords();
+
+    verboseMessage( V_FUNCTION_DETAILS, "Number of data records: "+boost::lexical_cast<std::string>( num_records ) );
 
     if( num_signals > 0 )
     {
@@ -242,12 +268,15 @@ void CmexObject::execute( )
     }
 
     reader.close( );
+
+    verboseMessage( V_FUNCTION_CALLS, "leaving CmexObject::execute( );");
 }
 
 // ===========================================================================
 
 void CmexObject::getUpsampleData( gdf::Reader &reader )
 {
+    verboseMessage( V_FUNCTION_CALLS, "entering CmexObject::getUpsampleData( );");
     // construct output structure
     if( data_orientation == DO_ROW )
         plhs_[0] = mxCreateNumericMatrix( num_signals, num_records*max_rate, mxDOUBLE_CLASS, mxREAL );
@@ -293,13 +322,17 @@ void CmexObject::getUpsampleData( gdf::Reader &reader )
                 interpolator->expand( &data[s*num_records*max_rate], 1, samples_per_record[s]*num_records, max_rate*num_records );
         }
     }
+    verboseMessage( V_FUNCTION_CALLS, "leaving CmexObject::getUpsampleData( );");
 }
 
 // ===========================================================================
 
 void CmexObject::getGroupData( gdf::Reader &reader )
 {
+    verboseMessage( V_FUNCTION_CALLS, "entering CmexObject::getGroupData( );");
+
     // construct output structure
+    verboseMessage( V_FUNCTION_DETAILS, "   constructing output structure.");
 
     plhs_[0] = mxCreateStructMatrix( num_samplerates, 1, 0, NULL );
     mxAddField( plhs_[0], "channels" );
@@ -308,6 +341,7 @@ void CmexObject::getGroupData( gdf::Reader &reader )
     map< gdf::uint32, vector<gdf::uint16> >::iterator it = signals_by_samplerate.begin( );
     for( gdf::uint16 g=0; g<num_samplerates; g++, it++ )
     {
+        verboseMessage( V_FUNCTION_LOOPS, "     creating group." );
         gdf::uint16 signal = it->second.front( );   // just one of the signals in this group
         size_t num_samples = samples_per_record[signal] * num_records;
 
@@ -334,8 +368,16 @@ void CmexObject::getGroupData( gdf::Reader &reader )
     }
 
     // fill output structure with data
+    verboseMessage( V_FUNCTION_DETAILS, "   filling output structure." );
+
     for( gdf::uint64 r=0; r<num_records; r++ )
+    //for( gdf::uint64 r=0; r<100; r++ )
     {
+        if( r==0 )
+            verboseMessage( V_FUNCTION_LOOPS, "     1st record" );
+        else if( r==num_records-1 )
+            verboseMessage( V_FUNCTION_LOOPS, "     last record" );
+
         gdf::Record *rec = reader.getRecordPtr( r );
         it = signals_by_samplerate.begin( );
         for( gdf::uint16 g=0; g<num_samplerates; g++, it++ )
@@ -343,8 +385,8 @@ void CmexObject::getGroupData( gdf::Reader &reader )
             if( it->first == 0 )
                 continue;
             double *data = mxGetPr( mx::getField( plhs_[0], "data", g+1 ) );
-            size_t rows = it->second.size( );
-            for( size_t s=0; s<rows; s++ )
+            size_t sing = it->second.size( );	// signals in group
+            for( size_t s=0; s<sing; s++ )
             {
                 gdf::uint16 signal = it->second[s];
                 for( gdf::uint32 n=0; n<samples_per_record[signal]; n++ )
@@ -352,23 +394,29 @@ void CmexObject::getGroupData( gdf::Reader &reader )
                     if( data_orientation == DO_ROW )
                     {
                         size_t column = n + r * samples_per_record[signal];
-                        data[s+column*rows] = rec->getChannel(signal)->getSamplePhys( n );
+			size_t row = s;
+			size_t rows = sing;
+                        data[row+column*rows] = rec->getChannel(signal)->getSamplePhys( n );
                     }
                     else
                     {
-                        size_t row = n + r * samples_per_record[s];
-                        data[row+s*num_records*samples_per_record[signal]] = rec->getChannel( s )->getSamplePhys( n );
+			size_t column = s;
+                        size_t row = n + r * samples_per_record[signal];
+			size_t rows = num_records * samples_per_record[signal];
+                        data[row+column*rows] = rec->getChannel(signal)->getSamplePhys( n );
                     }
                 }
             }
         }
     }
+    verboseMessage( V_FUNCTION_CALLS, "leaving CmexObject::getGroupData( );");
 }
 
 // ===========================================================================
 
 void CmexObject::getSingleData( gdf::Reader &reader )
 {
+    verboseMessage( V_FUNCTION_CALLS, "entering CmexObject::getSingleData( );");
     // construct output structure
     plhs_[0] = mxCreateCellMatrix( num_signals, 1 );
     for( gdf::uint16 s=0; s<num_signals; s++ )
@@ -398,12 +446,14 @@ void CmexObject::getSingleData( gdf::Reader &reader )
             }
         }
     }
+    verboseMessage( V_FUNCTION_CALLS, "leaving CmexObject::getSingleData( );");
 }
 
 // ===========================================================================
 
 void CmexObject::loadEvents( gdf::Reader &reader )
 {
+    verboseMessage( V_FUNCTION_CALLS, "entering CmexObject::loadEvents( );");
     plhs_[2] = mxCreateStructMatrix( 1, 1, 0, NULL );
     gdf::EventHeader *evh = reader.getEventHeader( );
     gdf::uint32 num_ev = evh->getNumEvents( );
@@ -490,21 +540,25 @@ void CmexObject::loadEvents( gdf::Reader &reader )
             }
         } break;
     }
+    verboseMessage( V_FUNCTION_CALLS, "leaving CmexObject::loadEvents( );");
 }
 
 // ===========================================================================
 
 void CmexObject::constructHeader( gdf::Reader &reader )
 {
+    verboseMessage( V_FUNCTION_CALLS, "entering CmexObject::constructHeader( );");
     plhs_[1] = constructHeaderStruct( num_signals );
 
     Header2Struct( plhs_[1], &reader.getHeaderAccess_readonly() );
+    verboseMessage( V_FUNCTION_CALLS, "leaving CmexObject::constructHeader( );");
 }
 
 // ===========================================================================
 
 void CmexObject::parseInputArguments( )
 {
+    verboseMessage( V_FUNCTION_CALLS, "entering CmexObject::parseInputArguments( );");
     using boost::lexical_cast;
 
     filename = mx::getString( prhs_[0] );
@@ -572,6 +626,17 @@ void CmexObject::parseInputArguments( )
             throw invalid_argument( " While parsing argument "+lexical_cast<string>(n+1)+": "+e.what() );
         }
     }
+    verboseMessage( V_FUNCTION_CALLS, "leaving CmexObject::parseInputArguments( );");
+}
+
+// ===========================================================================
+
+void CmexObject::verboseMessage( int level, std::string message )
+{
+#ifdef VERBOSE
+    if( level <= verbose_level )
+        mexPrintf( ( "%d : " + message + "\n").c_str(), level );
+#endif //VERBOSE
 }
 
 // ===========================================================================
