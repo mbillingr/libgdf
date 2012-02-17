@@ -101,8 +101,10 @@ namespace gdf {
     struct HeaderItem : public HeaderItemBase
     {
         HeaderItem( ) : item(), pos(P) { }
-        void tostream( std::ostream & out ) const { out.write( reinterpret_cast<const char*>(&item), sizeof(item) ); }
-        void fromstream( std::istream &in ) { in.read( reinterpret_cast<char*>(&item), sizeof(item) ); }
+        //void tostream( std::ostream & out ) const { out.write( reinterpret_cast<const char*>(&item), sizeof(item) ); }
+        //void fromstream( std::istream &in ) { in.read( reinterpret_cast<char*>(&item), sizeof(item) ); }
+        void tostream( std::ostream & out ) const { writeLittleEndian( out, item ); }
+        void fromstream( std::istream &in ) { readLittleEndian( in, item ); }
         T item;
         size_t pos;
     };

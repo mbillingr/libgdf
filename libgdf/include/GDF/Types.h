@@ -21,6 +21,7 @@
 
 #include "GDF/Exceptions.h"
 #include <boost/cstdint.hpp>
+#include <boost/detail/endian.hpp>
 
 namespace gdf
 {
@@ -52,6 +53,34 @@ namespace gdf
     };
 
     size_t datatype_size( uint32 t );
+
+    template<typename T>
+    void writeLittleEndian( std::ostream &out, T item )
+    {
+#if defined(BOOST_LITTLE_ENDIAN)
+        out.write( reinterpret_cast<const char*>(&item), sizeof(item) );
+#elif defined(BOOST_BIG_ENDIAN)
+        const char* p = reinterpret_cast<const char*>(&item) + sizeof(item)-1;
+        for( size_t i=0; i<sizeof(item); i++ )
+            out.write( p--, 1 );
+#else
+    #error "Unable to determine system endianness."
+#endif
+    }
+
+    template<typename T>
+    void readLittleEndian( std::istream &in, T item )
+    {
+#if defined(BOOST_LITTLE_ENDIAN)
+        in.read( reinterpret_cast<char*>(&item), sizeof(item) );
+#elif defined(BOOST_BIG_ENDIAN)
+        char* p = reinterpret_cast<char*>(&item) + sizeof(item)-1;
+        for( size_t i=0; i<sizeof(item); i++ )
+		in.read( p--, 1 );
+#else
+    #error "Unable to determine system endianness."
+#endif
+    }
 
 }
 
