@@ -410,23 +410,41 @@ namespace gdf
         for( uint16 i=0; i<ns; i++ )
             hdr.createSignal( i );
 
+        std::cout << "0 tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).label.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).transducer_type.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).physical_dimension.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).physical_dimension_code.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).physmin.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).physmax.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).digmin.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).digmax.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).reserved_1.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).lowpass.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).highpass.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).notch.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).samples_per_record.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).datatype.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).sensor_pos.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).sensor_info.fromstream( in );
+        std::cout << "tellg " << in.tellg() << std::endl;
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).reserved_2.fromstream( in );
+        std::cout << "end tellg " << in.tellg() << std::endl;
 
         assert( in.tellg() == std::streampos(256+256*ns) );
 
