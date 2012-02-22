@@ -36,11 +36,17 @@ namespace gdf
 
     void EventHeader::toStream( std::ostream &stream )
     {
-        uint32 mode_and_num = ( getMode( ) ) + ( getNumEvents( ) << 8 );
-        stream.write( reinterpret_cast<const char*>(&mode_and_num), 4 );
+        stream.write( reinterpret_cast<const char*>(&m_mode), 1 );
 
-        float32 efs = getSamplingRate( );
-        stream.write( reinterpret_cast<const char*>(&efs), 4 );
+        // convert number of events to 24bit little endian representation
+        uint32 numev = getNumEvents( );
+        char tmp[3];
+        tmp[0] = numev % 256;
+        tmp[1] = (numev / 256) % 256;
+        tmp[2] = (numev / 65536) % 256;
+        stream.write( tmp, 3 );
+
+        writeLittleEndian( stream, getSamplingRate( ) );
 
         if( getMode() == 1 )
         {
@@ -49,13 +55,13 @@ namespace gdf
             for( size_t i=0; i<getNumEvents(); i++)
             {
                 getEvent( i, e );
-                stream.write( reinterpret_cast<const char*>(&e.position), sizeof(e.position) );
+                writeLittleEndian( stream, e.position );
             }
             // write event types
             for( size_t i=0; i<getNumEvents(); i++)
             {
                 getEvent( i, e );
-                stream.write( reinterpret_cast<const char*>(&e.type), sizeof(e.type) );
+                writeLittleEndian( stream, e.type );
             }
         }
         else if( getMode() == 3 )
@@ -65,25 +71,25 @@ namespace gdf
             for( size_t i=0; i<getNumEvents(); i++)
             {
                 getEvent( i, e );
-                stream.write( reinterpret_cast<const char*>(&e.position), sizeof(e.position) );
+                writeLittleEndian( stream, e.position );
             }
             // write event types
             for( size_t i=0; i<getNumEvents(); i++)
             {
                 getEvent( i, e );
-                stream.write( reinterpret_cast<const char*>(&e.type), sizeof(e.type) );
+                writeLittleEndian( stream, e.type );
             }
             // write event channels
             for( size_t i=0; i<getNumEvents(); i++)
             {
                 getEvent( i, e );
-                stream.write( reinterpret_cast<const char*>(&e.channel), sizeof(e.channel) );
+                writeLittleEndian( stream, e.channel );
             }
             // write event durations
             for( size_t i=0; i<getNumEvents(); i++)
             {
                 getEvent( i, e );
-                stream.write( reinterpret_cast<const char*>(&e.duration), sizeof(e.duration) );
+                writeLittleEndian( stream, e.duration );
             }
         }
     }
@@ -92,21 +98,27 @@ namespace gdf
     {
         clear( );
 
-        uint32 mode_and_num;
-        stream.read( reinterpret_cast<char*>(&mode_and_num), 4 );
-        setMode( mode_and_num & 0x000000FF );
-        uint32 nev = (mode_and_num & 0xFFFFFF00 ) >> 8;
+        uint8 mode;
+        stream.read( reinterpret_cast<char*>(&mode), sizeof(mode) );
+        setMode( mode );
+
+        char tmp[3];
+        stream.read( tmp, 3 );
+
+        uint32 nev = tmp[0] + tmp[1]*256 + tmp[2]*65536;
 
         float32 efs;
-        stream.read( reinterpret_cast<char*>(&efs), 4 );
+        readLittleEndian( stream, efs );
         setSamplingRate( efs );
 
         std::vector<uint32> positions;
         std::vector<uint16> types;
         positions.resize( nev );
         types.resize( nev );
-        for( size_t i=0; i<nev; i++ ) stream.read( reinterpret_cast<char*>(&positions[i]), sizeof(uint32) );
-        for( size_t i=0; i<nev; i++ ) stream.read( reinterpret_cast<char*>(&types[i]), sizeof(uint16) );
+        for( size_t i=0; i<nev; i++ )
+            readLittleEndian( stream, positions[i] );
+        for( size_t i=0; i<nev; i++ )
+            readLittleEndian( stream, types[i] );
 
         if( getMode() == 1 )
         {
@@ -124,8 +136,10 @@ namespace gdf
             std::vector<uint32> durations;
             channels.resize( nev );
             durations.resize( nev );
-            for( size_t i=0; i<nev; i++ ) stream.read( reinterpret_cast<char*>(&channels[i]), sizeof(uint16) );
-            for( size_t i=0; i<nev; i++ ) stream.read( reinterpret_cast<char*>(&durations[i]), sizeof(uint32) );
+            for( size_t i=0; i<nev; i++ )
+                readLittleEndian( stream, channels[i] );
+            for( size_t i=0; i<nev; i++ )
+                readLittleEndian( stream, durations[i] );
             for( size_t i=0; i<nev; i++ )
             {
                 Mode3Event e;
