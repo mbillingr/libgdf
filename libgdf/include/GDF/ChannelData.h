@@ -116,15 +116,27 @@ namespace gdf
         /// Serializer
         void tostream( std::ostream &out )
         {
-            out.write( reinterpret_cast<char*>(&m_data[0]), sizeof(T)*m_data.size() );
+            //std::cout << "Channel -> Stream" << std::endl;
+            //out.write( reinterpret_cast<char*>(&m_data[0]), sizeof(T)*m_data.size() );
+            for( size_t i=0; i<m_data.size(); i++ )
+            {
+                writeLittleEndian( out, m_data[i] );
+            }
         }
 
         /// Deserializer
         void fromstream( std::istream &in )
         {
+            //std::cout << "Stream -> Channel" << std::endl;
+            //in.read( reinterpret_cast<char*>(&m_data[0]), sizeof(T)*m_data.size() );
+
+            for( size_t i=0; i<m_data.size(); i++ )
+            {
+                readLittleEndian( in, m_data[i] );
+            }
+
             //char *charbuf = new char[sizeof(T)*m_data.size()];
 
-            in.read( reinterpret_cast<char*>(&m_data[0]), sizeof(T)*m_data.size() );
             /*in.read( charbuf, sizeof(T)*m_data.size() );
 
             for( size_t i=0; i<m_data.size(); i++ )
