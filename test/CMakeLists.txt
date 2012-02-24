@@ -36,6 +36,9 @@ add_executable( testRWConsistency testRWConsistency.cpp )
 target_link_libraries( testRWConsistency ${Boost_LIBRARIES} GDF )
 add_test( NAME testRWConsistency COMMAND testRWConsistency )
 
+add_executable( testDataTypes testDataTypes.cpp )
+target_link_libraries( testDataTypes ${Boost_LIBRARIES} GDF )
+add_test( NAME testDataTypes COMMAND testDataTypes )
 
 #add_custom_target( buildtests DEPENDS testCreateGDF testRWConsistency )
 #add_custom_target( check COMMAND ${CMAKE_CTEST_COMMAND} DEPENDS buildtests )
