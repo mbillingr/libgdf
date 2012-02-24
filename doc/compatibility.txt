@@ -26,3 +26,5 @@ libGDF is an implementation of "GDF - A General Dataformat for Biosignals Versio
 * MainHeader.patient_ICD is defined as byte[6]. Implemented as a string of length 6.
 
 * SignalHeader.physical_dimension is specified as a 6 byte long char[8]. Implemented as a string of length 6.
+
+* Digital minimum and maximum range are 64 bit floating point numbers. Thus making storage of 64 bit integers at full precision impossible. Only integers up to 52 bit can be stored in full precision, according to the spec.
