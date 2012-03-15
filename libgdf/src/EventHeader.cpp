@@ -40,11 +40,11 @@ namespace gdf
 
         // convert number of events to 24bit little endian representation
         uint32 numev = getNumEvents( );
-        char tmp[3];
+        uint8 tmp[3];
         tmp[0] = numev % 256;
         tmp[1] = (numev / 256) % 256;
         tmp[2] = (numev / 65536) % 256;
-        stream.write( tmp, 3 );
+        stream.write( reinterpret_cast<const char*>(tmp), 3 );
 
         writeLittleEndian( stream, getSamplingRate( ) );
 
@@ -102,8 +102,8 @@ namespace gdf
         stream.read( reinterpret_cast<char*>(&mode), sizeof(mode) );
         setMode( mode );
 
-        char tmp[3];
-        stream.read( tmp, 3 );
+        uint8 tmp[3];
+        stream.read( reinterpret_cast<char*>(tmp), 3 );
 
         uint32 nev = tmp[0] + tmp[1]*256 + tmp[2]*65536;
 
