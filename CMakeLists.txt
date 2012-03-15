@@ -14,9 +14,12 @@ set( GDF_SOURCE_ROOT ${Project_SOURCE_DIR} )
 add_subdirectory( libgdf )
 add_subdirectory( tools )
 
+# Make sure the version is in sync with
+# libgdf/include/GDF/Version.h
+set(GDF_VERSION "0.1.3")
+
 # shared library API versioning (soversion) -- NOT the same as the release version
 # it follows first number
-set(GDF_VERSION "0.1.3")
 string( REGEX MATCH "^[0-9]+" GDF_SHAREDLIB_SOVERSION ${GDF_VERSION})
 
 set_target_properties(GDF PROPERTIES
