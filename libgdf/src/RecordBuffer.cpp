@@ -217,7 +217,23 @@ namespace gdf
             if( m_records.size() > 0 )
             {
                 if( m_records.back()->getChannel(channel_idx)->getFree( ) == 0 )
-                    m_channelhead[channel_idx] = createNewRecord( );
+				{
+					// Create a new record in m_records and inform all 
+					// channels that are pointing beyond the end m_records.
+
+					// capture the iter value that flags m_channelhead's that have no free space
+					std::list< Record* >::iterator end_iter = m_records.end();  
+					// get a clean record from m_pool, enlist it on m_records, and return an iterator
+					std::list< Record* >::iterator newrec_iter = createNewRecord( );
+					// broadcast the new record among all channels that need it
+					for( size_t i=0; i<m_channelhead.size(); i++ )
+					{
+						if (m_channelhead[i] == end_iter) 
+						{
+							m_channelhead[i] = newrec_iter;
+						}
+					}
+				}
                 else
                     throw exception::corrupt_recordbuffer( "DOOM is upon us!" );
             }
