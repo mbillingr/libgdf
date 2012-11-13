@@ -7,6 +7,10 @@ elseif( MINGW )
         add_definitions( -Wall -Wextra -pedantic -Werror )
 elseif( WIN32 )
         add_definitions( -W3 )
+        # Default Windows installs go to "C:\Program files" which may fail
+        # if user has insufficient privelege. This if-clause puts the 
+        # compile results under GDF project folder.
+        set( CMAKE_INSTALL_PREFIX ${GDF_SOURCE_DIR} )
 endif( UNIX )
 
 #set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${GDF_SOURCE_DIR}/lib )
@@ -59,10 +63,20 @@ set( SOURCES
 
 add_library( GDF ${HEADERS} ${SOURCES} ${Boost_LIBRARIES} )
 
-INSTALL( FILES ${HEADERS} DESTINATION include/GDF )
-INSTALL( TARGETS GDF
+install( FILES ${HEADERS} DESTINATION include/GDF )
+
+if( MSVC )
+        install( FILES ${PROJECT_BINARY_DIR}/Debug/gdf.pdb
+                DESTINATION lib
+                CONFIGURATIONS Debug
+                )
+endif( MSVC )
+
+install( TARGETS GDF
 	RUNTIME DESTINATION bin
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 )
+
+
 

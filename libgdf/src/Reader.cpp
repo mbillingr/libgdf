@@ -161,10 +161,9 @@ namespace gdf
             SignalHeader *sh = &m_header.getSignalHeader( signal_indices[i] );
             double fs = sh->get_samplerate( );
             start[i] = boost::numeric_cast<size_t>( floor( start_time * fs ) );
-            samples_to_go[i] = boost::numeric_cast<size_t>( floor( end_time * fs ) );
-            if( end_time < 0 )
-                samples_to_go[i] = boost::numeric_cast<size_t>( m_header.getMainHeader_readonly().get_num_datarecords() * sh->get_samples_per_record() );
-            samples_to_go[i] = std::min( samples_to_go[i], boost::numeric_cast<size_t>( m_header.getMainHeader_readonly().get_num_datarecords() * sh->get_samples_per_record() ) );
+            samples_to_go[i] = boost::numeric_cast<size_t>( m_header.getMainHeader_readonly().get_num_datarecords() * sh->get_samples_per_record() );
+            if( end_time > 0 )
+                samples_to_go[i] = std::min( samples_to_go[i], boost::numeric_cast<size_t>( floor( end_time * fs ) ) );
             samples_to_go[i] -= start[i];
             buffer[i].resize( boost::numeric_cast<size_t>( samples_to_go[i] ) );
             readpos[i] = start[i] % sh->get_samples_per_record();
