@@ -19,7 +19,7 @@
 #ifndef __TYPES_H_INCLUDED__
 #define __TYPES_H_INCLUDED__
 
-#include "GDF/Exceptions.h"
+#include "Exceptions.h"
 #include <boost/cstdint.hpp>
 #include <boost/detail/endian.hpp>
 #include <iostream>
@@ -93,7 +93,7 @@ namespace gdf
 #elif defined(BOOST_BIG_ENDIAN)
         char* p = reinterpret_cast<char*>(&item) + sizeof(item)-1;
         for( size_t i=0; i<sizeof(item); i++ )
-		in.read( p--, 1 );
+    in.read( p--, 1 );
 #else
     #error "Unable to determine system endianness."
 #endif

@@ -19,8 +19,8 @@
 #ifndef __RECORDBUFFER_H_INCLUDED__
 #define __RECORDBUFFER_H_INCLUDED__
 
-#include "GDF/Channel.h"
-#include "GDF/pointerpool.h"
+#include "Channel.h"
+#include "pointerpool.h"
 
 #include <list>
 #include <vector>

@@ -19,7 +19,7 @@
 #ifndef __EVENTHEADER_H_INCLUDED__
 #define __EVENTHEADER_H_INCLUDED__
 
-#include "GDF/Types.h"
+#include "Types.h"
 #include <vector>
 
 #define GDF_MAXNUM_EVENTS 16777215

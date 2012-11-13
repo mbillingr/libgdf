@@ -19,10 +19,10 @@
 #ifndef __GDFHEADERACCESS_H_INCLUDED__
 #define __GDFHEADERACCESS_H_INCLUDED__
 
-#include "GDF/EventHeader.h"
-#include "GDF/SignalHeader.h"
-#include "GDF/MainHeader.h"
-#include "GDF/TagHeader.h"
+#include "EventHeader.h"
+#include "SignalHeader.h"
+#include "MainHeader.h"
+#include "TagHeader.h"
 #include <map>
 #include <iostream>
 

@@ -19,9 +19,9 @@
 #ifndef __CHANNEL_H_INCLUDED__
 #define __CHANNEL_H_INCLUDED__
 
-#include "GDF/SignalHeader.h"
+#include "SignalHeader.h"
 #include "ChannelDataBase.h"
-#include "GDF/Types.h"
+#include "Types.h"
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/lexical_cast.hpp>
 

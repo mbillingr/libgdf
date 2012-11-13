@@ -41,19 +41,19 @@ public:
         for( ; it != m_instances.end(); it++ )
             m_free_pointers.push_back( &(*it) );
 
-        std::cout << "PointerPool::PointerPool( )" << std::endl;
+        //std::cout << "PointerPool::PointerPool( )" << std::endl;
     }
 
     /// Destructor
     virtual ~PointerPool( )
     {
-        std::cout << "PointerPool::~PointerPool( )" << std::endl;
+        //std::cout << "PointerPool::~PointerPool( )" << std::endl;
     }
 
     /// Add new elements to pool
     void expand( size_t num_el )
     {
-        std::cout << "PointerPool::expand( )" << std::endl;
+        //std::cout << "PointerPool::expand( )" << std::endl;
         for( size_t i=0; i<num_el; i++ )
         {
             m_instances.push_back( m_instances.front( ) );  // insert copies of the first element
