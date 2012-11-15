@@ -21,7 +21,10 @@
 
 #include "Channel.h"
 #include "pointerpool.h"
+<<<<<<< HEAD
 //#include "GDF/RecordFullHandler.h"
+=======
+>>>>>>> b2631f080192c2da12f38e55b13dd1e436e700ea
 
 #include <list>
 #include <vector>

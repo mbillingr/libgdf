@@ -93,7 +93,7 @@ namespace gdf
 #elif defined(BOOST_BIG_ENDIAN)
         char* p = reinterpret_cast<char*>(&item) + sizeof(item)-1;
         for( size_t i=0; i<sizeof(item); i++ )
-		in.read( p--, 1 );
+    in.read( p--, 1 );
 #else
     #error "Unable to determine system endianness."
 #endif

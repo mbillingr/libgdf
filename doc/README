@@ -19,17 +19,38 @@ The default installation prefix is /usr/local.
 For advanced configuration of the build process, please refer to the cmake documentation.
 
 b. Linux:
-
+		>> set BOOST_ROOT=/usr/include/boost
 		>> cd path/to/toplevel/sourcedir
 		>> mkdir build
 		>> cd build
 dynamic build:	>> cmake ..
 static build:	>> cmake .. -DBUILD_SHARED_LIBS=OFF
 		>> make
-		>> make install
+		>> make install    
 
 c. Windows:
-	(TODO)
+	The following must be installed on the system:
+		Microsoft Visual C++ 2008 Express Edition (or some other MSC version)
+		Boost libraries www.boost.org
+		libGDF
+
+	Open a Command Prompt, then...
+
+		> set BOOST_ROOT=C:\path\to\toplevel\of\boost
+		> cd path/to/toplevel/sourcedir
+		> mkdir build
+		> cd build
+		> cmake ..
+		> GDF.sln
+
+	The last command (or double-clicking the build/GDF.sln file) will launch
+	the MSC development environment.
+
+	In MSC, for Solution Configuration, select Release or Debug.
+	In MSC, in Solution Explorer, right-click on ALL_BUILD, and select Build.
+	If the build succeeds, in Solution Explorer, right-click on INSTALL, and select Build.
+
+	The last step copies the new GDF library file(s) into sourcedir/lib .
 
 
  Building the MATLAB functions
