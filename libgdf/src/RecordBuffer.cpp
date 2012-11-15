@@ -16,6 +16,7 @@
 //
 // Copyright 2010 Martin Billinger
 
+#include "GDF/RecordFullHandler.h"
 #include "GDF/RecordBuffer.h"
 #include "GDF/Record.h"
 #include "GDF/GDFHeaderAccess.h"

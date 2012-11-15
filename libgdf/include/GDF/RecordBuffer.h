@@ -21,6 +21,7 @@
 
 #include "GDF/Channel.h"
 #include "GDF/pointerpool.h"
+//#include "GDF/RecordFullHandler.h"
 
 #include <list>
 #include <vector>
@@ -29,6 +30,7 @@ namespace gdf
 {
     class Record;
     class GDFHeaderAccess;
+    class RecordFullHandler;
 
     /// Buffers incomplete records before they are written to disk.
     /** When saving data, one or more channels can be ahead of the others, and may even extend
@@ -37,12 +39,6 @@ namespace gdf
     class RecordBuffer
     {
     public:
-
-        class RecordFullHandler
-        {
-        public:
-            virtual void triggerRecordFull( Record *rec ) = 0;
-        };
 
         /// Constructor
         RecordBuffer( const GDFHeaderAccess *gdfh );
