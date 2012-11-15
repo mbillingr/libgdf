@@ -19,7 +19,7 @@
 #ifndef __TYPES_H_INCLUDED__
 #define __TYPES_H_INCLUDED__
 
-#include "GDF/Exceptions.h"
+#include "Exceptions.h"
 #include <boost/cstdint.hpp>
 #include <boost/detail/endian.hpp>
 #include <iostream>

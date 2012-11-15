@@ -19,8 +19,8 @@
 #ifndef __HEADERITEM_H_INCLUDED__
 #define __HEADERITEM_H_INCLUDED__
 
-#include "GDF/Types.h"
-#include "GDF/Exceptions.h"
+#include "Types.h"
+#include "Exceptions.h"
 #include <iostream>
 #include <stddef.h>
 #include <map>

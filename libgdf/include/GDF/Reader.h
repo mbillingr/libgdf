@@ -19,11 +19,11 @@
 #ifndef __READER_H_INCLUDED__
 #define __READER_H_INCLUDED__
 
-#include "GDF/Record.h"
-#include "GDF/EventHeader.h"
-#include "GDF/GDFHeaderAccess.h"
-#include "GDF/Types.h"
-#include "GDF/tools.h"
+#include "Record.h"
+#include "EventHeader.h"
+#include "GDFHeaderAccess.h"
+#include "Types.h"
+#include "tools.h"
 #include <vector>
 #include <string>
 #include <fstream>

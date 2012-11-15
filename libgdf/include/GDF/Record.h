@@ -19,7 +19,7 @@
 #ifndef __RECORD_H_INCLUDED__
 #define __RECORD_H_INCLUDED__
 
-#include "GDF/Channel.h"
+#include "Channel.h"
 #include "pointerpool.h"
 #include <vector>
 #include <list>

@@ -19,7 +19,7 @@
 #ifndef __MODIFIER_H_INCLUDED__
 #define __MODIFIER_H_INCLUDED__
 
-#include "GDF/Reader.h"
+#include "Reader.h"
 #include <vector>
 #include <string>
 #include <fstream>

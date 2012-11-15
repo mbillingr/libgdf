@@ -19,10 +19,10 @@
 #ifndef __WRITER_H_INCLUDED__
 #define __WRITER_H_INCLUDED__
 
-#include "GDF/RecordBuffer.h"
-#include "GDF/RecordFullHandler.h"
-#include "GDF/EventHeader.h"
-#include "GDF/GDFHeaderAccess.h"
+#include "RecordBuffer.h"
+#include "RecordFullHandler.h"
+#include "EventHeader.h"
+#include "GDFHeaderAccess.h"
 #include <string>
 #include <fstream>
 #include <iostream>
