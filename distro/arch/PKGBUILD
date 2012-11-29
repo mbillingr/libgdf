@@ -3,7 +3,7 @@
 # NOTE: Please fill out the license field for your package! If it is unknown,
 # then please put 'unknown'.
 
-# Maintainer: Your Name <youremail@domain.com>
+# Maintainer: Martin Billinger <flkazemakase@gmail.com>
 pkgname=libgdf-git
 pkgver=20121129
 pkgrel=1
@@ -41,12 +41,10 @@ build() {
     git clone $_gitroot $_gitname --depth=1
     cd $_gitname
   fi
-
   mkdir -p build
   cd build  
   cmake .. -DBUILD_TESTING:BOOL=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr
   make
-  
 }
 
 check() {
@@ -59,4 +57,3 @@ package() {
   make DESTDIR="$pkgdir/" install
 }
 
-# vim:set ts=2 sw=2 et:
