@@ -28,6 +28,7 @@ set( HEADERS
 	include/GDF/ChannelDataBase.h
 	include/GDF/ChannelData.h
 	include/GDF/Channel.h
+	include/GDF/EventConverter.h
 	include/GDF/EventHeader.h
 	include/GDF/Exceptions.h
 	include/GDF/GDFHeaderAccess.h
@@ -37,13 +38,14 @@ set( HEADERS
 	include/GDF/pointerpool.h
 	include/GDF/Reader.h
 	include/GDF/RecordBuffer.h
+	include/GDF/RecordFullHandler.h
 	include/GDF/Record.h
 	include/GDF/SignalHeader.h
 	include/GDF/TagHeader.h
 	include/GDF/tools.h
 	include/GDF/Types.h
+        include/GDF/Version.h
 	include/GDF/Writer.h
-        include/GDF/EventConverter.h
 )
 
 set( SOURCES
