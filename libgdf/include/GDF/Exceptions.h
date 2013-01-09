@@ -201,11 +201,11 @@ namespace gdf {
         public:
             header_issues( std::list< std::string > w, std::list< std::string > e )
                 : warnings(w), errors(e)
-            { }
+            { generate_message(); }
 
             header_issues( std::list< std::string > w )
                 : warnings(w), errors()
-            { }
+            { generate_message(); }
 
             std::list< std::string > warnings, errors;
 
@@ -214,6 +214,9 @@ namespace gdf {
             void generate_message( )
             {
                 std::stringstream ss;
+
+                ss << std::endl;
+
                 std::list< std::string >::const_iterator it;
                 if( warnings.size( ) > 0 )
                     ss << std::string("Warnings: ") << std::endl;
@@ -227,7 +230,7 @@ namespace gdf {
                     ss << " -> " << *it << std::endl;
                 }
 
-                std::string str = ss.str( );
+                str = ss.str( );
             }
 
             const char *what( ) const throw()
