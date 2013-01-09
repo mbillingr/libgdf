@@ -5,9 +5,13 @@ option( BUILD_TESTING "Build tests" OFF )
 
 if( WIN32 )
 	set( BUILD_SHARED_LIBS false CACHE BOOL "Whether we shall build shared or dynamic libraries." )
+	option( BUILD_PYTHON_MODULES "Build python modules" OFF )
 else( WIN32 )
 	set( BUILD_SHARED_LIBS true CACHE BOOL "Whether we shall build shared or dynamic libraries." )
+	option( BUILD_PYTHON_MODULES "Build python modules" OFF )
 endif( WIN32 )
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 set( GDF_SOURCE_ROOT ${Project_SOURCE_DIR} )
 
@@ -30,4 +34,8 @@ if (BUILD_TESTING)
 	include( CTest )
 	enable_testing( )
 	add_subdirectory( test )
+endif()
+
+if( BUILD_PYTHON_MODULES )
+	add_subdirectory( python )
 endif()
