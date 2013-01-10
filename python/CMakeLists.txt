@@ -19,6 +19,7 @@ add_custom_command(
 )
 
 include_directories(
+        ../libgdf/include
   ${PYTHON_INCLUDE_DIRS}
 )
 
