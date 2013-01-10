@@ -102,7 +102,7 @@ namespace gdf
             else if( item == "digmin" ) set_digmin( numeric_cast<float64>(value) );
             else if( item == "digmax" ) set_digmax( numeric_cast<float64>(value) );
             else if( item == "lowpass" ) set_lowpass( numeric_cast<float32>(value) );
-            else if( item == "highpass" ) set_highpassh( numeric_cast<float32>(value) );
+            else if( item == "highpass" ) set_highpass( numeric_cast<float32>(value) );
             else if( item == "notch" ) set_notch( numeric_cast<float32>(value) );
             else if( item == "datatype" ) set_datatype( numeric_cast<uint32>(value) );
             else if( item == "sensor_info" ) set_sensor_info( numeric_cast<float32>(value) );
