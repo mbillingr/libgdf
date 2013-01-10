@@ -84,7 +84,7 @@ namespace gdf
         }
 
         /// get value of a string item
-        std::string getString( std::string item )
+        std::string getString( std::string item ) const
         {
             if( item == "label" ) return get_label( );
             else if( item == "transducer_type" ) return get_transducer_type( );
@@ -110,7 +110,7 @@ namespace gdf
         }
 
         /// get value of a numeric item
-        template<typename T> T getNumeric( std::string item )
+        template<typename T> T getNumeric( std::string item ) const
         {
             using boost::numeric_cast;
             if( item == "physical_dimension_code" ) return numeric_cast<T>(get_physical_dimension_code( ));
