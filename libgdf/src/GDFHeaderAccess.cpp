@@ -248,7 +248,7 @@ namespace gdf
     //===================================================================================================
     //===================================================================================================
 
-    std::vector<uint16> GDFHeaderAccess::getSignalIndices( )
+    std::vector<uint16> GDFHeaderAccess::getSignalIndices( ) const
     {
         std::vector<uint16> vec;
         vec.resize( m_sighdr.size() );

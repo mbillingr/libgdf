@@ -59,7 +59,7 @@ namespace gdf
         const SignalHeader &getSignalHeader_readonly( size_t idx ) const;
         SignalHeader &getSignalHeader( size_t idx );
 
-        std::vector<uint16> getSignalIndices( );
+        std::vector<uint16> getSignalIndices( ) const;
 
         bool createSignal( size_t index, bool throwexc = false );
 
