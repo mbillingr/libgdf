@@ -248,6 +248,21 @@ namespace gdf
     //===================================================================================================
     //===================================================================================================
 
+    std::vector<uint16> GDFHeaderAccess::getSignalIndices( )
+    {
+        std::vector<uint16> vec;
+        vec.resize( m_sighdr.size() );
+        std::map<uint16,SignalHeader>::const_iterator it = m_sighdr.begin( );
+        for( size_t i=0 ; it!=m_sighdr.end(); it++, i++ )
+        {
+            vec[i] = it->first;
+        }
+        return vec;
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+
     size_t GDFHeaderAccess::getFirstFreeSignalIndex( )
     {
         size_t index = 0;
