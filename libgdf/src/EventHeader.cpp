@@ -20,6 +20,8 @@
 #include "GDF/Exceptions.h"
 #include <algorithm>
 #include <iostream>
+#include <sstream>
+#include <fstream>
 #include <boost/lexical_cast.hpp>
 
 namespace gdf
@@ -235,17 +237,20 @@ namespace gdf
 
     uint32 EventHeader::secToPos( const double sample_time_sec )
     {
-		int32 raw_pos = (int32) (sample_time_sec * m_efs);
-		if( raw_pos < 1 )
+        int32 raw_pos = (int32) (sample_time_sec * m_efs + 0.5);
+        if( raw_pos < 1 )
             throw exception::invalid_operation( "Event position >= 1 [sample] required, or m_efs not set." );
-		uint32 pos = raw_pos;
+        // GDF 2.20 item 32: "Then the position of all events is saved in 
+        // 32-bit integers using a one-based indexing (position of first sample
+        // is 1, not 0)"
+        uint32 pos = 1 + raw_pos;
         return pos;
     }
 
     double EventHeader::posToSec( const uint32 event_pos ) const
     {
-		double event_time_sec = event_pos / m_efs;
-		if( event_pos < 0 || m_efs <= 0 )
+        double event_time_sec = (event_pos - 1) / m_efs; // "-1" is for "one-based indexing" see EventHeader::secToPos
+        if( event_pos < 1 || m_efs <= 0 )
             throw exception::invalid_operation( "Event time > 0 [sec] required, or m_efs not set." );
         return event_time_sec;
     }

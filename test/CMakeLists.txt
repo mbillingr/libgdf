@@ -36,6 +36,14 @@ add_executable( testRWConsistency testRWConsistency.cpp )
 target_link_libraries( testRWConsistency ${Boost_LIBRARIES} GDF )
 add_test( NAME testRWConsistency COMMAND testRWConsistency )
 
+add_executable( testSparseSampling testSparseSampling.cpp )
+target_link_libraries( testSparseSampling ${Boost_LIBRARIES} GDF )
+add_test( NAME testSparseSampling COMMAND testSparseSampling )
+
+add_executable( testHeader3 testHeader3.cpp )
+target_link_libraries( testHeader3 ${Boost_LIBRARIES} GDF )
+add_test( NAME testHeader3 COMMAND testHeader3 )
+
 add_executable( testDataTypes testDataTypes.cpp )
 target_link_libraries( testDataTypes ${Boost_LIBRARIES} GDF )
 add_test( NAME testDataTypes COMMAND testDataTypes )

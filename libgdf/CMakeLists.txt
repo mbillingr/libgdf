@@ -30,6 +30,7 @@ set( HEADERS
 	include/GDF/Channel.h
 	include/GDF/EventConverter.h
 	include/GDF/EventHeader.h
+	include/GDF/EventDescriptor.h
 	include/GDF/Exceptions.h
 	include/GDF/GDFHeaderAccess.h
 	include/GDF/HeaderItem.h
@@ -44,13 +45,14 @@ set( HEADERS
 	include/GDF/TagHeader.h
 	include/GDF/tools.h
 	include/GDF/Types.h
-        include/GDF/Version.h
+	include/GDF/Version.h
 	include/GDF/Writer.h
 )
 
 set( SOURCES
 	src/Channel.cpp
 	src/EventHeader.cpp
+	src/EventDescriptor.cpp
 	src/GDFHeaderAccess.cpp
 	src/MainHeader.cpp
 	src/Modifier.cpp
@@ -58,9 +60,10 @@ set( SOURCES
 	src/RecordBuffer.cpp
 	src/Record.cpp
 	src/SignalHeader.cpp
+	src/TagHeader.cpp
 	src/Types.cpp
 	src/Writer.cpp
-        src/EventConverter.cpp
+	src/EventConverter.cpp
 )
 
 add_library( GDF ${HEADERS} ${SOURCES} ${Boost_LIBRARIES} )

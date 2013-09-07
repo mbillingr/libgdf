@@ -32,13 +32,10 @@
 using namespace std;
 
 const string testfile = "test.gdf.tmp";
-const string reffile0 = string(GDF_SOURCE_ROOT)+"/sampledata/MI128.gdf";
+//const string reffile0 = string(GDF_SOURCE_ROOT)+"/sampledata/MI128.gdf";
 // File NEQSuint32Ch678 uses Non-Equidistant sampling.
 // Channel 6, channel7 and channel 8 use NEQS. NEQS values are stored as Uint32.
 const string neqsfile = string(GDF_SOURCE_ROOT)+"/sampledata/NEQSuint32Ch678.GDF";
-const string annotfile = string(GDF_SOURCE_ROOT)+"/sampledata/Header3Tag1.gdf";
-const string alltypesfile = string(GDF_SOURCE_ROOT)+"/sampledata/alltypes.gdf";
-const string eventcodefile = string(GDF_SOURCE_ROOT)+"/libgdf/eventcodes.txt";
 
 bool fexist( std::string filename )
 {
@@ -86,9 +83,7 @@ bool fcompare( std::string fileA, std::string fileB )
 int main( )
 {
     std::vector<string> infilelist; // a list of files on which to run tests
-    infilelist.push_back(annotfile);
-    infilelist.push_back(alltypesfile);
-    infilelist.push_back(reffile0);
+    //infilelist.push_back(reffile0);
     infilelist.push_back(neqsfile);
     
     string reffile;
@@ -125,7 +120,7 @@ int main( )
             // Copy GDF header 3 including user-specific event description table
             gdf::TagHeader ath = r.getHeaderAccess_readonly().getTagHeader_readonly();
             w.getHeaderAccess().getTagHeader().copyFrom( ath ); 
-
+            
             cout << "Opening '" << testfile << "' for writing." << endl;
             w.open( testfile, gdf::writer_ev_memory | gdf::writer_overwrite );
 
@@ -159,15 +154,39 @@ int main( )
                 double sample_physical_value;
                 double sample_time_sec;
 
+                /// NEQS demonstration of getSparseSamples
+                // For the NEQS sample file, what follows is a simple
+                // demonstration of how to get the samples.
+                if (reffile.compare(neqsfile)==0) {
+                    /// Demonstrate getting all the events from channel 6.
+                    cout  << endl << "  reading non-equidistant samples (NEQS) ... ";
+                    int index_of_a_sparse_channel = 6;
+                    std::vector<gdf::uint32> ch6samples = ev_header->getSparseSamples (index_of_a_sparse_channel);
+                    // If the channel has enough events, let's look at the third event (for example).
+                    size_t event_index_to_get = 3;
+                    if (ch6samples.size() > event_index_to_get) {
+                        // Extract a specific sample from the event table into a local event object, ev.
+                        ev_header->getEvent(ch6samples[event_index_to_get], ev);
+                        // Convert ev to time and physical values.
+                        r.eventToSample(sample_time_sec, sample_physical_value, ev);
+                        // sample_time_sec = time of 3rd sample of channel 6
+                        // sample_physical_value = value of 3rd sample of channel 6
+                    }
+                    cout << "  OK" << endl;
+                }
+                /// end of getSparseSamples demonstration
+
                 // Copy all event from source file to target file.
                 // Mode 1 and 3 events are copied.
-                // Sparse samples are extracted to (time,phys) then stored again.
+                // Sparse samples are extracted to (time,phys) then stored again.                    
+                cout << "  writing non-equidistant samples ";
                 for(unsigned int mm = 0; mm < num_events; mm++)
                 {
                     ev_header->getEvent(mm, ev);
                     if( ev.type != 0x7fff ) {
                         w.addEvent(ev);
                     } else {
+                        cout << "."; // a dot is written for each NEQS sample stored to file
                         r.eventToSample(sample_time_sec, sample_physical_value, ev);
                         // At this point we have successfully decoded a sparse sample
                         //     (sample_time_sec, sample_physical_value)    .
@@ -180,7 +199,7 @@ int main( )
                     } break;
             }
 
-            cout << "OK" << endl;
+            cout << endl << "OK" << endl;
 
             w.close( );
             cout << "Comparing files .... ";

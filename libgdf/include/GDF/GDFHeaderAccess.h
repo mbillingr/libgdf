@@ -22,12 +22,15 @@
 #include "EventHeader.h"
 #include "SignalHeader.h"
 #include "MainHeader.h"
+#include "EventDescriptor.h"
 #include "TagHeader.h"
 #include <map>
 #include <iostream>
 
 namespace gdf
 {
+    //class TagHeader;
+
     class GDFHeaderAccess
     {
     public:
@@ -72,6 +75,8 @@ namespace gdf
         void relocateSignal( size_t src, size_t dst );
 
         EventHeader &getEventHeader( );
+        TagHeader &getTagHeader( );
+        const TagHeader &getTagHeader_readonly( ) const;
 
         friend std::ostream& operator<< (std::ostream& out, const GDFHeaderAccess& hdr);
         friend std::istream& operator>> (std::istream& in, GDFHeaderAccess& hdr);

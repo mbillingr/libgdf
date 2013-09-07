@@ -104,4 +104,17 @@ namespace gdf
         set_num_signals( other.get_num_signals() );
         memset( reserved_3.item, 0, reserved_3.len );
     }
+
+    //===================================================================================================
+    //===================================================================================================
+
+    int MainHeader::getGdfVersionInt( void )
+    {
+        std::string ver_id = this->get_version_id();
+        int gdf_version_int = 0;
+        gdf_version_int += 1*int(ver_id[7]-'0');
+        gdf_version_int += 10*int(ver_id[6]-'0');
+        gdf_version_int += 100*int(ver_id[4]-'0');
+        return gdf_version_int;
+    }
 }

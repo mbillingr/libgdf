@@ -55,6 +55,7 @@ namespace gdf
         m_mainhdr.setDefaultValues( );
         m_sighdr.clear( );
         m_events.clear( );
+        m_taghdr.clear();
         enableAutoRecordDuration( );
     }
 
@@ -334,6 +335,19 @@ namespace gdf
 
     //===================================================================================================
     //===================================================================================================
+    const TagHeader &GDFHeaderAccess::getTagHeader_readonly( ) const
+    {
+        return m_taghdr;
+    }
+
+    TagHeader &GDFHeaderAccess::getTagHeader( )
+    {
+        return m_taghdr;
+    }
+
+    
+    //===================================================================================================
+    //===================================================================================================
 
     std::ostream& operator<< (std::ostream& out, const GDFHeaderAccess& hdr)
     {
@@ -385,7 +399,10 @@ namespace gdf
 
         assert( out.tellp() == std::streampos(256+256*ns) );
 
-        //throw exception::feature_not_implemented( );
+        // write GDF header 3
+        hdr.getTagHeader_readonly( ).toStream( out );
+        uint16 header3LenBlocks = mh->get_header_length() - (1+ns);
+        assert( out.tellp() == std::streampos(256+256*ns+256*header3LenBlocks));
 
         return out;
     }
@@ -399,7 +416,8 @@ namespace gdf
 
         MainHeader *mh = &hdr.m_mainhdr;
         mh->version_id.fromstream( in );
-        if (mh->get_version_id() != "GDF 2.10")
+        int gdf_version_int = mh->getGdfVersionInt();
+        if (gdf_version_int < 210 || gdf_version_int > 220)
             throw exception::incompatible_gdf_version (mh->get_version_id ());
         mh->patient_id.fromstream( in );
         mh->reserved_1.fromstream( in );
@@ -450,6 +468,35 @@ namespace gdf
 
         assert( in.tellg() == std::streampos(256+256*ns) );
 
+        // read GDF header 3
+        uint16 header3LenBlocks = mh->get_header_length() - (1+ns);
+        if( header3LenBlocks>0 )
+        {
+            TagHeader & taghdr = hdr.getTagHeader();
+            taghdr.fromStream( in, hdr);
+            std::map<int,TagField>::iterator it = taghdr.m_tags.begin();
+            gdf::EventDescriptor evd; 
+            for( ; it != taghdr.m_tags.end(); ++it) {
+                // copy each tag to the stream
+                TagField tagfield = (*it).second;
+                int tagnum = tagfield.getTagNumber();
+                switch( tagnum )
+                {
+                case 0:
+                    break;
+                case 1:
+                    evd.fromTagField(tagfield);
+                    taghdr.setEventDescriptor(evd);
+                    break;
+                default:
+                    throw exception::feature_not_implemented("Only tag==1 is supported in this build");
+                    break;
+                }
+            }
+            taghdr.setLength();
+        }
+
+        assert( in.tellg() == std::streampos(256+256*ns+256*header3LenBlocks));
         return in;
     }
 

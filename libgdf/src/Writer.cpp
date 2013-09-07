@@ -481,4 +481,22 @@ namespace gdf
         }
     }
 
+    //===================================================================================================
+    //===================================================================================================
+    void Writer::makeFreeTextEvent( double noteTimeSec, const std::string str, EventDescriptor & ev_desc, Mode1Event & e )
+    {
+        gdf::EventHeader & evh = m_header.getEventHeader( );
+        e.position = evh.secToPos(noteTimeSec);
+        e.type = ev_desc.getUserDescEventType(str);
+    }
+
+    //===================================================================================================
+    //===================================================================================================
+    void Writer::makeFreeTextEvent( double noteTimeSec, const std::string str, EventDescriptor & ev_desc, Mode3Event & e )
+    {
+        gdf::EventHeader & evh = m_header.getEventHeader( );
+        e.position = evh.secToPos(noteTimeSec);
+        e.type = ev_desc.getUserDescEventType(str);
+    }
+
 }

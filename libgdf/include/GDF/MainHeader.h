@@ -23,6 +23,30 @@
 #include <boost/smart_ptr/scoped_ptr.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
+/////////////////////////////////////////////////
+// A brief history of GDF versions from 2.10 to 2.22
+//
+// Comments describe changes since the previous version.
+// Notation "v3" is a version at http://arxiv.org/abs/cs/0608052 ;
+//          "2.10" is a GDF version.
+//
+// History
+//
+// v3 2.10 Version 2.10 introduces the Tag-Length-Value structure to
+//         Header 3 in place of free header.
+// v4 2.11 IP address moved from Header 1 to Header 3.
+//         Patient Classification (patient_ICD) introduced at Header 1 byte 186.
+//         Technician ID, Lab ID, Device info and MEG info added to Header 3.
+// v5 2.12 Adds heart impairment interpretation Header 1 patient_flags.
+// v6 2.20 In Header 2, Replaces Electrode impedance with
+//         Electrode impedance OR Probe Frequency depending on units.
+//         Both are stored float32, therefore this is an interpretation difference only.
+// v7 2.22 Header1.Duration changed to float64 (this breaks compatibility with <= 2.20).
+//         Adds TOffset field to Header 2.
+// v8 2.23 No format change.
+//
+/////////////////////////////////////////////////
+
 namespace gdf
 {
     class GDFHeaderAccess;
@@ -44,12 +68,14 @@ namespace gdf
         GDF_DECLARE_HEADERITEM( header_length, uint16, 184 )
         GDF_DECLARE_HEADERSTRING( patient_ICD, 186, 6 )       // defined as byte[6] in the spec
         GDF_DECLARE_HEADERITEM( equipment_provider_classification, uint64, 192 )
-        GDF_DECLARE_RESERVED( reserved_2, 200, 6 )
+        GDF_DECLARE_RESERVED( reserved_2, 200, 6 ) // GDF 2.11 and later (to 2.23 at least)
+        //GDF_DECLARE_HEADERARRAY( ip_address, uint8, 200, 6 ) // GDF 2.10 
         GDF_DECLARE_HEADERARRAY( patient_headsize, uint16, 206, 3 )
         GDF_DECLARE_HEADERARRAY( pos_reference, float32, 212, 3 )
         GDF_DECLARE_HEADERARRAY( pos_ground, float32, 224, 3 )
         GDF_DECLARE_HEADERITEM( num_datarecords, int64, 236 )
-        GDF_DECLARE_HEADERARRAY( datarecord_duration, uint32, 244, 2 )
+        GDF_DECLARE_HEADERARRAY( datarecord_duration, uint32, 244, 2 )  // GDF 2.20 and earlier
+        // GDF_DECLARE_HEADERITEM( datarecord_duration, float64, 244 ) // GDF 2.22 and later
         GDF_DECLARE_HEADERITEM_PRIVATE( num_signals, uint16, 252 )
         GDF_DECLARE_RESERVED( reserved_3, 254, 2 )
 
@@ -164,6 +190,9 @@ namespace gdf
             else if( item == "datarecord_duration" ) return numeric_cast<T>(datarecord_duration[array_index]);
             else throw exception::general( "Bad array access to " + item );
         }
+
+        // Converts version numbers so that "GDF 2.20" returns the integer 220.
+        int getGdfVersionInt();
 
         friend class GDFHeaderAccess;
         friend class Writer;
