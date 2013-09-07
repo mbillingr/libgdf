@@ -401,6 +401,35 @@ namespace gdf
     //===================================================================================================
     //===================================================================================================
 
+	void Writer::sampleToEvent( const double sample_time_sec,
+		const double sample_physical_value,
+		const uint16 channel,
+		Mode3Event& ev )
+	{
+		// channel  is  1-based index as defined in GDF spec
+		// chan_idx is 0-based index in signal header
+		gdf::uint16 chan_idx = channel - 1;
+		gdf::uint32 datatype = this->getSignalHeader_readonly( chan_idx ).get_datatype( );
+		// format the event
+		ev.position = this->getHeaderAccess( ).getEventHeader( ).secToPos(sample_time_sec);
+		ev.type = 0x7fff;	// specific GDF flag for sparse sampling
+		ev.channel = channel; // event uses 1-based channel indexing
+		double raw_value = this->getSignalHeader_readonly( chan_idx ).phys_to_raw(sample_physical_value);
+		if( datatype <= 6 ) {
+			// small integer gdftype's as defined in GDF spec
+			ev.duration = boost::numeric_cast<uint32>(raw_value);
+		} else if( datatype==16 ) {
+			// float32 from GDF spec
+			ev.value = boost::numeric_cast<float32>(raw_value);
+		} else {
+			// invalid data type while writing sparse sample
+            throw exception::event_conversion_error("Invalid data type for NEQS sample; sample not converted to event.");
+		}
+	}
+
+	//===================================================================================================
+    //===================================================================================================
+
     void Writer::addEvent( uint32 position, uint16 type, uint16 channel, float32 value )
     {
         Mode3Event ev;

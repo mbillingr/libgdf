@@ -110,6 +110,13 @@ namespace gdf {
             mismatch_channel_number( std::string str ) : domain_error("Number of channels mismatch: "+str) { }
         };
 
+        /// Data for event does not satisfy event representation constraints specified in GDF standard.
+        class event_conversion_error : public std::domain_error
+        {
+        public:
+            event_conversion_error( std::string str ) : domain_error("Event conversion error: "+str) { }
+        };
+
         /// Record Buffer is corrupt. This likely indicates an internal programming error.
         class corrupt_recordbuffer : public std::runtime_error
         {

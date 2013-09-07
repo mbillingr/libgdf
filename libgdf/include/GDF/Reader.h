@@ -107,6 +107,13 @@ namespace gdf
         /// get constant reference to a signal's header
         const SignalHeader &getSignalHeader_readonly( size_t idx ) const { return m_header.getSignalHeader_readonly(idx); }
 
+		/// Converts from event to sample
+		/** @throws exception::event_conversion_error
+            @throws exception::invalid_operation
+        */
+		void eventToSample( double& sample_time_sec, double& sample_physical_value, const Mode3Event& ev ) ;
+
+
     protected:
         void readEvents( );
 

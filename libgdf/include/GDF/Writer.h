@@ -249,6 +249,12 @@ namespace gdf
         /// get reference to a signal's header
         SignalHeader &getSignalHeader( size_t idx ) { return m_header.getSignalHeader(idx); }
 
+		/// Converts from sample to event
+		/** @throws exception::event_conversion_error
+        */
+		void sampleToEvent( const double sample_time_sec, const double sample_physical_value, const uint16 channel, Mode3Event& ev );
+
+
     private:
 
         /// write first full record from record buffer to disk

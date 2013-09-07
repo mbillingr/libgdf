@@ -188,6 +188,22 @@ namespace gdf
         return m_mode3;
     }
 
+	//-------------------------------------------------------------------------
+	std::vector<uint32> EventHeader::getSparseSamples (const size_t chan_idx)
+	{
+		std::vector<uint32> index_list;
+		unsigned int num_events = this->getNumEvents();
+		// loop over all mode 3 events
+		for(unsigned int m = 0; m < num_events; m++)
+		{
+			if( (m_mode3[m].channel == chan_idx) && (m_mode3[m].type == 0x7fff) )
+			{
+				index_list.push_back( m );
+			}
+		}
+		return index_list;
+	}
+
     //-------------------------------------------------------------------------
     void EventHeader::getEvent( uint32 index, Mode1Event &ev )
     {
@@ -215,6 +231,23 @@ namespace gdf
         if( m_mode != 3 )
             throw exception::wrong_eventmode( "Expecting mode 3" );
         m_mode3.push_back( ev );
+    }
+
+    uint32 EventHeader::secToPos( const double sample_time_sec )
+    {
+		int32 raw_pos = (int32) (sample_time_sec * m_efs);
+		if( raw_pos < 1 )
+            throw exception::invalid_operation( "Event position >= 1 [sample] required, or m_efs not set." );
+		uint32 pos = raw_pos;
+        return pos;
+    }
+
+    double EventHeader::posToSec( const uint32 event_pos ) const
+    {
+		double event_time_sec = event_pos / m_efs;
+		if( event_pos < 0 || m_efs <= 0 )
+            throw exception::invalid_operation( "Event time > 0 [sec] required, or m_efs not set." );
+        return event_time_sec;
     }
 
     void EventHeader::sort( )

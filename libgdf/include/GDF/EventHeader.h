@@ -74,6 +74,12 @@ namespace gdf
             In order to convert event positions between time and sample, this sampling rate is used. */
         void setSamplingRate( float32 fs );
 
+		// converts seconds to event position using event sampling rate
+		uint32 secToPos( const double sample_time_sec );
+
+		// converts event position to time in seconds (0.0 sec corresponds to the main header start time)
+		double posToSec( const uint32 event_pos ) const;
+
         /// returns event mode
         uint8 getMode( ) { return m_mode; }
 
@@ -91,6 +97,10 @@ namespace gdf
 
         /// Returns all Mode 3 Events
         std::vector<Mode3Event> getMode3Events () const;
+
+        /// Returns indices of sparse samples associated with a channel
+		//    chan_idx is event.CHN from GDF spec (a 1-based index)
+        std::vector<uint32> getSparseSamples (const size_t chan_idx);
 
         /// Returns a Mode 3 Event
         void getEvent( uint32 index, Mode3Event &ev );

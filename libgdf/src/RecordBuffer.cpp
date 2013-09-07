@@ -99,6 +99,21 @@ namespace gdf
         m_records.pop_front( );
         m_num_full++;
 
+        // Sparse channels do not need m_channelhead[i] mechanism, but the mechanism
+        // for non-sparse channels breaks if not all m_channelhead[i] are valid.
+        // Specifically, m_records.pop_front (above) makes stored iterators
+        // that pointed to the pop'd element no longer valid.
+        // This loop forces m_channelhead[i] to be valid for sparse channels.
+        for( size_t i=0; i<m_channelhead.size(); i++ )
+        {
+            size_t spr = m_gdfh->getSignalHeader_readonly( i ).get_samples_per_record( );
+            // Change only elements associated to sparse channels, i.e. with spr==0.
+            if( spr == 0 )
+            {
+                m_channelhead[i] = m_records.begin(); // assign any valid iterator, e.g. list.begin()
+            }
+        }
+
         std::list<RecordFullHandler*>::iterator it = m_recfull_callbacks.begin( );
         for( ; it != m_recfull_callbacks.end(); it++ )
             (*it)->triggerRecordFull( m_records_full.back() );

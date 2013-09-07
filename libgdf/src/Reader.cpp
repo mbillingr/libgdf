@@ -308,8 +308,49 @@ namespace gdf
         return m_events;
     }
 
-    //===================================================================================================
-    //===================================================================================================
+	//===================================================================================================
+	//===================================================================================================
+
+	void Reader::eventToSample( double& sample_time_sec, double& sample_physical_value, const Mode3Event& ev )
+	{
+		// In GDF 2.20, ev.TYP==0x7fff indicates a Non-Equidistant Sampling (NEQS) event
+		if( ev.type != 0x7fff ) {
+            throw exception::event_conversion_error("Event has incorrect type for NEQS; event not converted to sample.");
+		}
+		// In GDF 2.20 item 32, ev.CHN is 1-based, but for getSignalHeader_readonly,
+		// the signal header array is 0-based.
+		size_t chan_idx_in_event = ev.channel;
+		if( chan_idx_in_event == 0 ){
+			// error: Generally "a value of 0 indicates the event refers to all
+			// channels" (GDF 2.20) however for events representing sparse channel
+			// samples, the referred channel must be unique so that physical values
+			// can be decode.
+            throw exception::event_conversion_error("NEQS sample cannot have CHN==0; event not converted to sample.");
+		}
+		size_t chan_idx = chan_idx_in_event - 1;
+		gdf::uint32 spr = getSignalHeader_readonly( chan_idx ).get_samples_per_record( );
+		gdf::uint32 datatype = getSignalHeader_readonly( chan_idx ).get_datatype( );
+		// NEQS is indicated by sampling rate of zero
+		if( spr == 0 ) {
+			if( datatype <= 6 ) {
+				// all of the small integer types from GDF table Table 7
+				sample_physical_value = this->getSignalHeader_readonly( chan_idx ).raw_to_phys((double)ev.duration);
+			} else if( datatype==16 ) {
+				// float32 from GDF table Table 7
+				sample_physical_value = this->getSignalHeader_readonly( chan_idx ).raw_to_phys((double)ev.value);
+			} else {
+				// invalid data type while reading sparse sample
+                throw exception::event_conversion_error("Invalid data type for NEQS sample; event not converted to sample.");
+			}
+            sample_time_sec = this->getEventHeader()->posToSec(ev.position);
+		} else {
+			// error: event has type 0x7fff and non-zero sampling, discard the event
+            throw exception::event_conversion_error("NEQS sample event associated to CHN with spr > 0; event not converted to sample.");
+		}
+	}
+
+	//===================================================================================================
+	//===================================================================================================
 
     void Reader::readEvents( )
     {

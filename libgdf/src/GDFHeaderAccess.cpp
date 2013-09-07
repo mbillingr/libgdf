@@ -130,9 +130,14 @@ namespace gdf
                 errors.push_back( "Signal "+lexical_cast<std::string>(it->first)+" has no valid data type." );
 
             // ------------ Check sampling rate ------------------
+			// Resetting samples_per_record is necessary in case sanitize had adjusted
+			// the record duration
             it->second.set_samples_per_record( it->second.get_samplerate() * ddur[0] / ddur[1] );
-            if( it->second.get_samples_per_record() == 0 )
-                errors.push_back( "Signal "+lexical_cast<std::string>(it->first)+" has sample rate set to 0 or not set at all." );
+			// Zero samples_per_record is permitted for sparse sampling,
+			// however it requires that the associated data type fits
+			// within sizeof(gdf::Mode3Event::duration) == 4 bytes.
+			if( it->second.get_samples_per_record() == 0 && gdf::datatype_size(it->second.get_datatype()) > 4 )
+				errors.push_back( "Signal "+lexical_cast<std::string>(it->first)+" has sample rate set to 0 and datatype not for sparse sampling." );
 
             // ------------ Check ranges ------------------
             if( it->second.get_digmin() > it->second.get_digmax() )
