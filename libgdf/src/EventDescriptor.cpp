@@ -186,10 +186,10 @@ namespace gdf
     {
         // Format the m_value info into the other data structures
         size_t tagfieldlength = tf.getLength();//m_value.size();
-        // find the length of the string array
-        size_t taglength = tagfieldlength - 4; //1 char for tag, 3 chars for uint24 length.
+        // taglength is length of the string array
+        // size_t taglength = tagfieldlength - 4; //1 char for tag, 3 chars for uint24 length.
         // pos is position where next string begins
-        size_t pos = 4; // begin search after the header
+        size_t pos = 4; // first string begins after T-L-V header
         std::string desc; 
         std::vector<unsigned char> value = tf.getValue(); // the byte array from the tag field
         for( uint16 eventtyp = 0; eventtyp <= 255 && pos < tagfieldlength; eventtyp++ )

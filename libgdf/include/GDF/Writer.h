@@ -255,11 +255,11 @@ namespace gdf
 		void sampleToEvent( const double sample_time_sec, const double sample_physical_value, const uint16 channel, Mode3Event& ev );
 
         /// Format an existing Mode 1 event (TYP, POS) to represent the given string (TYP) at the given time (POS).
-        void Writer::makeFreeTextEvent( double noteTimeSec, const std::string str, EventDescriptor & ev_desc, Mode1Event & e );
+        void makeFreeTextEvent( double noteTimeSec, const std::string str, EventDescriptor & ev_desc, Mode1Event & e );
 
         /// Format an existing Mode 3 event (TYP, POS, CHN, DUR) to represent the given string (TYP) at the given time (POS).
         //  Separately, the string may be associated to a particular channel using event.CHN.
-        void Writer::makeFreeTextEvent( double noteTimeSec, const std::string str, EventDescriptor & ev_desc, Mode3Event & e );
+        void makeFreeTextEvent( double noteTimeSec, const std::string str, EventDescriptor & ev_desc, Mode3Event & e );
 
     private:
 

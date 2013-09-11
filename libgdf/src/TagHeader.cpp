@@ -22,6 +22,7 @@
 #include "GDF/GDFHeaderAccess.h"
 //#include <algorithm>
 //#include <iostream>
+#include<iterator>
 #include <boost/lexical_cast.hpp>
 //#include <boost/shared_ptr.hpp>
 
@@ -51,7 +52,7 @@ namespace gdf
         size_t header3unpaddedsize = 0;
         while( tag != 0 )
         {
-            std::streampos pos = stream.tellg();
+            //std::streampos pos = stream.tellg();
             gdf::TagField tagfield(0);
             tagfield.fromStream(stream); 
             tag = tagfield.getTagNumber();
@@ -123,7 +124,7 @@ namespace gdf
     {
         m_tags.clear();
         m_header3ByteSizeUnpadded = 0;
-        uint16 m_hdr3SizeBlocks = 0;
+        m_hdr3SizeBlocks = 0;
         m_eventdesc.clear();
     }
 
