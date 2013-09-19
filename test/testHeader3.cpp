@@ -137,6 +137,7 @@ int main( )
                 eventType = free_text_annotator.addUserSpecificDesc("green");  // 2
                 eventType = free_text_annotator.addUserSpecificDesc("blue");   // 3
                 eventType = free_text_annotator.addUserSpecificDesc("yellow"); // 1. If same string is encountered, the existing eventType is returned.
+                cout << "Text 'yellow' was assigned event #" << eventType << "." << endl;
                 free_text_annotator.loadEventDescriptions(eventcodefile);
                 //
                 // Phase X. At any time after Phase 1, use the table to get Event TYP's or event description strings
