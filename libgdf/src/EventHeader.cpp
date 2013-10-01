@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with libGDF.  If not, see <http://www.gnu.org/licenses/>.
 //
-// Copyright 2010 Martin Billinger, Christoph Eibel
+// Copyright 2010, 2013 Martin Billinger, Christoph Eibel, Owen Kelly
 
 #include "GDF/EventHeader.h"
 #include "GDF/Exceptions.h"

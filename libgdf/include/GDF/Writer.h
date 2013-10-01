@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with libGDF.  If not, see <http://www.gnu.org/licenses/>.
 //
-// Copyright 2010 Martin Billinger
+// Copyright 2010, 2013 Martin Billinger, Owen Kelly
 
 #ifndef __WRITER_H_INCLUDED__
 #define __WRITER_H_INCLUDED__
