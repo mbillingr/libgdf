@@ -21,7 +21,7 @@
 
 // Current library version
 // Must be the same as in the top level CMakeLists.txt
-#define GDF_VERSION "0.1.3"
+#define GDF_VERSION "0.1.4"
 
 
 #endif

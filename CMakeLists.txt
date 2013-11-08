@@ -20,7 +20,7 @@ add_subdirectory( tools )
 
 # Make sure the version is in sync with
 # libgdf/include/GDF/Version.h
-set(GDF_VERSION "0.1.3")
+set(GDF_VERSION "0.1.4")
 
 # shared library API versioning (soversion) -- NOT the same as the release version
 # it follows first number
