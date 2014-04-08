@@ -36,6 +36,10 @@ add_executable( testRWConsistency testRWConsistency.cpp )
 target_link_libraries( testRWConsistency ${Boost_LIBRARIES} GDF )
 add_test( NAME testRWConsistency COMMAND testRWConsistency )
 
+add_executable( testBlit testBlit.cpp )
+target_link_libraries( testBlit ${Boost_LIBRARIES} GDF )
+add_test( NAME testBlit COMMAND testBlit )
+
 add_executable( testSparseSampling testSparseSampling.cpp )
 target_link_libraries( testSparseSampling ${Boost_LIBRARIES} GDF )
 add_test( NAME testSparseSampling COMMAND testSparseSampling )
