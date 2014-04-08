@@ -59,6 +59,7 @@ namespace gdf
         m_records.clear( );
         m_records_full.clear( );
 
+        m_num_recs = 0;
         m_num_full = 0;
     }
 
@@ -97,6 +98,7 @@ namespace gdf
         //std::cout << "Record Full" << std::endl;
         m_records_full.push_back( m_records.front() );
         m_records.pop_front( );
+        m_num_recs--;
         m_num_full++;
 
         // Sparse channels do not need m_channelhead[i] mechanism, but the mechanism
@@ -194,6 +196,7 @@ namespace gdf
         Record *r = m_pool->pop( );
         r->clear( );
         m_records.push_back( r );
+        m_num_recs++;
         std::list< Record* >::iterator it = m_records.end( );
         it--;
         return it;
@@ -230,26 +233,26 @@ namespace gdf
 
         if( m_channelhead[channel_idx] == m_records.end() )
         {
-            if( m_records.size() > 0 )
+            if( m_num_recs > 0 )
             {
                 if( m_records.back()->getChannel(channel_idx)->getFree( ) == 0 )
-				{
-					// Create a new record in m_records and inform all 
-					// channels that are pointing beyond the end m_records.
+                {
+                    // Create a new record in m_records and inform all
+                    // channels that are pointing beyond the end m_records.
 
-					// capture the iter value that flags m_channelhead's that have no free space
-					std::list< Record* >::iterator end_iter = m_records.end();  
-					// get a clean record from m_pool, enlist it on m_records, and return an iterator
-					std::list< Record* >::iterator newrec_iter = createNewRecord( );
-					// broadcast the new record among all channels that need it
-					for( size_t i=0; i<m_channelhead.size(); i++ )
-					{
-						if (m_channelhead[i] == end_iter) 
-						{
-							m_channelhead[i] = newrec_iter;
-						}
-					}
-				}
+                    // capture the iter value that flags m_channelhead's that have no free space
+                    std::list< Record* >::iterator end_iter = m_records.end();
+                    // get a clean record from m_pool, enlist it on m_records, and return an iterator
+                    std::list< Record* >::iterator newrec_iter = createNewRecord( );
+                    // broadcast the new record among all channels that need it
+                    for( size_t i=0; i<m_channelhead.size(); i++ )
+                    {
+                        if (m_channelhead[i] == end_iter)
+                        {
+                            m_channelhead[i] = newrec_iter;
+                        }
+                    }
+                }
                 else
                     throw exception::corrupt_recordbuffer( "DOOM is upon us!" );
             }

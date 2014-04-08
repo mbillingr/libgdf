@@ -125,7 +125,7 @@ namespace gdf
         inline size_t getNumFullRecords( ) const { return m_num_full; }
 
         /// Get number of partially filled records currently in the list.
-        inline size_t getNumPartialRecords( ) const { return m_records.size( ); }
+        inline size_t getNumPartialRecords( ) const { return m_num_recs; }
 
         /// Returns reference to channel specified by channel_idx
         /** If channel does not exist gdf::nonexistent_channel_access::nonexistent_channel_access is thrown.
@@ -145,7 +145,7 @@ namespace gdf
         PointerPool<Record> *m_pool;
         std::list< Record* > m_records;
         std::list< Record* > m_records_full;
-        size_t m_num_full;
+        size_t m_num_full, m_num_recs;
         std::vector< std::list< Record* >::iterator > m_channelhead;
         std::list<RecordFullHandler*> m_recfull_callbacks;
     };
