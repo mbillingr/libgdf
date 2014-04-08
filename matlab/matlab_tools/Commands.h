@@ -16,6 +16,7 @@
 #ifndef __COMMANDS_H_INCLUDED__
 #define __COMMANDS_H_INCLUDED__
 
+#include <map>
 #include <stdexcept>
 #include <string>
 #include "mex.h"
@@ -49,6 +50,7 @@ class CommandManager
 public:
     CommandManager( )
     {
+        default_cmd = NULL;
     }
 
     virtual ~CommandManager( )
@@ -56,6 +58,14 @@ public:
         std::map< std::string, Command* >::iterator it = commands.begin( );
         for( ; it != commands.end(); it++ )
             delete it->second;
+    }
+
+    void setDefaultCommand( const std::string cmdstr )
+    {
+        std::map< std::string, Command* >::iterator it = commands.find( toUpper( cmdstr ) );
+        if( it == commands.end() )
+            throw std::invalid_argument( "Invalid command: "+toUpper( cmdstr ) );
+        default_cmd = it->second;
     }
 
     void registerCommand( const std::string cmdstr, Command * cmd, size_t nlhs, size_t nrhs )
@@ -72,6 +82,13 @@ public:
         (*it->second)( nlhs, plhs, nrhs, prhs );
     }
 
+    void execute( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
+    {
+        if( !default_cmd )
+            throw std::invalid_argument( "No default command specified." );
+        (*default_cmd)( nlhs, plhs, nrhs, prhs );
+    }
+
     static std::string toUpper( const std::string str )
     {
             std::string out( str );
@@ -84,6 +101,7 @@ public:
 
 private:
     std::map< std::string, Command* > commands;
+    Command *default_cmd;
 };
 
 #endif // COMMANDS_H
