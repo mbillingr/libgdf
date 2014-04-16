@@ -5,11 +5,11 @@ compiler:
   - clang
   
 before_install:
-  - sudo apt-get install libboost-dev
+  - sudo apt-get install libboost-all-dev
   
 script:
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_VERBOSE_MAKEFILE=yes
-  - make -j
-  - make check
+  - cmake .. -DBUILD_TESTING=yes
+  - make
+  - make test

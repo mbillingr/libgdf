@@ -25,6 +25,6 @@ tree (e.g. ~/repositories/libgdf).
 
     mkdir build
     cd build
-    cmake $GDF_ROOT
+    cmake $GDF_ROOT -DBUILD_TESTING=yes
     make
-    make check
+    make test

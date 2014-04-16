@@ -104,7 +104,7 @@ namespace gdf
             {
                 delete m_record_cache[i];
                 m_record_cache[i] = NULL;
-                m_record_changed[i] = NULL;
+                m_record_changed[i] = false;
             }
         }
     }
