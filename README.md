@@ -18,8 +18,8 @@ Build Instructions
 ------------------
 
 The preferred method is to perform an out-of-source build.
-replace `$GDF_ROOT with the` (relative or absolute) path to the source
-tree (e.g. ~/SVN/GDF/trunk).
+replace `$GDF_ROOT` with the (relative or absolute) path to the source
+tree (e.g. ~/repositories/libgdf).
 
     mkdir build
     cd build
