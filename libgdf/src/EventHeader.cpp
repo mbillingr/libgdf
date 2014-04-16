@@ -18,6 +18,7 @@
 
 #include "GDF/EventHeader.h"
 #include "GDF/Exceptions.h"
+#include <math.h>
 #include <algorithm>
 #include <iostream>
 #include <sstream>
