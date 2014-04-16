@@ -36,7 +36,7 @@ namespace gdf
     {
     public:
         /// Constructor
-        TagField( uint8 tag );
+        TagField( uint8 tag=0 );
 
         /// Destructor
         virtual ~TagField( );
