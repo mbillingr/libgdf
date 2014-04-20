@@ -10,7 +10,7 @@ pkgrel=1
 epoch=
 pkgdesc="C++ implementation of GDF, the general dataformat for biosignals"
 arch=('i686' 'x86_64')
-url="http://sourceforge.net/projects/libgdf/"
+url="http://github.com/kazemakase/libgdf/"
 license=('LGPL')
 groups=()
 depends=(boost-libs)
@@ -28,7 +28,7 @@ source=()
 noextract=()
 md5sums=() #generate with 'makepkg -g'
 
-_gitroot='git://libgdf.git.sourceforge.net/gitroot/libgdf/libgdf'
+_gitroot='https://github.com/kazemakase/libgdf.git'
 _gitname='libgdf'
 
 build() {
