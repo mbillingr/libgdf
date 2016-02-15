@@ -7,7 +7,7 @@ compiler:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install libboost-all-dev
-  - pip install coveralls
+  - pip install --user coveralls
   
 script:
   - mkdir build
