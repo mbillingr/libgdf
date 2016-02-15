@@ -25,9 +25,9 @@
 #include <string>
 //#include <iostream>
 
-const double epsilon_d = 1e-15;
-const double epsilon_f = 1e-15;
-const double epsilon_i = 1;
+//const double epsilon_d = 1e-15;
+//const double epsilon_f = 1e-15;
+//const double epsilon_i = 1;
 
 
 namespace gdf
