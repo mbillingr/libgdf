@@ -29,6 +29,11 @@ string( REGEX MATCH "^[0-9]+" GDF_SHAREDLIB_SOVERSION ${GDF_VERSION})
 set_target_properties(GDF PROPERTIES
 	VERSION ${GDF_VERSION}
 	SOVERSION ${GDF_SHAREDLIB_SOVERSION})
+	
+if (BUILD_COVERAGE)
+        SET(GCC_COVERAGE_COMPILE_FLAGS "-coverage")
+        add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
+endif()
 
 if (BUILD_TESTING)
 	include( CTest )
