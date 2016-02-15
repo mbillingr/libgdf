@@ -6,10 +6,12 @@ compiler:
   
 before_install:
   - sudo apt-get install libboost-all-dev
+  - pip install --user codecov
   
 script:
   - mkdir build
   - cd build
-  - cmake .. -DBUILD_TESTING=yes
+  - cmake .. -DBUILD_TESTING=yes -DBUILD_COVERAGE=yes
   - make
   - make test
+  - codecov
