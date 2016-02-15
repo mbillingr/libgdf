@@ -7,7 +7,7 @@ compiler:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install libboost-all-dev
-  - pip install --user codecov
+  - pip install coveralls
   
 script:
   - mkdir build
@@ -15,4 +15,4 @@ script:
   - cmake .. -DBUILD_TESTING=yes -DBUILD_COVERAGE=yes
   - make
   - make test
-  - codecov
+  - coveralls
