@@ -196,7 +196,7 @@ namespace gdf
         {
             desc = "";
             int i =0;
-            while( value[pos+i] != 0 && (pos+i < tagfieldlength)) {
+            while( (pos + i < tagfieldlength) && value[pos+i] != 0 ) {
                 desc.push_back(value[pos+i]);
                 i++;
             }
