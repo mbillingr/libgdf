@@ -67,8 +67,11 @@ namespace gdf
         {
             size_t samplesize = datatype_size( m_header.getSignalHeader_readonly( i ).get_datatype( ) );
             m_record_length += samplesize * m_header.getSignalHeader_readonly( i ).get_samples_per_record( );
-
+#ifdef ALLOW_GDF_V_251
+            double fs = m_header.getSignalHeader( i ).get_samples_per_record( );
+#else
             double fs = m_header.getSignalHeader( i ).get_samples_per_record( ) * m_header.getMainHeader_readonly().get_datarecord_duration(1) / m_header.getMainHeader_readonly().get_datarecord_duration(0);
+#endif
             m_header.getSignalHeader( i ).set_samplerate( boost::numeric_cast<uint32>(fs) );
         }
 
@@ -145,8 +148,11 @@ namespace gdf
         }
 
         buffer.resize( signal_indices.size() );
-
+#ifdef ALLOW_GDF_V_251
+        double record_rate = 1;
+#else
         double record_rate = m_header.getMainHeader_readonly().get_datarecord_duration(1) / m_header.getMainHeader_readonly().get_datarecord_duration(0);
+#endif
         size_t record = boost::numeric_cast<size_t>( floor( start_time * record_rate ) );
 
 

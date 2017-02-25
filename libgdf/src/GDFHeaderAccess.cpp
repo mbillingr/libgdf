@@ -398,6 +398,7 @@ namespace gdf
         hdr.getTagHeader_readonly( ).toStream( out );
         uint16 header3LenBlocks = mh->get_header_length() - (1+ns);
         assert( out.tellp() == std::streampos(256+256*ns+256*header3LenBlocks));
+        (void)header3LenBlocks; // To prevent -Werror=unused-variable in a release build.
 
         return out;
     }
@@ -412,8 +413,13 @@ namespace gdf
         MainHeader *mh = &hdr.m_mainhdr;
         mh->version_id.fromstream( in );
         int gdf_version_int = mh->getGdfVersionInt();
+#ifdef ALLOW_GDF_V_251
+        if (gdf_version_int < 210 || gdf_version_int > 251)
+#else
         if (gdf_version_int < 210 || gdf_version_int > 220)
+#endif
             throw exception::incompatible_gdf_version (mh->get_version_id ());
+
         mh->patient_id.fromstream( in );
         mh->reserved_1.fromstream( in );
         mh->patient_drugs.fromstream( in );
@@ -479,6 +485,12 @@ namespace gdf
                 {
                 case 0:
                     break;
+#ifdef ALLOW_GDF_V_251
+                default:
+                    evd.fromTagField(tagfield);
+                    taghdr.setEventDescriptor(evd);
+                    break;
+#else
                 case 1:
                     evd.fromTagField(tagfield);
                     taghdr.setEventDescriptor(evd);
@@ -486,6 +498,7 @@ namespace gdf
                 default:
                     throw exception::feature_not_implemented("Only tag==1 is supported in this build");
                     break;
+#endif
                 }
             }
             taghdr.setLength();

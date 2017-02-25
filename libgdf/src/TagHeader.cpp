@@ -56,6 +56,22 @@ namespace gdf
             gdf::TagField tagfield(0);
             tagfield.fromStream(stream); 
             tag = tagfield.getTagNumber();
+#ifdef ALLOW_GDF_V_251
+            if (tag == 0)
+            {
+                // Zero tag value indicates end of Header 3. See first row of Table 10 in GDF standard.
+                header3unpaddedsize += 1;
+            }
+            else if (1 <= tag && tag <= 13)
+            {
+                header3unpaddedsize += tagfield.getLength();
+                this->addTagField( tagfield );
+            }
+            else
+            {
+                throw exception::feature_not_implemented("Only tag==1..13 are supported in this build");
+            }
+#else
             switch( tag )
             {
             case 0:
@@ -70,6 +86,7 @@ namespace gdf
                 throw exception::feature_not_implemented("Only tag==1 is supported in this build");
                 break;
             }
+#endif
         }
         // consume the padding bytes that make Header 3 a multiple of 256 bytes
         size_t ns = hdr.getMainHeader_readonly().get_num_signals( );
