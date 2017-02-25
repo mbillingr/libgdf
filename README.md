@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/kazemakase/libgdf.svg?branch=master)](https://travis-ci.org/kazemakase/libgdf)
+[![Build Status](https://travis-ci.org/mbillingr/libgdf.svg?branch=master)](https://travis-ci.org/mbillingr/libgdf)
 
 libGDF
 ======
