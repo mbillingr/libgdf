@@ -74,9 +74,9 @@ namespace gdf
     template<typename T>
     void writeLittleEndian( std::ostream &out, T item )
     {
-#if defined(BOOST_ENDIAN_LITTLE_BYTE)
+#if BOOST_ENDIAN_LITTLE_BYTE
         out.write( reinterpret_cast<const char*>(&item), sizeof(item) );
-#elif defined(BOOST_ENDIAN_BIG_BYTE)
+#elif BOOST_ENDIAN_BIG_BYTE
         const char* p = reinterpret_cast<const char*>(&item) + sizeof(item)-1;
         for( size_t i=0; i<sizeof(item); i++ )
             out.write( p--, 1 );
@@ -88,9 +88,9 @@ namespace gdf
     template<typename T>
     void readLittleEndian( std::istream &in, T &item )
     {
-#if defined(BOOST_ENDIAN_LITTLE_BYTE)
+#if BOOST_ENDIAN_LITTLE_BYTE
         in.read( reinterpret_cast<char*>(&item), sizeof(item) );
-#elif defined(BOOST_ENDIAN_BIG_BYTE)
+#elif BOOST_ENDIAN_BIG_BYTE
         char* p = reinterpret_cast<char*>(&item) + sizeof(item)-1;
         for( size_t i=0; i<sizeof(item); i++ )
     in.read( p--, 1 );
