@@ -31,8 +31,7 @@ namespace gdf
     ///        using the flag 0x8000 which marks the type of mode 1 stop events
     /// @throws general if events could not be converted
     std::vector<Mode3Event> convertMode1EventsIntoMode3Events (std::vector<Mode1Event>
-                                                               const& mode_1_events)
-        throw (exception::general);
+                                                               const& mode_1_events);
 }
 
 #endif
