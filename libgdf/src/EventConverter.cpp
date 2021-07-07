@@ -34,7 +34,6 @@ namespace gdf
 
     //-------------------------------------------------------------------------
     vector<Mode3Event> convertMode1EventsIntoMode3Events (vector<Mode1Event> const& mode_1_events)
-            throw (exception::general)
     {
         vector<Mode3Event> mode_3_events;
 
