@@ -1,6 +1,12 @@
 cmake_minimum_required( VERSION 2.8 )
 project( GDF )
 
+option(VERSION_251 "Allow support of GDF 2.51" OFF)
+
+if (VERSION_251)
+        add_compile_definitions(ALLOW_GDF_V_251)
+endif()
+
 if( UNIX )
         add_definitions( -Wall -Wextra -pedantic -Werror -fPIC )
 elseif( MINGW )
