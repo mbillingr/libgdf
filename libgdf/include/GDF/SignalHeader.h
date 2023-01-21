@@ -37,7 +37,12 @@ namespace gdf
         GDF_DECLARE_HEADERITEM( physmax, float64, 112 )
         GDF_DECLARE_HEADERITEM( digmin, float64, 120 )
         GDF_DECLARE_HEADERITEM( digmax, float64, 128 )
+#ifdef ALLOW_GDF_V_251
+        GDF_DECLARE_RESERVED( reserved_1, 136, 64 )
+        GDF_DECLARE_HEADERITEM( toffset, float32, 200 )
+#else
         GDF_DECLARE_RESERVED( reserved_1, 136, 68 )
+#endif
         GDF_DECLARE_HEADERITEM( lowpass, float32, 204 )
         GDF_DECLARE_HEADERITEM( highpass, float32, 208 )
         GDF_DECLARE_HEADERITEM( notch, float32, 212 )
@@ -57,6 +62,7 @@ namespace gdf
             GDF_ASSIGN_HEADERITEM( digmin )
             GDF_ASSIGN_HEADERITEM( digmax )
             GDF_ASSIGN_RESERVED( reserved_1 )
+            GDF_ASSIGN_HEADERITEM( toffset )
             GDF_ASSIGN_HEADERITEM( lowpass )
             GDF_ASSIGN_HEADERITEM( highpass )
             GDF_ASSIGN_HEADERITEM( notch )
@@ -101,6 +107,7 @@ namespace gdf
             else if( item == "physmax" ) set_physmax( numeric_cast<float64>(value) );
             else if( item == "digmin" ) set_digmin( numeric_cast<float64>(value) );
             else if( item == "digmax" ) set_digmax( numeric_cast<float64>(value) );
+            else if( item == "toffset" ) set_toffset( numeric_cast<float32>(value) );
             else if( item == "lowpass" ) set_lowpass( numeric_cast<float32>(value) );
             else if( item == "highpass" ) set_highpass( numeric_cast<float32>(value) );
             else if( item == "notch" ) set_notch( numeric_cast<float32>(value) );
@@ -118,6 +125,7 @@ namespace gdf
             else if( item == "physmax" ) return numeric_cast<T>(get_physmax( ));
             else if( item == "digmin" ) return numeric_cast<T>(get_digmin( ));
             else if( item == "digmax" ) return numeric_cast<T>(get_digmax( ));
+            else if( item == "toffset" ) return numeric_cast<T>(get_toffset( ));
             else if( item == "lowpass" ) return numeric_cast<T>(get_lowpass( ));
             else if( item == "highpass" ) return numeric_cast<T>(get_highpass( ));
             else if( item == "notch" ) return numeric_cast<T>(get_notch( ));
