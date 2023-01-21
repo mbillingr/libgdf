@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required( VERSION 3.12 )
 project( GDF )
 
 option(VERSION_251 "Allow support of GDF 2.51" OFF)
