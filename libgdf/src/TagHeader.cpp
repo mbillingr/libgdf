@@ -48,55 +48,39 @@ namespace gdf
 
     void TagHeader::fromStream( std::istream &stream , gdf::GDFHeaderAccess& hdr)
     {
-        unsigned char tag = 1;
-        size_t header3unpaddedsize = 0;
-        while( tag != 0 )
+        const size_t ns = hdr.getMainHeader_readonly().get_num_signals( );
+        const size_t nhdrblocks = hdr.getMainHeader_readonly().get_header_length( );
+        size_t header3remainingsize = (nhdrblocks - (ns+1))*256;
+
+        while(header3remainingsize>=4)
         {
-            //std::streampos pos = stream.tellg();
             gdf::TagField tagfield(0);
             tagfield.fromStream(stream); 
-            tag = tagfield.getTagNumber();
-#ifdef ALLOW_GDF_V_251
-            if (tag == 0)
-            {
+            unsigned char tag = tagfield.getTagNumber();
+            if (tag==0) {
                 // Zero tag value indicates end of Header 3. See first row of Table 10 in GDF standard.
-                header3unpaddedsize += 1;
+                header3remainingsize -= 1;
+                break;
             }
-            else if (1 <= tag && tag <= 13)
-            {
-                header3unpaddedsize += tagfield.getLength();
-                this->addTagField( tagfield );
-            }
-            else
-            {
-                throw exception::feature_not_implemented("Only tag==1..13 are supported in this build");
+
+#ifdef ALLOW_GDF_V_251
+            if (tag>13 && tag!=255) {
+                std::cerr << "Warning: use of reserved tag " << tag << std::endl;
             }
 #else
-            switch( tag )
-            {
-            case 0:
-                // Zero tag value indicates end of Header 3. See first row of Table 10 in GDF standard.
-                header3unpaddedsize += 1;
-                break;
-            case 1:
-                header3unpaddedsize += tagfield.getLength();
-                this->addTagField( tagfield );
-                break;
-            default:
-                throw exception::feature_not_implemented("Only tag==1 is supported in this build");
-                break;
+            if (tag!=1) {
+                std::cerr << "Warning: invalid tag " << tag << std::endl;
+                continue;
             }
 #endif
+            //  Opaque storage of the tag. No attempt is made to interpret its content.
+
+            this->addTagField( tagfield );
+            header3remainingsize -= tagfield.getLength();
         }
-        // consume the padding bytes that make Header 3 a multiple of 256 bytes
-        size_t ns = hdr.getMainHeader_readonly().get_num_signals( );
-        size_t nhdrblocks = hdr.getMainHeader_readonly().get_header_length( );
-        int padbytecount = (nhdrblocks - (ns+1))*256 - header3unpaddedsize;
-        if( padbytecount < 0 )
-        {
-            throw exception::serialization_error("problem reading GDF Header 3");
-        }
-        stream.seekg(std::streamoff(padbytecount), std::ios_base::cur);
+
+        // Consume the padding bytes that make Header 3 a multiple of 256 bytes
+        stream.seekg(std::streamoff(header3remainingsize), std::ios_base::cur);
     }
 
     //===================================================================================================
@@ -186,6 +170,11 @@ namespace gdf
 
     void TagHeader::addTagField( TagField & tagfield )
     {
+        if (m_tags.find(tagfield.getTagNumber()) != m_tags.end()) {
+            std::cerr << "Warning: multiple tags numbered " << tagfield.getTagNumber() << "." << std::endl
+                      << "Keeping the first one." << std::endl;
+            return;
+        }
         m_tags[tagfield.getTagNumber()] = tagfield;
     }
 
