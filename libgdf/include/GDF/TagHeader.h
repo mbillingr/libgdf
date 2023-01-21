@@ -54,13 +54,13 @@ namespace gdf
         void setValue( std::vector <unsigned char> value ){ m_value = value; }
 
         /// Get the value 
-        std::vector <unsigned char> & getValue() { return m_value; }
+        const std::vector <unsigned char> & getValue() { return m_value; }
 
         /// Update the output representation of the T-L-V field. 
         virtual void finalize(){;}
 
         // Return the tag number
-        int getTagNumber(){return int(m_tag);}
+        int getTagNumber() const {return int(m_tag);}
 
     private:
         std::vector <unsigned char> m_value;

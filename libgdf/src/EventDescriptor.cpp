@@ -182,7 +182,7 @@ namespace gdf
     //===================================================================================================
     //===================================================================================================
 
-    void EventDescriptor::fromTagField( TagField &tf )
+    void EventDescriptor::fromTagField(const TagField &tf )
     {
         // Format the m_value info into the other data structures
         size_t tagfieldlength = tf.getLength();//m_value.size();

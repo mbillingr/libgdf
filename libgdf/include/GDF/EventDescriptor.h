@@ -80,7 +80,7 @@ namespace gdf
         int getNumUserDesc( ) {return m_userdesc.size();}
         
         // Populates class instance from a T-L-V triple.
-        void fromTagField( TagField &tf );
+        void fromTagField(const TagField &tf );
 
         // Copies table of user-specified descriptions into a T-L-V triple.
         TagField toTagField(  );
