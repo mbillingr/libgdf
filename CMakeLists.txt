@@ -1,3 +1,4 @@
+message("cmake version: ${CMAHE_VERSION}")
 cmake_minimum_required( VERSION 3.12 )
 project( libGDF CXX)
 
