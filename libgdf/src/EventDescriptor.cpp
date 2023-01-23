@@ -132,9 +132,7 @@ namespace gdf
         std::string token;
         uint16 eventType;
         std::string eventDesc;
-        size_t lineNum = 0;
         while (getline(infile, line)){
-            lineNum++;
             if( (line.length() > 0) && (line.c_str()[0] != '#') ) {
                 std::stringstream strstr(line);
                 std::getline(strstr, token, '\t');
