@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/mbillingr/libgdf.svg?branch=master)](https://travis-ci.com/mbillingr/libgdf)
 [![CMake](https://github.com/mbillingr/libgdf/actions/workflows/cmake.yml/badge.svg)](https://github.com/mbillingr/libgdf/actions/workflows/cmake.yml)
 
+This branch only exists to test if CI runs correctly on master, after all this time...
+
 libGDF
 ======
 
