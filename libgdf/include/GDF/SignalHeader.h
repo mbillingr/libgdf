@@ -107,7 +107,9 @@ namespace gdf
             else if( item == "physmax" ) set_physmax( numeric_cast<float64>(value) );
             else if( item == "digmin" ) set_digmin( numeric_cast<float64>(value) );
             else if( item == "digmax" ) set_digmax( numeric_cast<float64>(value) );
+#ifdef ALLOW_GDF_V_251
             else if( item == "toffset" ) set_toffset( numeric_cast<float32>(value) );
+#endif
             else if( item == "lowpass" ) set_lowpass( numeric_cast<float32>(value) );
             else if( item == "highpass" ) set_highpass( numeric_cast<float32>(value) );
             else if( item == "notch" ) set_notch( numeric_cast<float32>(value) );
@@ -125,7 +127,9 @@ namespace gdf
             else if( item == "physmax" ) return numeric_cast<T>(get_physmax( ));
             else if( item == "digmin" ) return numeric_cast<T>(get_digmin( ));
             else if( item == "digmax" ) return numeric_cast<T>(get_digmax( ));
+#ifdef ALLOW_GDF_V_251
             else if( item == "toffset" ) return numeric_cast<T>(get_toffset( ));
+#endif
             else if( item == "lowpass" ) return numeric_cast<T>(get_lowpass( ));
             else if( item == "highpass" ) return numeric_cast<T>(get_highpass( ));
             else if( item == "notch" ) return numeric_cast<T>(get_notch( ));

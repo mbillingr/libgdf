@@ -458,6 +458,9 @@ namespace gdf
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).digmin.fromstream( in );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).digmax.fromstream( in );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).reserved_1.fromstream( in );
+#ifdef ALLOW_GDF_V_251
+        for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).toffset.fromstream( in );
+#endif
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).lowpass.fromstream( in );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).highpass.fromstream( in );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader(i).notch.fromstream( in );
@@ -475,30 +478,25 @@ namespace gdf
         {
             TagHeader & taghdr = hdr.getTagHeader();
             taghdr.fromStream( in, hdr);
-            std::map<int,TagField>::iterator it = taghdr.m_tags.begin();
-            gdf::EventDescriptor evd; 
-            for( ; it != taghdr.m_tags.end(); ++it) {
+            for(std::map<int,TagField>::iterator it = taghdr.m_tags.begin() ; it != taghdr.m_tags.end(); ++it) {
+
                 // copy each tag to the stream
-                TagField tagfield = (*it).second;
-                int tagnum = tagfield.getTagNumber();
-                switch( tagnum )
-                {
-                case 0:
+
+                const TagField& tagfield = (*it).second;
+                const uint8_t   tagnum = tagfield.getTagNumber();
+                if (tagnum==0) // The GDF spec says that a tag 0 marks the end of the tag table.
                     break;
 #ifdef ALLOW_GDF_V_251
-                default:
-                    evd.fromTagField(tagfield);
-                    taghdr.setEventDescriptor(evd);
-                    break;
+                const bool valid_tag = true;
 #else
-                case 1:
+                const bool valid_tag = (tagnum==1);
+#endif
+                if (valid_tag) {
+                    gdf::EventDescriptor evd;
                     evd.fromTagField(tagfield);
                     taghdr.setEventDescriptor(evd);
-                    break;
-                default:
-                    throw exception::feature_not_implemented("Only tag==1 is supported in this build");
-                    break;
-#endif
+                } else {
+                    std::cerr << "Only tag==1 is supported in this build" << std::endl;
                 }
             }
             taghdr.setLength();

@@ -123,44 +123,55 @@ namespace gdf
         for( size_t i=0; i<nev; i++ )
             readLittleEndian( stream, types[i] );
 
-        if( getMode() == 1 )
-        {
-            for( size_t i=0; i<nev; i++ )
-            {
-                Mode1Event e;
-                e.position = positions[i];
-                e.type = types[i];
-                addEvent( e );
+        const bool has_time_stamps = mode&0x04;
+        if (has_time_stamps)
+            std::cerr << "Warning non equidistant sampling is not yet implemented." << std::endl;
+
+        //  At this point mode have been validated.
+        //  mode&3 can be only 1 or 3.
+
+        switch (mode&0x03) {
+            case 1: {
+                for( size_t i=0; i<nev; i++ )
+                {
+                    Mode1Event e;
+                    e.position = positions[i];
+                    e.type = types[i];
+                    addEvent( e );
+                }
+                break;
             }
-        }
-        else if( getMode() == 3 )
-        {
-            std::vector<uint16> channels;
-            std::vector<uint32> durations;
-            channels.resize( nev );
-            durations.resize( nev );
-            for( size_t i=0; i<nev; i++ )
-                readLittleEndian( stream, channels[i] );
-            for( size_t i=0; i<nev; i++ )
-                readLittleEndian( stream, durations[i] );
-            for( size_t i=0; i<nev; i++ )
-            {
-                Mode3Event e;
-                e.position = positions[i];
-                e.type = types[i];
-                e.channel = channels[i];
-                e.duration = durations[i];
-                addEvent( e );
+            case 3: {
+                std::vector<uint16> channels;
+                std::vector<uint32> durations;
+                channels.resize( nev );
+                durations.resize( nev );
+                for( size_t i=0; i<nev; i++ )
+                    readLittleEndian( stream, channels[i] );
+                for( size_t i=0; i<nev; i++ )
+                    readLittleEndian( stream, durations[i] );
+                for( size_t i=0; i<nev; i++ )
+                {
+                    Mode3Event e;
+                    e.position = positions[i];
+                    e.type = types[i];
+                    e.channel = channels[i];
+                    e.duration = durations[i];
+                    addEvent( e );
+                }
+                break;
             }
+            default:
+                throw exception::invalid_eventmode( boost::lexical_cast<std::string>( getMode() ) );
         }
-        else
-            throw exception::invalid_eventmode( boost::lexical_cast<std::string>( getMode() ) );
     }
 
     void EventHeader::setMode( uint8 mode )
     {
         if( m_mode1.size() > 0 || m_mode3.size() > 0 )
             throw exception::illegal_eventmode_change( "EventHeader::setMode called, but header already contains events" );
+        if ((mode&0x1)!=1 && (mode>>1)>3)
+            throw exception::wrong_eventmode(std::to_string(mode));
         m_mode = mode;
     }
 
@@ -171,10 +182,10 @@ namespace gdf
 
     uint32 EventHeader::getNumEvents( )
     {
-        switch( m_mode )
+        switch( m_mode&0x03 )
         {
-        case 1: return m_mode1.size( ); break;
-        case 3: return m_mode3.size( ); break;
+        case 1: return m_mode1.size( );
+        case 3: return m_mode3.size( );
         default: throw exception::invalid_eventmode( boost::lexical_cast<std::string>( m_mode ) );
         }
     }
@@ -210,28 +221,28 @@ namespace gdf
     //-------------------------------------------------------------------------
     void EventHeader::getEvent( uint32 index, Mode1Event &ev )
     {
-        if( m_mode != 1 )
+        if( (m_mode&0x03) != 1 )
             throw exception::wrong_eventmode( "Expecting mode 1" );
         ev = m_mode1[index];
     }
 
     void EventHeader::getEvent( uint32 index, Mode3Event &ev )
     {
-        if( m_mode != 3 )
+        if( (m_mode&0x03) != 3 )
             throw exception::wrong_eventmode( "Expecting mode 3" );
         ev = m_mode3[index];
     }
 
     void EventHeader::addEvent( const Mode1Event &ev )
     {
-        if( m_mode != 1 )
+        if( (m_mode&0x03) != 1 )
             throw exception::wrong_eventmode( "Expecting mode 1" );
         m_mode1.push_back( ev );
     }
 
     void EventHeader::addEvent( const Mode3Event &ev )
     {
-        if( m_mode != 3 )
+        if( (m_mode&0x03) != 3 )
             throw exception::wrong_eventmode( "Expecting mode 3" );
         m_mode3.push_back( ev );
     }

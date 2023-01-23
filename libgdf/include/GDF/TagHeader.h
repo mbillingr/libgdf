@@ -54,7 +54,7 @@ namespace gdf
         void setValue( std::vector <unsigned char> value ){ m_value = value; }
 
         /// Get the value 
-        const std::vector <unsigned char> & getValue() { return m_value; }
+        const std::vector <unsigned char> & getValue() const { return m_value; }
 
         /// Update the output representation of the T-L-V field. 
         virtual void finalize(){;}
