@@ -52,5 +52,9 @@ add_executable( testDataTypes testDataTypes.cpp )
 target_link_libraries( testDataTypes ${Boost_LIBRARIES} GDF )
 add_test( NAME testDataTypes COMMAND testDataTypes )
 
+# Avoid running tests that use the same file test.gdf.tmp  in parrallel
+
+set_tests_properties(testCreateGDF testRWConsistency testBlit testSparseSampling testHeader3 PROPERTIES RESOURCE_LOCK test.gdf.tmp)
+
 #add_custom_target( buildtests DEPENDS testCreateGDF testRWConsistency )
 #add_custom_target( check COMMAND ${CMAKE_CTEST_COMMAND} DEPENDS buildtests )
