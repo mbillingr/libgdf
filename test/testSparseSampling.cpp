@@ -202,7 +202,7 @@ int main( )
             cout << endl << "OK" << endl;
 
             w.close( );
-            cout << "Comparing files .... ";
+            cout << "Comparing files .... " << reffile << " and " << testfile << std::endl;
             if( !fcompare( reffile, testfile ) )
             {
                 cout << "Failed." << endl;
