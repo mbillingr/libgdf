@@ -399,9 +399,10 @@ namespace gdf
 
         // write GDF header 3
         hdr.getTagHeader_readonly( ).toStream( out );
+#ifdef NDEBUG
         uint16 header3LenBlocks = mh->get_header_length() - (1+ns);
         assert( out.tellp() == std::streampos(256+256*ns+256*header3LenBlocks));
-        (void)header3LenBlocks; // To prevent -Werror=unused-variable in a release build.
+#endif
 
         return out;
     }
