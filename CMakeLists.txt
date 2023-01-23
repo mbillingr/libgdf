@@ -3,6 +3,8 @@ project( libGDF CXX)
 
 option( BUILD_TESTING "Build tests" OFF )
 
+set(CMAKE_CXX_STANDARD 11)
+
 if( WIN32 )
 	set( BUILD_SHARED_LIBS false CACHE BOOL "Whether we shall build shared or dynamic libraries." )
 	option( BUILD_PYTHON_MODULES "Build python modules" OFF )
