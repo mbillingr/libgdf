@@ -13,7 +13,7 @@ endif( WIN32 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
-set( GDF_SOURCE_ROOT ${Project_SOURCE_DIR} )
+set( GDF_SOURCE_ROOT ${PROJECT_SOURCE_DIR} )
 
 add_subdirectory( libgdf )
 add_subdirectory( tools )
