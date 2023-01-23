@@ -382,6 +382,9 @@ namespace gdf
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader_readonly(i).physmax.tostream( out );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader_readonly(i).digmin.tostream( out );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader_readonly(i).digmax.tostream( out );
+#ifdef ALLOW_GDF_V_251
+        for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader_readonly(i).toffset.tostream( out );
+#endif
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader_readonly(i).reserved_1.tostream( out );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader_readonly(i).lowpass.tostream( out );
         for( uint16 i=0; i<ns; i++ ) hdr.getSignalHeader_readonly(i).highpass.tostream( out );
